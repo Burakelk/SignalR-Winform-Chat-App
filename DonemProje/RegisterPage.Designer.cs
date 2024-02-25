@@ -34,26 +34,23 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RegisterPage));
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RegisterPage));
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges22 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges21 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges19 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges20 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges19 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges17 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges18 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             guna2ControlBox3 = new Guna.UI2.WinForms.Guna2ControlBox();
-            guna2ControlBox2 = new Guna.UI2.WinForms.Guna2ControlBox();
             guna2ControlBox1 = new Guna.UI2.WinForms.Guna2ControlBox();
             RegisterRegisterpageTxt = new Button();
             UserNametxt = new Guna.UI2.WinForms.Guna2TextBox();
@@ -61,7 +58,6 @@
             fullNametxt = new Guna.UI2.WinForms.Guna2TextBox();
             DateTimePickertxt = new Guna.UI2.WinForms.Guna2DateTimePicker();
             guna2DragControl1 = new Guna.UI2.WinForms.Guna2DragControl(components);
-            guna2ResizeForm1 = new Guna.UI2.WinForms.Guna2ResizeForm(components);
             femaleRadiobutton = new Guna.UI2.WinForms.Guna2RadioButton();
             maleRadiobutton = new Guna.UI2.WinForms.Guna2RadioButton();
             maskedTextBox1 = new MaskedTextBox();
@@ -101,35 +97,22 @@
             guna2ControlBox3.FillColor = Color.Black;
             guna2ControlBox3.ForeColor = Color.Transparent;
             guna2ControlBox3.IconColor = Color.White;
-            guna2ControlBox3.Location = new Point(948, -1);
+            guna2ControlBox3.Location = new Point(993, -1);
             guna2ControlBox3.Name = "guna2ControlBox3";
             guna2ControlBox3.ShadowDecoration.CustomizableEdges = customizableEdges2;
             guna2ControlBox3.Size = new Size(45, 29);
             guna2ControlBox3.TabIndex = 6;
             // 
-            // guna2ControlBox2
-            // 
-            guna2ControlBox2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            guna2ControlBox2.ControlBoxType = Guna.UI2.WinForms.Enums.ControlBoxType.MaximizeBox;
-            guna2ControlBox2.CustomizableEdges = customizableEdges3;
-            guna2ControlBox2.FillColor = Color.Black;
-            guna2ControlBox2.IconColor = Color.White;
-            guna2ControlBox2.Location = new Point(999, -1);
-            guna2ControlBox2.Name = "guna2ControlBox2";
-            guna2ControlBox2.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            guna2ControlBox2.Size = new Size(45, 29);
-            guna2ControlBox2.TabIndex = 5;
-            // 
             // guna2ControlBox1
             // 
             guna2ControlBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             guna2ControlBox1.ControlBoxStyle = Guna.UI2.WinForms.Enums.ControlBoxStyle.Custom;
-            guna2ControlBox1.CustomizableEdges = customizableEdges5;
+            guna2ControlBox1.CustomizableEdges = customizableEdges3;
             guna2ControlBox1.FillColor = Color.Black;
             guna2ControlBox1.IconColor = Color.White;
-            guna2ControlBox1.Location = new Point(1050, -1);
+            guna2ControlBox1.Location = new Point(1044, -1);
             guna2ControlBox1.Name = "guna2ControlBox1";
-            guna2ControlBox1.ShadowDecoration.CustomizableEdges = customizableEdges6;
+            guna2ControlBox1.ShadowDecoration.CustomizableEdges = customizableEdges4;
             guna2ControlBox1.Size = new Size(45, 29);
             guna2ControlBox1.TabIndex = 4;
             // 
@@ -138,7 +121,9 @@
             RegisterRegisterpageTxt.Anchor = AnchorStyles.None;
             RegisterRegisterpageTxt.BackColor = Color.Black;
             RegisterRegisterpageTxt.ForeColor = SystemColors.ButtonFace;
-            RegisterRegisterpageTxt.Location = new Point(489, 468);
+            RegisterRegisterpageTxt.Location = new Point(489, 456);
+            RegisterRegisterpageTxt.MaximumSize = new Size(80, 33);
+            RegisterRegisterpageTxt.MinimumSize = new Size(80, 33);
             RegisterRegisterpageTxt.Name = "RegisterRegisterpageTxt";
             RegisterRegisterpageTxt.Size = new Size(80, 33);
             RegisterRegisterpageTxt.TabIndex = 14;
@@ -151,7 +136,7 @@
             UserNametxt.Anchor = AnchorStyles.None;
             UserNametxt.BackColor = Color.White;
             UserNametxt.BackgroundImageLayout = ImageLayout.None;
-            UserNametxt.CustomizableEdges = customizableEdges7;
+            UserNametxt.CustomizableEdges = customizableEdges5;
             UserNametxt.DefaultText = "";
             UserNametxt.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             UserNametxt.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -161,13 +146,15 @@
             UserNametxt.Font = new Font("Segoe UI", 9F);
             UserNametxt.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
             UserNametxt.IconLeft = (Image)resources.GetObject("UserNametxt.IconLeft");
-            UserNametxt.Location = new Point(95, 271);
+            UserNametxt.Location = new Point(92, 234);
+            UserNametxt.MaximumSize = new Size(213, 38);
+            UserNametxt.MinimumSize = new Size(213, 38);
             UserNametxt.Name = "UserNametxt";
             UserNametxt.PasswordChar = '\0';
             UserNametxt.PlaceholderForeColor = Color.Gray;
             UserNametxt.PlaceholderText = "Kullanıcı Adı";
             UserNametxt.SelectedText = "";
-            UserNametxt.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            UserNametxt.ShadowDecoration.CustomizableEdges = customizableEdges6;
             UserNametxt.Size = new Size(213, 38);
             UserNametxt.TabIndex = 1;
             UserNametxt.TextOffset = new Point(0, 2);
@@ -179,7 +166,9 @@
             pictureBox1.BackColor = Color.White;
             pictureBox1.BackgroundImage = (Image)resources.GetObject("pictureBox1.BackgroundImage");
             pictureBox1.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBox1.Location = new Point(95, 121);
+            pictureBox1.Location = new Point(92, 84);
+            pictureBox1.MaximumSize = new Size(474, 110);
+            pictureBox1.MinimumSize = new Size(474, 110);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(474, 110);
             pictureBox1.TabIndex = 20;
@@ -190,7 +179,7 @@
             fullNametxt.Anchor = AnchorStyles.None;
             fullNametxt.BackColor = Color.White;
             fullNametxt.BackgroundImageLayout = ImageLayout.None;
-            fullNametxt.CustomizableEdges = customizableEdges9;
+            fullNametxt.CustomizableEdges = customizableEdges7;
             fullNametxt.DefaultText = "";
             fullNametxt.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             fullNametxt.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -200,13 +189,15 @@
             fullNametxt.Font = new Font("Segoe UI", 9F);
             fullNametxt.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
             fullNametxt.IconLeft = (Image)resources.GetObject("fullNametxt.IconLeft");
-            fullNametxt.Location = new Point(95, 325);
+            fullNametxt.Location = new Point(92, 288);
+            fullNametxt.MaximumSize = new Size(213, 38);
+            fullNametxt.MinimumSize = new Size(213, 38);
             fullNametxt.Name = "fullNametxt";
             fullNametxt.PasswordChar = '\0';
             fullNametxt.PlaceholderForeColor = Color.Gray;
             fullNametxt.PlaceholderText = "İsim Soyisim";
             fullNametxt.SelectedText = "";
-            fullNametxt.ShadowDecoration.CustomizableEdges = customizableEdges10;
+            fullNametxt.ShadowDecoration.CustomizableEdges = customizableEdges8;
             fullNametxt.Size = new Size(213, 38);
             fullNametxt.TabIndex = 2;
             fullNametxt.TextOffset = new Point(0, 2);
@@ -215,17 +206,19 @@
             // 
             DateTimePickertxt.Anchor = AnchorStyles.None;
             DateTimePickertxt.Checked = true;
-            DateTimePickertxt.CustomizableEdges = customizableEdges11;
+            DateTimePickertxt.CustomizableEdges = customizableEdges9;
             DateTimePickertxt.FillColor = Color.White;
             DateTimePickertxt.FocusedColor = Color.FromArgb(224, 224, 224);
             DateTimePickertxt.Font = new Font("Segoe UI", 9F);
             DateTimePickertxt.Format = DateTimePickerFormat.Short;
-            DateTimePickertxt.Location = new Point(356, 384);
+            DateTimePickertxt.Location = new Point(356, 345);
             DateTimePickertxt.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
+            DateTimePickertxt.MaximumSize = new Size(213, 38);
             DateTimePickertxt.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
+            DateTimePickertxt.MinimumSize = new Size(213, 38);
             DateTimePickertxt.Name = "DateTimePickertxt";
-            DateTimePickertxt.ShadowDecoration.CustomizableEdges = customizableEdges12;
-            DateTimePickertxt.Size = new Size(213, 36);
+            DateTimePickertxt.ShadowDecoration.CustomizableEdges = customizableEdges10;
+            DateTimePickertxt.Size = new Size(213, 38);
             DateTimePickertxt.TabIndex = 11;
             DateTimePickertxt.Value = new DateTime(2024, 2, 19, 0, 0, 0, 0);
             // 
@@ -235,19 +228,18 @@
             guna2DragControl1.TargetControl = this;
             guna2DragControl1.UseTransparentDrag = true;
             // 
-            // guna2ResizeForm1
-            // 
-            guna2ResizeForm1.TargetForm = this;
-            // 
             // femaleRadiobutton
             // 
+            femaleRadiobutton.Anchor = AnchorStyles.None;
             femaleRadiobutton.AutoSize = true;
             femaleRadiobutton.CheckedState.BorderColor = Color.FromArgb(94, 148, 255);
             femaleRadiobutton.CheckedState.BorderThickness = 0;
             femaleRadiobutton.CheckedState.FillColor = Color.FromArgb(94, 148, 255);
             femaleRadiobutton.CheckedState.InnerColor = Color.White;
             femaleRadiobutton.CheckedState.InnerOffset = -4;
-            femaleRadiobutton.Location = new Point(356, 432);
+            femaleRadiobutton.Location = new Point(356, 406);
+            femaleRadiobutton.MaximumSize = new Size(63, 19);
+            femaleRadiobutton.MinimumSize = new Size(63, 19);
             femaleRadiobutton.Name = "femaleRadiobutton";
             femaleRadiobutton.Size = new Size(63, 19);
             femaleRadiobutton.TabIndex = 12;
@@ -260,13 +252,16 @@
             // 
             // maleRadiobutton
             // 
+            maleRadiobutton.Anchor = AnchorStyles.None;
             maleRadiobutton.AutoSize = true;
             maleRadiobutton.CheckedState.BorderColor = Color.FromArgb(94, 148, 255);
             maleRadiobutton.CheckedState.BorderThickness = 0;
             maleRadiobutton.CheckedState.FillColor = Color.FromArgb(94, 148, 255);
             maleRadiobutton.CheckedState.InnerColor = Color.White;
             maleRadiobutton.CheckedState.InnerOffset = -4;
-            maleRadiobutton.Location = new Point(501, 432);
+            maleRadiobutton.Location = new Point(515, 406);
+            maleRadiobutton.MaximumSize = new Size(51, 19);
+            maleRadiobutton.MinimumSize = new Size(51, 19);
             maleRadiobutton.Name = "maleRadiobutton";
             maleRadiobutton.RightToLeft = RightToLeft.Yes;
             maleRadiobutton.Size = new Size(51, 19);
@@ -279,9 +274,12 @@
             // 
             // maskedTextBox1
             // 
+            maskedTextBox1.Anchor = AnchorStyles.None;
             maskedTextBox1.BorderStyle = BorderStyle.None;
-            maskedTextBox1.Location = new Point(204, 467);
+            maskedTextBox1.Location = new Point(201, 446);
             maskedTextBox1.Mask = "00000";
+            maskedTextBox1.MaximumSize = new Size(50, 16);
+            maskedTextBox1.MinimumSize = new Size(50, 16);
             maskedTextBox1.Name = "maskedTextBox1";
             maskedTextBox1.RightToLeft = RightToLeft.No;
             maskedTextBox1.Size = new Size(50, 16);
@@ -291,8 +289,11 @@
             // 
             // verificationtxt
             // 
+            verificationtxt.Anchor = AnchorStyles.None;
             verificationtxt.AutoSize = true;
-            verificationtxt.Location = new Point(95, 468);
+            verificationtxt.Location = new Point(92, 447);
+            verificationtxt.MaximumSize = new Size(105, 15);
+            verificationtxt.MinimumSize = new Size(105, 15);
             verificationtxt.Name = "verificationtxt";
             verificationtxt.Size = new Size(105, 15);
             verificationtxt.TabIndex = 30;
@@ -300,7 +301,10 @@
             // 
             // verificationCodeSendertxt
             // 
-            verificationCodeSendertxt.Location = new Point(95, 432);
+            verificationCodeSendertxt.Anchor = AnchorStyles.None;
+            verificationCodeSendertxt.Location = new Point(92, 406);
+            verificationCodeSendertxt.MaximumSize = new Size(213, 23);
+            verificationCodeSendertxt.MinimumSize = new Size(213, 23);
             verificationCodeSendertxt.Name = "verificationCodeSendertxt";
             verificationCodeSendertxt.Size = new Size(213, 23);
             verificationCodeSendertxt.TabIndex = 4;
@@ -310,7 +314,10 @@
             // 
             // approveTheCodebutton
             // 
-            approveTheCodebutton.Location = new Point(95, 489);
+            approveTheCodebutton.Anchor = AnchorStyles.None;
+            approveTheCodebutton.Location = new Point(92, 468);
+            approveTheCodebutton.MaximumSize = new Size(150, 31);
+            approveTheCodebutton.MinimumSize = new Size(150, 31);
             approveTheCodebutton.Name = "approveTheCodebutton";
             approveTheCodebutton.Size = new Size(150, 31);
             approveTheCodebutton.TabIndex = 7;
@@ -320,14 +327,17 @@
             // 
             // VerfCodeCheck
             // 
+            VerfCodeCheck.Anchor = AnchorStyles.None;
             VerfCodeCheck.BackColor = Color.SpringGreen;
             VerfCodeCheck.BackgroundImage = (Image)resources.GetObject("VerfCodeCheck.BackgroundImage");
             VerfCodeCheck.BackgroundImageLayout = ImageLayout.Stretch;
             VerfCodeCheck.FillColor = Color.Transparent;
             VerfCodeCheck.ImageRotate = 0F;
-            VerfCodeCheck.Location = new Point(239, 468);
+            VerfCodeCheck.Location = new Point(236, 447);
+            VerfCodeCheck.MaximumSize = new Size(15, 15);
+            VerfCodeCheck.MinimumSize = new Size(15, 15);
             VerfCodeCheck.Name = "VerfCodeCheck";
-            VerfCodeCheck.ShadowDecoration.CustomizableEdges = customizableEdges22;
+            VerfCodeCheck.ShadowDecoration.CustomizableEdges = customizableEdges20;
             VerfCodeCheck.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
             VerfCodeCheck.Size = new Size(15, 15);
             VerfCodeCheck.TabIndex = 34;
@@ -336,23 +346,27 @@
             // 
             // PasswordShowButton
             // 
+            PasswordShowButton.Anchor = AnchorStyles.None;
             PasswordShowButton.CheckedState.ImageSize = new Size(64, 64);
             PasswordShowButton.HoverState.ImageSize = new Size(64, 64);
             PasswordShowButton.Image = Properties.Resources.gozAcik;
             PasswordShowButton.ImageOffset = new Point(0, 0);
             PasswordShowButton.ImageRotate = 0F;
             PasswordShowButton.ImageSize = new Size(30, 30);
-            PasswordShowButton.Location = new Point(575, 280);
+            PasswordShowButton.Location = new Point(575, 243);
+            PasswordShowButton.MaximumSize = new Size(20, 20);
+            PasswordShowButton.MinimumSize = new Size(20, 20);
             PasswordShowButton.Name = "PasswordShowButton";
             PasswordShowButton.PressedState.ImageSize = new Size(64, 64);
-            PasswordShowButton.ShadowDecoration.CustomizableEdges = customizableEdges21;
-            PasswordShowButton.Size = new Size(20, 19);
+            PasswordShowButton.ShadowDecoration.CustomizableEdges = customizableEdges19;
+            PasswordShowButton.Size = new Size(20, 20);
             PasswordShowButton.TabIndex = 9;
             PasswordShowButton.Click += PasswordShowButton_Click;
             // 
             // Password1textbox
             // 
-            Password1textbox.CustomizableEdges = customizableEdges19;
+            Password1textbox.Anchor = AnchorStyles.None;
+            Password1textbox.CustomizableEdges = customizableEdges17;
             Password1textbox.DefaultText = "";
             Password1textbox.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             Password1textbox.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -362,19 +376,22 @@
             Password1textbox.Font = new Font("Segoe UI", 9F);
             Password1textbox.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
             Password1textbox.IconLeft = Properties.Resources.png_clipart_password_computer_icons_security_safety_icon_safety_icon_child_safety_lock_thumbnail;
-            Password1textbox.Location = new Point(356, 271);
+            Password1textbox.Location = new Point(356, 234);
+            Password1textbox.MaximumSize = new Size(213, 38);
+            Password1textbox.MinimumSize = new Size(213, 38);
             Password1textbox.Name = "Password1textbox";
             Password1textbox.PasswordChar = '●';
             Password1textbox.PlaceholderForeColor = Color.Gray;
             Password1textbox.PlaceholderText = "Şifre";
             Password1textbox.SelectedText = "";
-            Password1textbox.ShadowDecoration.CustomizableEdges = customizableEdges20;
+            Password1textbox.ShadowDecoration.CustomizableEdges = customizableEdges18;
             Password1textbox.Size = new Size(213, 38);
             Password1textbox.TabIndex = 8;
             // 
             // Password2textbox
             // 
-            Password2textbox.CustomizableEdges = customizableEdges17;
+            Password2textbox.Anchor = AnchorStyles.None;
+            Password2textbox.CustomizableEdges = customizableEdges15;
             Password2textbox.DefaultText = "";
             Password2textbox.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             Password2textbox.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -384,13 +401,15 @@
             Password2textbox.Font = new Font("Segoe UI", 9F);
             Password2textbox.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
             Password2textbox.IconLeft = Properties.Resources.png_clipart_password_computer_icons_security_safety_icon_safety_icon_child_safety_lock_thumbnail;
-            Password2textbox.Location = new Point(356, 325);
+            Password2textbox.Location = new Point(356, 288);
+            Password2textbox.MaximumSize = new Size(213, 38);
+            Password2textbox.MinimumSize = new Size(213, 38);
             Password2textbox.Name = "Password2textbox";
             Password2textbox.PasswordChar = '●';
             Password2textbox.PlaceholderForeColor = Color.Gray;
             Password2textbox.PlaceholderText = "Tekrar Şifre";
             Password2textbox.SelectedText = "";
-            Password2textbox.ShadowDecoration.CustomizableEdges = customizableEdges18;
+            Password2textbox.ShadowDecoration.CustomizableEdges = customizableEdges16;
             Password2textbox.Size = new Size(213, 38);
             Password2textbox.TabIndex = 10;
             Password2textbox.UseWaitCursor = true;
@@ -418,7 +437,7 @@
             EmailRegistertxt.Anchor = AnchorStyles.None;
             EmailRegistertxt.BackColor = Color.White;
             EmailRegistertxt.BackgroundImageLayout = ImageLayout.None;
-            EmailRegistertxt.CustomizableEdges = customizableEdges15;
+            EmailRegistertxt.CustomizableEdges = customizableEdges13;
             EmailRegistertxt.DefaultText = "";
             EmailRegistertxt.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             EmailRegistertxt.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -428,13 +447,15 @@
             EmailRegistertxt.Font = new Font("Segoe UI", 9F);
             EmailRegistertxt.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
             EmailRegistertxt.IconLeft = Properties.Resources.at_icon_128250;
-            EmailRegistertxt.Location = new Point(95, 382);
+            EmailRegistertxt.Location = new Point(92, 345);
+            EmailRegistertxt.MaximumSize = new Size(213, 38);
+            EmailRegistertxt.MinimumSize = new Size(213, 38);
             EmailRegistertxt.Name = "EmailRegistertxt";
             EmailRegistertxt.PasswordChar = '\0';
             EmailRegistertxt.PlaceholderForeColor = Color.Gray;
             EmailRegistertxt.PlaceholderText = "E-posta";
             EmailRegistertxt.SelectedText = "";
-            EmailRegistertxt.ShadowDecoration.CustomizableEdges = customizableEdges16;
+            EmailRegistertxt.ShadowDecoration.CustomizableEdges = customizableEdges14;
             EmailRegistertxt.Size = new Size(213, 38);
             EmailRegistertxt.TabIndex = 35;
             EmailRegistertxt.TextOffset = new Point(0, 2);
@@ -464,8 +485,9 @@
             // 
             // GoBackLoginButton
             // 
+            GoBackLoginButton.Anchor = AnchorStyles.None;
             GoBackLoginButton.BorderColor = Color.DimGray;
-            GoBackLoginButton.CustomizableEdges = customizableEdges13;
+            GoBackLoginButton.CustomizableEdges = customizableEdges11;
             GoBackLoginButton.DisabledState.BorderColor = Color.DarkGray;
             GoBackLoginButton.DisabledState.CustomBorderColor = Color.DarkGray;
             GoBackLoginButton.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -476,9 +498,11 @@
             GoBackLoginButton.Image = Properties.Resources.arrowback21;
             GoBackLoginButton.ImageSize = new Size(80, 70);
             GoBackLoginButton.Location = new Point(12, 28);
+            GoBackLoginButton.MaximumSize = new Size(78, 53);
+            GoBackLoginButton.MinimumSize = new Size(78, 53);
             GoBackLoginButton.Name = "GoBackLoginButton";
             GoBackLoginButton.PressedColor = Color.DimGray;
-            GoBackLoginButton.ShadowDecoration.CustomizableEdges = customizableEdges14;
+            GoBackLoginButton.ShadowDecoration.CustomizableEdges = customizableEdges12;
             GoBackLoginButton.Size = new Size(78, 53);
             GoBackLoginButton.TabIndex = 36;
             GoBackLoginButton.Click += GoBackLoginButton_Click;
@@ -489,7 +513,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             BackgroundImageLayout = ImageLayout.Stretch;
-            ClientSize = new Size(1095, 666);
+            ClientSize = new Size(1089, 592);
             Controls.Add(GoBackLoginButton);
             Controls.Add(EmailRegistertxt);
             Controls.Add(Password2textbox);
@@ -508,9 +532,10 @@
             Controls.Add(RegisterRegisterpageTxt);
             Controls.Add(UserNametxt);
             Controls.Add(guna2ControlBox3);
-            Controls.Add(guna2ControlBox2);
             Controls.Add(guna2ControlBox1);
             FormBorderStyle = FormBorderStyle.None;
+            MaximumSize = new Size(1089, 592);
+            MinimumSize = new Size(1089, 592);
             Name = "RegisterPage";
             SizeGripStyle = SizeGripStyle.Hide;
             StartPosition = FormStartPosition.CenterScreen;
@@ -532,7 +557,6 @@
         #endregion
 
         private Guna.UI2.WinForms.Guna2ControlBox guna2ControlBox3;
-        private Guna.UI2.WinForms.Guna2ControlBox guna2ControlBox2;
         private Guna.UI2.WinForms.Guna2ControlBox guna2ControlBox1;
         private Button RegisterRegisterpageTxt;
         private Guna.UI2.WinForms.Guna2TextBox UserNametxt;
@@ -540,7 +564,6 @@
         private Guna.UI2.WinForms.Guna2TextBox fullNametxt;
         private Guna.UI2.WinForms.Guna2DateTimePicker DateTimePickertxt;
         private Guna.UI2.WinForms.Guna2DragControl guna2DragControl1;
-        private Guna.UI2.WinForms.Guna2ResizeForm guna2ResizeForm1;
         private Guna.UI2.WinForms.Guna2RadioButton maleRadiobutton;
         private Guna.UI2.WinForms.Guna2ImageRadioButton guna2ImageRadioButton1;
         private Guna.UI2.WinForms.Guna2RadioButton femaleRadiobutton;

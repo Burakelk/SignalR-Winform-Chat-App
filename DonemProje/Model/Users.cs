@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace DonemProje.Model
 {
-    internal class Users
+    public class Users
     {
-        [Key]
-        private int ID { get; set; }
+        [Key] public int ID { get; set; }
+
         public string FullName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }

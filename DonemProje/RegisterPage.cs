@@ -12,8 +12,7 @@ using System.Windows.Forms;
 using Microsoft.VisualBasic;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Security.Cryptography.X509Certificates;
-using DevExpress.Mvvm.POCO;
-using DevExpress.Mvvm.UI;
+using DonemProje.Model;
 
 namespace DonemProje
 {
@@ -119,7 +118,6 @@ namespace DonemProje
             {
                 ApprovErr.SetError(maskedTextBox1, "E-postanın doğrulanmış olması gerek");
 
-
             }
 
             if (UserNameErr.HasErrors || fullNameErr.HasErrors || EmailRegisterErr.HasErrors || Password1Err.HasErrors || Password2Err.HasErrors || GenderErr.HasErrors || ApprovErr.HasErrors)
@@ -127,17 +125,12 @@ namespace DonemProje
 
                 return;
             }
-
-
-
             // şifrelerin aynı olup olmadığını kontrol etme
             if (Password1textbox.Text != Password2textbox.Text)
             {
                 MessageBox.Show("Girilen Şifrelerin Aynı olması lazım");
                 return;
             }
-
-
             DateTime birthDate = DateTimePickertxt.Value;
             if (DateTimePickertxt.Value > DateTime.Now)
             {
@@ -165,9 +158,23 @@ namespace DonemProje
                 MessageBox.Show("Yaşın henüz " + age + " bu uygulamayı kullanmak için yeterince büyük değilsin.\n" + (18 - age) + " yıl sonra tekrar bekleriz :)");
                 return;
             }
-
-
             #endregion
+            DatabaseContext db = new DatabaseContext();
+
+
+            bool gender = femaleRadiobutton.Checked == true ? true : false;
+            Users users = new Users();
+            users.Username = UserNametxt.Text;
+            users.FullName = fullNametxt.Text;
+            users.Email = EmailRegistertxt.Text.ToLower();
+            users.Password = Password1textbox.Text;
+            users.DateOfBirth = birthDate;
+            users.Gender = gender;  // erkekler için 0 kadınları için 1 değeri verir
+            db.Add(users);
+            db.SaveChanges();
+
+
+
 
 
 
@@ -260,38 +267,20 @@ namespace DonemProje
         private void PasswordShowButton_Click(object sender, EventArgs e)
         {
 
-            //if (Password1textbox.UseSystemPasswordChar == true && Password2textbox.UseSystemPasswordChar == true)
-            //{
-            //    PasswordShowButton.Image = Properties.Resources.gozKapali;
-            //    Password1textbox.UseSystemPasswordChar = false;
-            //    Password2textbox.UseSystemPasswordChar = false;
-
-
-
-            //}
-            //else
-            //{
-            //    PasswordShowButton.Image = Properties.Resources.gozAcik;
-            //    Password1textbox.UseSystemPasswordChar = true;
-            //    Password2textbox.UseSystemPasswordChar = true;
-
-
-            //}
             Password1textbox.PasswordChar = Password1textbox.PasswordChar == '●' ? '\0' : '●';
             PasswordShowButton.Image = Password1textbox.PasswordChar == '●' ? Properties.Resources.gozKapali : Properties.Resources.gozAcik;
 
             Password2textbox.PasswordChar = Password2textbox.PasswordChar == '●' ? '\0' : '●';
 
-
-
-
         }
-   
+
         private void GoBackLoginButton_Click(object sender, EventArgs e)
         {
             LoginPage loginPage = new LoginPage();
             loginPage.Show();
             this.Close();
         }
+
+        
     }
 }
