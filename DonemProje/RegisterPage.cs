@@ -267,6 +267,10 @@ namespace DonemProje
         private void PasswordShowButton_Click(object sender, EventArgs e)
         {
 
+<<<<<<< Updated upstream
+=======
+        
+>>>>>>> Stashed changes
             Password1textbox.PasswordChar = Password1textbox.PasswordChar == '●' ? '\0' : '●';
             PasswordShowButton.Image = Password1textbox.PasswordChar == '●' ? Properties.Resources.gozKapali : Properties.Resources.gozAcik;
 
