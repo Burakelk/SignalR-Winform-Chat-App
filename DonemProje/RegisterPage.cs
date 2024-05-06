@@ -191,8 +191,8 @@ namespace DonemProje
             verificationCode = VerifCodeCreater();
 
             // Gönderen ve alıcı e-posta adreslerini ve şifreyi girin.
-            string gonderen = "celikburak4999@gmail.com";
-            string sifre = "xwbk xpts awfi usui";
+            string gonderen = "//your e-mail";
+            string sifre = "//your e-email's app password";
             string alici = EmailRegistertxt.Text;
             if (alici == null)
             {
