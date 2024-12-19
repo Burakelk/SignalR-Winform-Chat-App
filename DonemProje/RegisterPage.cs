@@ -1,48 +1,101 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
+using Microsoft.Data.SqlClient;
 using System.Net.Mail;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Microsoft.VisualBasic;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using System.Security.Cryptography.X509Certificates;
-using DonemProje.Model;
-
+using System.Security.Cryptography;
+using Microsoft.AspNet.SignalR.Client;
+using System.Diagnostics.Eventing.Reader;
 namespace DonemProje
 {
     public partial class RegisterPage : Form
     {
-
+        string connectionString = " Data Source=LAPTOP-5188NCUM;Initial Catalog=users;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
         public RegisterPage()
         {
             InitializeComponent();
         }
 
         // hiç kod oluşturulmamışsa ilk fonksiyon çalışır
-        string verificationCode = "";
+        string verificationCode;
         public string VerifCodeCreater()
         {
             // creating verification code 
-            string VerfCode = "";
+            string VerfCode = null;
             for (int i = 0; i < 5; i++)
             {
                 Random rnd = new Random();
                 VerfCode += Convert.ToString(rnd.Next(10));
             }
-
+            if (string.IsNullOrEmpty(VerfCode))
+            {
+                VerifCodeCreater();
+            }
             return VerfCode;
         }
 
+        public string ComputeHash(string input)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] bytes = Encoding.UTF8.GetBytes(input);
+                byte[] hashBytes = sha256.ComputeHash(bytes);
+                return Convert.ToBase64String(hashBytes);
+            }
+        }
+        private void RegisterAcceptanceOfValuen()
+        {
+            #region DbRegister
 
-        private void RegisterRegisterpageTxt_Click(object sender, EventArgs e)
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string hashedPassword = ComputeHash(Password1textbox.Text); // Şifreyi hash et
+                try
+                {
+                    connection.Open();
+                    string checkQuery = "SELECT COUNT(*) FROM users_table WHERE USERNAME = @USERNAME";
+                    SqlCommand checkCommand = new SqlCommand(checkQuery, connection);
+                    checkCommand.Parameters.AddWithValue("@USERNAME", UserNametxt.Text);
+
+                    int count = Convert.ToInt32(checkCommand.ExecuteScalar());
+
+                    if (count > 0)
+                    {
+                        MessageBox.Show("Bu kullanıcı adı zaten kullanılıyor.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+
+                        string insertQuery = "INSERT INTO users_table (USERNAME, PASSW,NAME_SURNAME,E_MAIL,BIRTH_DAY,GENDER) VALUES (@USERNAME, @PASSW,@NAME_SURNAME,@E_MAIL,@BIRTH_DAY,@GENDER)";
+                        SqlCommand command = new SqlCommand(insertQuery, connection);
+                        command.Parameters.AddWithValue("@USERNAME", UserNametxt.Text);
+                        command.Parameters.AddWithValue("@PASSW", hashedPassword);
+                        command.Parameters.AddWithValue("@NAME_SURNAME", fullNametxt.Text);
+                        command.Parameters.AddWithValue("@E_MAIL", EmailRegistertxt.Text);
+                        command.Parameters.AddWithValue("@BIRTH_DAY", DateTimePickertxt.Value);
+                        command.Parameters.AddWithValue("@GENDER", 'M');
+                        command.ExecuteNonQuery();
+                        MessageBox.Show("KAYIT BAŞARILI");
+                    }
+                   
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Hata: " + ex.Message);
+                }
+                finally
+                {
+                    connection?.Close();
+
+                }
+                #endregion
+            }
+        }
+        private bool RegisterErrorCheck()
         {
             #region ErrorCheck
+
+
             //  Kullanıcı adı için TextBox'ın boş olup olmadığını kontrol etme
             if (string.IsNullOrEmpty(UserNametxt.Text))
             {
@@ -104,38 +157,23 @@ namespace DonemProje
                 Password2Err.Clear();
             }
 
-            // cinsiyet seçimi için kontrol
-            if (maleRadiobutton.Checked == false && femaleRadiobutton.Checked == false)
-            {
-                GenderErr.SetError(femaleRadiobutton, "Bu alan boş olamaz");
-            }
-            else
-            {
-                GenderErr.Clear();
-            }
-
-            if (VerfCodeCheck.Visible == false)
-            {
-                ApprovErr.SetError(maskedTextBox1, "E-postanın doğrulanmış olması gerek");
-
-            }
 
             if (UserNameErr.HasErrors || fullNameErr.HasErrors || EmailRegisterErr.HasErrors || Password1Err.HasErrors || Password2Err.HasErrors || GenderErr.HasErrors || ApprovErr.HasErrors)
             {
 
-                return;
+                return false;
             }
             // şifrelerin aynı olup olmadığını kontrol etme
             if (Password1textbox.Text != Password2textbox.Text)
             {
                 MessageBox.Show("Girilen Şifrelerin Aynı olması lazım");
-                return;
+                return false;
             }
             DateTime birthDate = DateTimePickertxt.Value;
             if (DateTimePickertxt.Value > DateTime.Now)
             {
                 MessageBox.Show("Lütfen geçerli bir tarih giriniz");
-                return;
+                return false;
             }
             // Bugünün tarihini alma
             DateTime todayDate = DateTime.Today;
@@ -156,45 +194,65 @@ namespace DonemProje
             if (age < 18)
             {
                 MessageBox.Show("Yaşın henüz " + age + " bu uygulamayı kullanmak için yeterince büyük değilsin.\n" + (18 - age) + " yıl sonra tekrar bekleriz :)");
-                return;
+                return false;
+
             }
+
             #endregion
-            DatabaseContext db = new DatabaseContext();
+            SqlConnection connection = new SqlConnection(connectionString);
+            string checkQuery = "SELECT COUNT(*) FROM users_table WHERE USERNAME = @USERNAME";
+            SqlCommand checkCommand = new SqlCommand(checkQuery, connection);
+            checkCommand.Parameters.AddWithValue("@USERNAME", UserNametxt.Text);
+            connection.Open();
+            int count = Convert.ToInt32(checkCommand.ExecuteScalar());
 
-
-            bool gender = femaleRadiobutton.Checked == true ? true : false;
-            Users users = new Users();
-            users.Username = UserNametxt.Text;
-            users.FullName = fullNametxt.Text;
-            users.Email = EmailRegistertxt.Text.ToLower();
-            users.Password = Password1textbox.Text;
-            users.DateOfBirth = birthDate;
-            users.Gender = gender;  // erkekler için 0 kadınları için 1 değeri verir
-            db.Add(users);
-            db.SaveChanges();
-
-
-
-
-
-
-            LoginPage loginPage = new LoginPage();
-            loginPage.Show();
-            this.Close();
-
-
+            if (count > 0)
+            {
+                UserNameErr.SetError(UserNametxt, "Bu kullanıcı adı zaten kullanılıyor. Lütfen başka bir kullanıcı adı giriniz.");
+                connection.Close();
+                return false;
+                
+            }
+            connection.Close();
+            return true;
+          
         }
+        private void RegisterRegisterpageTxt_Click(object sender, EventArgs e)
+        {
 
+            if (RegisterErrorCheck())
+            {
+                try
+                {
+                    RegisterAcceptanceOfValuen();
+                    LoginPage loginPage = new LoginPage();
+                    loginPage.Show();
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+
+                    MessageBox.Show("Bir hata ile karşılaşıldı" + ex.ToString());
+                    return;
+                }
+            }
+            else
+            {
+               return;
+            }
+
+        } 
+        
         private void verificationCodeSendertxt_Click(object sender, EventArgs e)
         {
 
             verificationCode = VerifCodeCreater();
 
             // Gönderen ve alıcı e-posta adreslerini ve şifreyi girin.
-            string gonderen = "//your e-mail";
-            string sifre = "//your e-email's app password";
+            string gonderen = "celikburak4999@gmail.com";
+            string sifre = "fncm ofpw nhjq yrei";
             string alici = EmailRegistertxt.Text;
-            if (alici == null)
+            if (string.IsNullOrEmpty( alici))
             {
                 MessageBox.Show("Lütfen geçerli bir e-posta giriniz");
                 return;
@@ -219,7 +277,7 @@ namespace DonemProje
             }
             catch (Exception)
             {
-                MessageBox.Show("Girdiğiniz e-posta adresinizi konrol ediniz.");
+                MessageBox.Show("Girdiğiniz e-posta adresi eksik veya hatalı lütfen konrol ediniz.");
                 return;
             }
 
@@ -246,7 +304,7 @@ namespace DonemProje
 
         private void approveTheCodebutton_Click(object sender, EventArgs e)
         {
-            if (maskedTextBox1.Text == verificationCode)
+            if (maskedTextBox1.Text == verificationCode && !string.IsNullOrEmpty( maskedTextBox1.Text))
             {
                 VerfCodeCheck.Visible = true;
                 MessageBox.Show("E-posta doğrulama başarılı!");
@@ -267,10 +325,7 @@ namespace DonemProje
         private void PasswordShowButton_Click(object sender, EventArgs e)
         {
 
-<<<<<<< Updated upstream
-=======
-        
->>>>>>> Stashed changes
+
             Password1textbox.PasswordChar = Password1textbox.PasswordChar == '●' ? '\0' : '●';
             PasswordShowButton.Image = Password1textbox.PasswordChar == '●' ? Properties.Resources.gozKapali : Properties.Resources.gozAcik;
 

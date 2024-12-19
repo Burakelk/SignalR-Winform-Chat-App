@@ -28,32 +28,82 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            findNewUserLabel = new Label();
+            findFriendTextBox = new Guna.UI2.WinForms.Guna2TextBox();
+            findFriendsButton = new Guna.UI2.WinForms.Guna2Button();
             SuspendLayout();
             // 
-            // label1
+            // findNewUserLabel
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Login", 71.99999F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(3, 9);
-            label1.Name = "label1";
-            label1.Size = new Size(729, 74);
-            label1.TabIndex = 2;
-            label1.Text = "yeni kisi bul";
+            findNewUserLabel.AutoSize = true;
+            findNewUserLabel.Font = new Font("Microsoft Sans Serif", 71.99999F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            findNewUserLabel.Location = new Point(125, 19);
+            findNewUserLabel.Name = "findNewUserLabel";
+            findNewUserLabel.Size = new Size(724, 135);
+            findNewUserLabel.TabIndex = 2;
+            findNewUserLabel.Text = "Find Friends";
+            // 
+            // findFriendTextBox
+            // 
+            findFriendTextBox.CustomizableEdges = customizableEdges1;
+            findFriendTextBox.DefaultText = "";
+            findFriendTextBox.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            findFriendTextBox.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            findFriendTextBox.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            findFriendTextBox.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            findFriendTextBox.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            findFriendTextBox.Font = new Font("Segoe UI", 9F);
+            findFriendTextBox.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            findFriendTextBox.Location = new Point(285, 218);
+            findFriendTextBox.Margin = new Padding(3, 4, 3, 4);
+            findFriendTextBox.Name = "findFriendTextBox";
+            findFriendTextBox.PasswordChar = '\0';
+            findFriendTextBox.PlaceholderText = "";
+            findFriendTextBox.SelectedText = "";
+            findFriendTextBox.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            findFriendTextBox.Size = new Size(387, 78);
+            findFriendTextBox.TabIndex = 3;
+            // 
+            // findFriendsButton
+            // 
+            findFriendsButton.CustomizableEdges = customizableEdges3;
+            findFriendsButton.DisabledState.BorderColor = Color.DarkGray;
+            findFriendsButton.DisabledState.CustomBorderColor = Color.DarkGray;
+            findFriendsButton.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            findFriendsButton.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            findFriendsButton.Font = new Font("Segoe UI", 9F);
+            findFriendsButton.ForeColor = Color.White;
+            findFriendsButton.Location = new Point(368, 339);
+            findFriendsButton.Name = "findFriendsButton";
+            findFriendsButton.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            findFriendsButton.Size = new Size(225, 56);
+            findFriendsButton.TabIndex = 4;
+            findFriendsButton.Text = "Send Request";
+            findFriendsButton.Click += findFriendsButton_Click;
             // 
             // FindNewUserControl
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(label1);
+            Controls.Add(findFriendsButton);
+            Controls.Add(findFriendTextBox);
+            Controls.Add(findNewUserLabel);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "FindNewUserControl";
-            Size = new Size(879, 650);
+            Size = new Size(1005, 867);
+            Load += FindNewUserControl_Load;
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private Label label1;
+        private Label findNewUserLabel;
+        private Guna.UI2.WinForms.Guna2TextBox findFriendTextBox;
+        private Guna.UI2.WinForms.Guna2Button findFriendsButton;
     }
 }

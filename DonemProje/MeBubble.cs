@@ -1,5 +1,4 @@
-﻿using Guna.UI2.WinForms;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,17 +10,11 @@ using System.Windows.Forms;
 
 namespace DonemProje
 {
-    public partial class ProfileUserControl : UserControl
+    public partial class MeBubble : UserControl
     {
-        public ProfileUserControl()
+        public MeBubble()
         {
             InitializeComponent();
-        }
-
-        private void guna2Button1_Click(object sender, EventArgs e)
-        {
-            
-           
         }
     }
 }

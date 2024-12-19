@@ -72,10 +72,11 @@
             guna2Transition1.SetDecoration(guna2ControlBox1, Guna.UI2.AnimatorNS.DecorationType.None);
             guna2ControlBox1.FillColor = Color.Black;
             guna2ControlBox1.IconColor = Color.White;
-            guna2ControlBox1.Location = new Point(1046, 0);
+            guna2ControlBox1.Location = new Point(1308, 0);
+            guna2ControlBox1.Margin = new Padding(4, 4, 4, 4);
             guna2ControlBox1.Name = "guna2ControlBox1";
             guna2ControlBox1.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            guna2ControlBox1.Size = new Size(45, 29);
+            guna2ControlBox1.Size = new Size(56, 36);
             guna2ControlBox1.TabIndex = 0;
             // 
             // guna2ControlBox3
@@ -88,10 +89,11 @@
             guna2ControlBox3.FillColor = Color.Black;
             guna2ControlBox3.ForeColor = Color.Transparent;
             guna2ControlBox3.IconColor = Color.White;
-            guna2ControlBox3.Location = new Point(995, 0);
+            guna2ControlBox3.Location = new Point(1244, 0);
+            guna2ControlBox3.Margin = new Padding(4, 4, 4, 4);
             guna2ControlBox3.Name = "guna2ControlBox3";
             guna2ControlBox3.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            guna2ControlBox3.Size = new Size(45, 29);
+            guna2ControlBox3.Size = new Size(56, 36);
             guna2ControlBox3.TabIndex = 3;
             // 
             // guna2DragControl1
@@ -128,9 +130,10 @@
             pictureBox1.BackgroundImage = Properties.Resources.login_font_6_big;
             pictureBox1.BackgroundImageLayout = ImageLayout.Stretch;
             guna2Transition1.SetDecoration(pictureBox1, Guna.UI2.AnimatorNS.DecorationType.None);
-            pictureBox1.Location = new Point(121, 105);
+            pictureBox1.Location = new Point(151, 131);
+            pictureBox1.Margin = new Padding(4, 4, 4, 4);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(367, 139);
+            pictureBox1.Size = new Size(459, 174);
             pictureBox1.TabIndex = 18;
             pictureBox1.TabStop = false;
             // 
@@ -146,10 +149,11 @@
             LoginButton.FillColor = Color.Black;
             LoginButton.Font = new Font("Segoe UI", 9F);
             LoginButton.ForeColor = Color.White;
-            LoginButton.Location = new Point(315, 393);
+            LoginButton.Location = new Point(394, 491);
+            LoginButton.Margin = new Padding(4, 4, 4, 4);
             LoginButton.Name = "LoginButton";
             LoginButton.ShadowDecoration.CustomizableEdges = customizableEdges15;
-            LoginButton.Size = new Size(72, 21);
+            LoginButton.Size = new Size(90, 26);
             LoginButton.TabIndex = 20;
             LoginButton.Text = "Giriş";
             LoginButton.Click += LoginButton_Click;
@@ -166,10 +170,11 @@
             RegisterLoginPageButton.FillColor = Color.Black;
             RegisterLoginPageButton.Font = new Font("Segoe UI", 9F);
             RegisterLoginPageButton.ForeColor = Color.White;
-            RegisterLoginPageButton.Location = new Point(174, 393);
+            RegisterLoginPageButton.Location = new Point(218, 491);
+            RegisterLoginPageButton.Margin = new Padding(4, 4, 4, 4);
             RegisterLoginPageButton.Name = "RegisterLoginPageButton";
             RegisterLoginPageButton.ShadowDecoration.CustomizableEdges = customizableEdges13;
-            RegisterLoginPageButton.Size = new Size(72, 21);
+            RegisterLoginPageButton.Size = new Size(90, 26);
             RegisterLoginPageButton.TabIndex = 28;
             RegisterLoginPageButton.Text = "Kaydol";
             RegisterLoginPageButton.Click += RegisterLoginPageButton_Click;
@@ -186,10 +191,11 @@
             ForgetPasswordButton.FillColor = Color.White;
             ForgetPasswordButton.Font = new Font("Segoe UI", 9F);
             ForgetPasswordButton.ForeColor = Color.Black;
-            ForgetPasswordButton.Location = new Point(161, 420);
+            ForgetPasswordButton.Location = new Point(201, 525);
+            ForgetPasswordButton.Margin = new Padding(4, 4, 4, 4);
             ForgetPasswordButton.Name = "ForgetPasswordButton";
             ForgetPasswordButton.ShadowDecoration.CustomizableEdges = customizableEdges11;
-            ForgetPasswordButton.Size = new Size(114, 21);
+            ForgetPasswordButton.Size = new Size(142, 26);
             ForgetPasswordButton.TabIndex = 29;
             ForgetPasswordButton.Text = "Şifremi unuttum";
             // 
@@ -209,14 +215,15 @@
             EmailLogintxt.Font = new Font("Segoe UI", 9F);
             EmailLogintxt.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
             EmailLogintxt.IconLeft = Properties.Resources.at_icon_128250;
-            EmailLogintxt.Location = new Point(174, 268);
+            EmailLogintxt.Location = new Point(218, 335);
+            EmailLogintxt.Margin = new Padding(4, 5, 4, 5);
             EmailLogintxt.Name = "EmailLogintxt";
             EmailLogintxt.PasswordChar = '\0';
             EmailLogintxt.PlaceholderForeColor = Color.Gray;
             EmailLogintxt.PlaceholderText = "E-posta";
             EmailLogintxt.SelectedText = "";
             EmailLogintxt.ShadowDecoration.CustomizableEdges = customizableEdges9;
-            EmailLogintxt.Size = new Size(213, 38);
+            EmailLogintxt.Size = new Size(266, 48);
             EmailLogintxt.TabIndex = 36;
             EmailLogintxt.TextOffset = new Point(0, 2);
             // 
@@ -234,14 +241,15 @@
             PasswordLogintextbox.Font = new Font("Segoe UI", 9F);
             PasswordLogintextbox.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
             PasswordLogintextbox.IconLeft = Properties.Resources.png_clipart_password_computer_icons_security_safety_icon_safety_icon_child_safety_lock_thumbnail;
-            PasswordLogintextbox.Location = new Point(174, 327);
+            PasswordLogintextbox.Location = new Point(218, 409);
+            PasswordLogintextbox.Margin = new Padding(4, 5, 4, 5);
             PasswordLogintextbox.Name = "PasswordLogintextbox";
             PasswordLogintextbox.PasswordChar = '●';
             PasswordLogintextbox.PlaceholderForeColor = Color.Gray;
             PasswordLogintextbox.PlaceholderText = "Şifre";
             PasswordLogintextbox.SelectedText = "";
             PasswordLogintextbox.ShadowDecoration.CustomizableEdges = customizableEdges7;
-            PasswordLogintextbox.Size = new Size(213, 38);
+            PasswordLogintextbox.Size = new Size(266, 48);
             PasswordLogintextbox.TabIndex = 37;
             // 
             // PasswordShowButton
@@ -254,11 +262,12 @@
             PasswordShowButton.ImageOffset = new Point(0, 0);
             PasswordShowButton.ImageRotate = 0F;
             PasswordShowButton.ImageSize = new Size(30, 30);
-            PasswordShowButton.Location = new Point(393, 336);
+            PasswordShowButton.Location = new Point(491, 420);
+            PasswordShowButton.Margin = new Padding(4, 4, 4, 4);
             PasswordShowButton.Name = "PasswordShowButton";
             PasswordShowButton.PressedState.ImageSize = new Size(64, 64);
             PasswordShowButton.ShadowDecoration.CustomizableEdges = customizableEdges5;
-            PasswordShowButton.Size = new Size(20, 19);
+            PasswordShowButton.Size = new Size(25, 24);
             PasswordShowButton.TabIndex = 38;
             PasswordShowButton.Click += PasswordShowButton_Click;
             // 
@@ -276,10 +285,10 @@
             // 
             // LoginPage
             // 
-            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleDimensions = new SizeF(120F, 120F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.White;
-            ClientSize = new Size(1089, 592);
+            ClientSize = new Size(1361, 740);
             Controls.Add(PasswordShowButton);
             Controls.Add(PasswordLogintextbox);
             Controls.Add(EmailLogintxt);
@@ -292,8 +301,9 @@
             guna2Transition1.SetDecoration(this, Guna.UI2.AnimatorNS.DecorationType.None);
             ForeColor = Color.Transparent;
             FormBorderStyle = FormBorderStyle.None;
-            MaximumSize = new Size(1089, 592);
-            MinimumSize = new Size(1089, 592);
+            Margin = new Padding(4, 4, 4, 4);
+            MaximumSize = new Size(1361, 740);
+            MinimumSize = new Size(1361, 740);
             Name = "LoginPage";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "LoginPage";
