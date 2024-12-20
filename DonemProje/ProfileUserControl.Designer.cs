@@ -38,10 +38,10 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Login", 71.99999F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(0, 10);
+            label1.Font = new Font("Microsoft Sans Serif", 71.99999F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.Location = new Point(189, 24);
             label1.Name = "label1";
-            label1.Size = new Size(392, 74);
+            label1.Size = new Size(331, 135);
             label1.TabIndex = 3;
             label1.Text = "Profil";
             // 
@@ -54,10 +54,11 @@
             guna2Button1.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
             guna2Button1.Font = new Font("Segoe UI", 9F);
             guna2Button1.ForeColor = Color.White;
-            guna2Button1.Location = new Point(0, 179);
+            guna2Button1.Location = new Point(283, 187);
+            guna2Button1.Margin = new Padding(3, 4, 3, 4);
             guna2Button1.Name = "guna2Button1";
             guna2Button1.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            guna2Button1.Size = new Size(180, 45);
+            guna2Button1.Size = new Size(206, 60);
             guna2Button1.TabIndex = 4;
             guna2Button1.Text = "guna2Button1";
             guna2Button1.Click += guna2Button1_Click;
@@ -68,12 +69,13 @@
             // 
             // ProfileUserControl
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(guna2Button1);
             Controls.Add(label1);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "ProfileUserControl";
-            Size = new Size(879, 650);
+            Size = new Size(743, 730);
             ResumeLayout(false);
             PerformLayout();
         }

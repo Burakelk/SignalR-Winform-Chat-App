@@ -41,7 +41,7 @@
             // 
             findNewUserLabel.AutoSize = true;
             findNewUserLabel.Font = new Font("Microsoft Sans Serif", 71.99999F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            findNewUserLabel.Location = new Point(125, 19);
+            findNewUserLabel.Location = new Point(3, 17);
             findNewUserLabel.Name = "findNewUserLabel";
             findNewUserLabel.Size = new Size(724, 135);
             findNewUserLabel.TabIndex = 2;
@@ -58,7 +58,7 @@
             findFriendTextBox.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             findFriendTextBox.Font = new Font("Segoe UI", 9F);
             findFriendTextBox.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            findFriendTextBox.Location = new Point(285, 218);
+            findFriendTextBox.Location = new Point(182, 219);
             findFriendTextBox.Margin = new Padding(3, 4, 3, 4);
             findFriendTextBox.Name = "findFriendTextBox";
             findFriendTextBox.PasswordChar = '\0';
@@ -77,7 +77,7 @@
             findFriendsButton.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
             findFriendsButton.Font = new Font("Segoe UI", 9F);
             findFriendsButton.ForeColor = Color.White;
-            findFriendsButton.Location = new Point(368, 339);
+            findFriendsButton.Location = new Point(258, 348);
             findFriendsButton.Name = "findFriendsButton";
             findFriendsButton.ShadowDecoration.CustomizableEdges = customizableEdges4;
             findFriendsButton.Size = new Size(225, 56);
@@ -94,7 +94,7 @@
             Controls.Add(findNewUserLabel);
             Margin = new Padding(3, 4, 3, 4);
             Name = "FindNewUserControl";
-            Size = new Size(1005, 867);
+            Size = new Size(743, 730);
             Load += FindNewUserControl_Load;
             ResumeLayout(false);
             PerformLayout();

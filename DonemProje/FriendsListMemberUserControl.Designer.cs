@@ -65,19 +65,20 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.DarkSalmon;
+            BorderStyle = BorderStyle.Fixed3D;
             Controls.Add(dateTimeLastMessageFriendListMemberLabel);
             Controls.Add(LastMessageFriendListMemberLabel);
             Controls.Add(usernameFriendLabel);
             Name = "FriendsListMemberUserControl";
-            Size = new Size(335, 100);
+            Size = new Size(331, 96);
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private Label usernameFriendLabel;
-        private Label LastMessageFriendListMemberLabel;
-        private Label dateTimeLastMessageFriendListMemberLabel;
+        public Label usernameFriendLabel;
+        public Label LastMessageFriendListMemberLabel;
+        public Label dateTimeLastMessageFriendListMemberLabel;
     }
 }

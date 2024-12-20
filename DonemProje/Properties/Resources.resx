@@ -133,8 +133,8 @@
   <data name="pexels-photo-176851" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pexels-photo-176851.jpeg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="istockphoto-1294603953-612x612" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\istockphoto-1294603953-612x612.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="send.1024x931" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\send.1024x931.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Character with phone in cafe" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Character with phone in cafe.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -154,14 +154,17 @@
   <data name="Ekran görüntüsü 2024-02-06 205958" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Ekran görüntüsü 2024-02-06 205958.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="koyu-siyah-arka-plan-dokusu_297412-original" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\koyu-siyah-arka-plan-dokusu_297412-original.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="arrowback21" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\arrowback21.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="a9dc83070c03716bf41a2b5bfcecc44e" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\a9dc83070c03716bf41a2b5bfcecc44e1.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="koyu-siyah-arka-plan-dokusu_297412-original" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\koyu-siyah-arka-plan-dokusu_297412-original.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="istockphoto-1294603953-612x612" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\istockphoto-1294603953-612x612.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="png-clipart-password-computer-icons-security-safety-icon-safety-icon-child-safety-lock-thumbnail" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\png-clipart-password-computer-icons-security-safety-icon-safety-icon-child-safety-lock-thumbnail1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -172,7 +175,7 @@
   <data name="desktop-wallpaper-30-cool-plain-backgrounds-plain-but-nice-backgrounds" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\desktop-wallpaper-30-cool-plain-backgrounds-plain-but-nice-backgrounds.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="send.1024x931" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\send.1024x931.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="share-video" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\share-video.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

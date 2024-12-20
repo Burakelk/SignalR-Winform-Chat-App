@@ -28,18 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
+            MessageLabel = new Label();
             SuspendLayout();
             // 
-            // label1
+            // MessageLabel
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(246, 16);
-            label1.Name = "label1";
-            label1.Size = new Size(67, 20);
-            label1.TabIndex = 0;
-            label1.Text = "Message";
-            label1.TextAlign = ContentAlignment.MiddleRight;
+            MessageLabel.AutoSize = true;
+            MessageLabel.Location = new Point(3, 19);
+            MessageLabel.Name = "MessageLabel";
+            MessageLabel.Size = new Size(67, 20);
+            MessageLabel.TabIndex = 0;
+            MessageLabel.Text = "Message";
+            MessageLabel.TextAlign = ContentAlignment.MiddleRight;
             // 
             // MeBubble
             // 
@@ -47,7 +47,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Aquamarine;
             BorderStyle = BorderStyle.FixedSingle;
-            Controls.Add(label1);
+            Controls.Add(MessageLabel);
             ForeColor = SystemColors.ActiveCaptionText;
             Name = "MeBubble";
             Size = new Size(326, 58);
@@ -57,6 +57,6 @@
 
         #endregion
 
-        public Label label1;
+        public Label MessageLabel;
     }
 }

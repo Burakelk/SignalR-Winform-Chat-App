@@ -28,25 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
+            MessageLabel = new Label();
             SuspendLayout();
             // 
-            // label1
+            // MessageLabel
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(14, 18);
-            label1.Name = "label1";
-            label1.Size = new Size(67, 20);
-            label1.TabIndex = 1;
-            label1.Text = "Message";
-            label1.TextAlign = ContentAlignment.MiddleRight;
+            MessageLabel.AutoSize = true;
+            MessageLabel.Location = new Point(14, 18);
+            MessageLabel.Name = "MessageLabel";
+            MessageLabel.Size = new Size(67, 20);
+            MessageLabel.TabIndex = 1;
+            MessageLabel.Text = "Message";
+            MessageLabel.TextAlign = ContentAlignment.MiddleRight;
             // 
             // YouBubble
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Red;
-            Controls.Add(label1);
+            Controls.Add(MessageLabel);
             Name = "YouBubble";
             Size = new Size(326, 58);
             ResumeLayout(false);
@@ -55,6 +55,6 @@
 
         #endregion
 
-        public Label label1;
+        public Label MessageLabel;
     }
 }

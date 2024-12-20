@@ -29,13 +29,17 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(components);
             guna2ControlBox3 = new Guna.UI2.WinForms.Guna2ControlBox();
             guna2ControlBox1 = new Guna.UI2.WinForms.Guna2ControlBox();
@@ -46,11 +50,19 @@
             ProfileButton = new Button();
             UserNameMainPageLabel = new Label();
             ProfilePictureBoxMainPage = new Guna.UI2.WinForms.Guna2CirclePictureBox();
-            chatUserControl1 = new ChatUserControl();
-            findNewUserControl1 = new FindNewUserControl();
-            profileUserControl1 = new ProfileUserControl();
+            FriendListPanelMainPage = new Panel();
+            MainPanelMainPage = new Panel();
+            MainTextboxPanel = new Panel();
+            textboxChat = new Guna.UI2.WinForms.Guna2TextBox();
+            MainSendButtonPanel = new Panel();
+            sendButtonChat = new Guna.UI2.WinForms.Guna2ImageButton();
+            MainSendFilePanel = new Panel();
+            sendFileButtonChat = new Guna.UI2.WinForms.Guna2ImageButton();
             guna2GroupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ProfilePictureBoxMainPage).BeginInit();
+            MainTextboxPanel.SuspendLayout();
+            MainSendButtonPanel.SuspendLayout();
+            MainSendFilePanel.SuspendLayout();
             SuspendLayout();
             // 
             // guna2BorderlessForm1
@@ -64,14 +76,14 @@
             guna2ControlBox3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             guna2ControlBox3.BackgroundImageLayout = ImageLayout.Center;
             guna2ControlBox3.ControlBoxType = Guna.UI2.WinForms.Enums.ControlBoxType.MinimizeBox;
-            guna2ControlBox3.CustomizableEdges = customizableEdges8;
+            guna2ControlBox3.CustomizableEdges = customizableEdges5;
             guna2ControlBox3.FillColor = Color.Black;
             guna2ControlBox3.ForeColor = Color.Transparent;
             guna2ControlBox3.IconColor = Color.White;
             guna2ControlBox3.Location = new Point(1076, -1);
             guna2ControlBox3.Margin = new Padding(3, 4, 3, 4);
             guna2ControlBox3.Name = "guna2ControlBox3";
-            guna2ControlBox3.ShadowDecoration.CustomizableEdges = customizableEdges9;
+            guna2ControlBox3.ShadowDecoration.CustomizableEdges = customizableEdges6;
             guna2ControlBox3.Size = new Size(51, 39);
             guna2ControlBox3.TabIndex = 6;
             // 
@@ -79,13 +91,13 @@
             // 
             guna2ControlBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             guna2ControlBox1.ControlBoxStyle = Guna.UI2.WinForms.Enums.ControlBoxStyle.Custom;
-            guna2ControlBox1.CustomizableEdges = customizableEdges10;
+            guna2ControlBox1.CustomizableEdges = customizableEdges7;
             guna2ControlBox1.FillColor = Color.Black;
             guna2ControlBox1.IconColor = Color.White;
             guna2ControlBox1.Location = new Point(1133, -1);
             guna2ControlBox1.Margin = new Padding(3, 4, 3, 4);
             guna2ControlBox1.Name = "guna2ControlBox1";
-            guna2ControlBox1.ShadowDecoration.CustomizableEdges = customizableEdges11;
+            guna2ControlBox1.ShadowDecoration.CustomizableEdges = customizableEdges8;
             guna2ControlBox1.Size = new Size(51, 39);
             guna2ControlBox1.TabIndex = 4;
             // 
@@ -100,14 +112,14 @@
             guna2GroupBox1.Controls.Add(UserNameMainPageLabel);
             guna2GroupBox1.Controls.Add(ProfilePictureBoxMainPage);
             guna2GroupBox1.CustomBorderColor = Color.White;
-            guna2GroupBox1.CustomizableEdges = customizableEdges13;
+            guna2GroupBox1.CustomizableEdges = customizableEdges10;
             guna2GroupBox1.Dock = DockStyle.Left;
             guna2GroupBox1.Font = new Font("Segoe UI", 9F);
             guna2GroupBox1.ForeColor = Color.White;
             guna2GroupBox1.Location = new Point(0, 0);
             guna2GroupBox1.Margin = new Padding(3, 4, 3, 4);
             guna2GroupBox1.Name = "guna2GroupBox1";
-            guna2GroupBox1.ShadowDecoration.CustomizableEdges = customizableEdges14;
+            guna2GroupBox1.ShadowDecoration.CustomizableEdges = customizableEdges11;
             guna2GroupBox1.Size = new Size(179, 901);
             guna2GroupBox1.TabIndex = 7;
             guna2GroupBox1.TabStop = false;
@@ -184,37 +196,105 @@
             ProfilePictureBoxMainPage.Location = new Point(0, -1);
             ProfilePictureBoxMainPage.Margin = new Padding(3, 4, 3, 4);
             ProfilePictureBoxMainPage.Name = "ProfilePictureBoxMainPage";
-            ProfilePictureBoxMainPage.ShadowDecoration.CustomizableEdges = customizableEdges12;
+            ProfilePictureBoxMainPage.ShadowDecoration.CustomizableEdges = customizableEdges9;
             ProfilePictureBoxMainPage.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
             ProfilePictureBoxMainPage.Size = new Size(179, 193);
             ProfilePictureBoxMainPage.TabIndex = 14;
             ProfilePictureBoxMainPage.TabStop = false;
             ProfilePictureBoxMainPage.Click += guna2CirclePictureBox1_Click;
             // 
-            // chatUserControl1
+            // FriendListPanelMainPage
             // 
-            chatUserControl1.Location = new Point(179, 35);
-            chatUserControl1.Margin = new Padding(3, 5, 3, 5);
-            chatUserControl1.Name = "chatUserControl1";
-            chatUserControl1.Size = new Size(1005, 867);
-            chatUserControl1.TabIndex = 8;
+            FriendListPanelMainPage.BackColor = Color.DarkSlateGray;
+            FriendListPanelMainPage.Location = new Point(185, 0);
+            FriendListPanelMainPage.Name = "FriendListPanelMainPage";
+            FriendListPanelMainPage.Size = new Size(250, 901);
+            FriendListPanelMainPage.TabIndex = 8;
             // 
-            // findNewUserControl1
+            // MainPanelMainPage
             // 
-            findNewUserControl1.Location = new Point(179, 35);
-            findNewUserControl1.Margin = new Padding(3, 5, 3, 5);
-            findNewUserControl1.Name = "findNewUserControl1";
-            findNewUserControl1.Size = new Size(1005, 863);
-            findNewUserControl1.TabIndex = 9;
-            findNewUserControl1.Load += findNewUserControl1_Load;
+            MainPanelMainPage.Location = new Point(441, 45);
+            MainPanelMainPage.Name = "MainPanelMainPage";
+            MainPanelMainPage.Size = new Size(743, 730);
+            MainPanelMainPage.TabIndex = 9;
             // 
-            // profileUserControl1
+            // MainTextboxPanel
             // 
-            profileUserControl1.Location = new Point(179, 35);
-            profileUserControl1.Margin = new Padding(3, 5, 3, 5);
-            profileUserControl1.Name = "profileUserControl1";
-            profileUserControl1.Size = new Size(1005, 867);
-            profileUserControl1.TabIndex = 19;
+            MainTextboxPanel.Controls.Add(textboxChat);
+            MainTextboxPanel.Location = new Point(441, 781);
+            MainTextboxPanel.Name = "MainTextboxPanel";
+            MainTextboxPanel.Size = new Size(539, 108);
+            MainTextboxPanel.TabIndex = 12;
+            // 
+            // textboxChat
+            // 
+            textboxChat.CustomizableEdges = customizableEdges3;
+            textboxChat.DefaultText = "";
+            textboxChat.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            textboxChat.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            textboxChat.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            textboxChat.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            textboxChat.Dock = DockStyle.Fill;
+            textboxChat.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            textboxChat.Font = new Font("Segoe UI", 9F);
+            textboxChat.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            textboxChat.Location = new Point(0, 0);
+            textboxChat.Margin = new Padding(3, 4, 3, 4);
+            textboxChat.Name = "textboxChat";
+            textboxChat.PasswordChar = '\0';
+            textboxChat.PlaceholderText = "";
+            textboxChat.SelectedText = "";
+            textboxChat.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            textboxChat.Size = new Size(539, 108);
+            textboxChat.TabIndex = 0;
+            // 
+            // MainSendButtonPanel
+            // 
+            MainSendButtonPanel.Controls.Add(sendButtonChat);
+            MainSendButtonPanel.Location = new Point(986, 781);
+            MainSendButtonPanel.Name = "MainSendButtonPanel";
+            MainSendButtonPanel.Size = new Size(87, 108);
+            MainSendButtonPanel.TabIndex = 13;
+            // 
+            // sendButtonChat
+            // 
+            sendButtonChat.CheckedState.ImageSize = new Size(64, 64);
+            sendButtonChat.Dock = DockStyle.Fill;
+            sendButtonChat.HoverState.ImageSize = new Size(64, 64);
+            sendButtonChat.Image = Properties.Resources.send_1024x931;
+            sendButtonChat.ImageOffset = new Point(0, 0);
+            sendButtonChat.ImageRotate = 0F;
+            sendButtonChat.Location = new Point(0, 0);
+            sendButtonChat.Name = "sendButtonChat";
+            sendButtonChat.PressedState.ImageSize = new Size(64, 64);
+            sendButtonChat.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            sendButtonChat.Size = new Size(87, 108);
+            sendButtonChat.TabIndex = 0;
+            sendButtonChat.Click += sendButtonChat_Click;
+            // 
+            // MainSendFilePanel
+            // 
+            MainSendFilePanel.Controls.Add(sendFileButtonChat);
+            MainSendFilePanel.Location = new Point(1079, 782);
+            MainSendFilePanel.Name = "MainSendFilePanel";
+            MainSendFilePanel.Size = new Size(87, 108);
+            MainSendFilePanel.TabIndex = 12;
+            MainSendFilePanel.Paint += panel3_Paint;
+            // 
+            // sendFileButtonChat
+            // 
+            sendFileButtonChat.CheckedState.ImageSize = new Size(64, 64);
+            sendFileButtonChat.Dock = DockStyle.Fill;
+            sendFileButtonChat.HoverState.ImageSize = new Size(64, 64);
+            sendFileButtonChat.Image = Properties.Resources.share_video;
+            sendFileButtonChat.ImageOffset = new Point(0, 0);
+            sendFileButtonChat.ImageRotate = 0F;
+            sendFileButtonChat.Location = new Point(0, 0);
+            sendFileButtonChat.Name = "sendFileButtonChat";
+            sendFileButtonChat.PressedState.ImageSize = new Size(64, 64);
+            sendFileButtonChat.ShadowDecoration.CustomizableEdges = customizableEdges1;
+            sendFileButtonChat.Size = new Size(87, 108);
+            sendFileButtonChat.TabIndex = 0;
             // 
             // MainPage
             // 
@@ -223,12 +303,14 @@
             BackColor = Color.BlanchedAlmond;
             ClientSize = new Size(1184, 901);
             ControlBox = false;
-            Controls.Add(findNewUserControl1);
-            Controls.Add(chatUserControl1);
+            Controls.Add(MainSendFilePanel);
+            Controls.Add(MainSendButtonPanel);
+            Controls.Add(MainTextboxPanel);
+            Controls.Add(MainPanelMainPage);
+            Controls.Add(FriendListPanelMainPage);
             Controls.Add(guna2ControlBox3);
             Controls.Add(guna2ControlBox1);
             Controls.Add(guna2GroupBox1);
-            Controls.Add(profileUserControl1);
             FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(3, 4, 3, 4);
             Name = "MainPage";
@@ -237,6 +319,9 @@
             guna2GroupBox1.ResumeLayout(false);
             guna2GroupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)ProfilePictureBoxMainPage).EndInit();
+            MainTextboxPanel.ResumeLayout(false);
+            MainSendButtonPanel.ResumeLayout(false);
+            MainSendFilePanel.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -251,9 +336,16 @@
         private Button FindNewButton;
         private Button LogoutButton;
         private Button ChatButton;
-        private ProfileUserControl profileUserControl1;
-        private FindNewUserControl findNewUserControl1;
-        private ChatUserControl chatUserControl1;
         public Guna.UI2.WinForms.Guna2CirclePictureBox ProfilePictureBoxMainPage;
+        private Panel FriendListPanelMainPage;
+        private Guna.UI2.WinForms.Guna2ImageButton guna2ImageButton1;
+        private Guna.UI2.WinForms.Guna2TextBox ChatTextbox;
+        private Panel MainPanelMainPage;
+        private Panel MainTextboxPanel;
+        private Panel MainSendButtonPanel;
+        private Panel MainSendFilePanel;
+        private Guna.UI2.WinForms.Guna2ImageButton sendFileButtonChat;
+        private Guna.UI2.WinForms.Guna2ImageButton sendButtonChat;
+        private Guna.UI2.WinForms.Guna2TextBox textboxChat;
     }
 }
