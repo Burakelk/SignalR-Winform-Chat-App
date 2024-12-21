@@ -1,12 +1,21 @@
-﻿using Microsoft.AspNet.SignalR;
+﻿
 using Microsoft.Owin.Hosting;
 using Owin;
-using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNet.SignalR;
+using System;
+using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.SignalR.Messaging;
+using System;
+using System.Collections.Concurrent;
+using Microsoft.AspNet.SignalR;
+using System;
+using System.Collections.Concurrent;
 
+using System.Linq;
 
-namespace Server_Chat_App
+using System.Threading.Tasks;
+namespace SignalR_Server
 {
-
     class Program
     {
         private const string Url = "http://localhost:8080";
@@ -17,7 +26,7 @@ namespace Server_Chat_App
             using (WebApp.Start(Url, Configuration))
             {
                 Console.WriteLine($"Server running at {Url}");
-                Console.ReadLine(); 
+                Console.ReadLine(); // Sunucunun açık kalması için
             }
         }
 
@@ -30,4 +39,5 @@ namespace Server_Chat_App
 
         }
     }
+
 }

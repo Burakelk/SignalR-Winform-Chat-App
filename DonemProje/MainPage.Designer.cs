@@ -100,6 +100,7 @@
             guna2ControlBox1.ShadowDecoration.CustomizableEdges = customizableEdges8;
             guna2ControlBox1.Size = new Size(51, 39);
             guna2ControlBox1.TabIndex = 4;
+            guna2ControlBox1.Click += guna2ControlBox1_Click;
             // 
             // guna2GroupBox1
             // 
@@ -215,7 +216,7 @@
             // 
             MainPanelMainPage.Location = new Point(441, 45);
             MainPanelMainPage.Name = "MainPanelMainPage";
-            MainPanelMainPage.Size = new Size(743, 730);
+            MainPanelMainPage.Size = new Size(743, 703);
             MainPanelMainPage.TabIndex = 9;
             // 
             // MainTextboxPanel
@@ -240,6 +241,7 @@
             textboxChat.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
             textboxChat.Location = new Point(0, 0);
             textboxChat.Margin = new Padding(3, 4, 3, 4);
+            textboxChat.Multiline = true;
             textboxChat.Name = "textboxChat";
             textboxChat.PasswordChar = '\0';
             textboxChat.PlaceholderText = "";
@@ -295,6 +297,7 @@
             sendFileButtonChat.ShadowDecoration.CustomizableEdges = customizableEdges1;
             sendFileButtonChat.Size = new Size(87, 108);
             sendFileButtonChat.TabIndex = 0;
+            sendFileButtonChat.Click += sendFileButtonChat_Click;
             // 
             // MainPage
             // 
@@ -315,6 +318,7 @@
             Margin = new Padding(3, 4, 3, 4);
             Name = "MainPage";
             Text = "MainPage";
+            FormClosed += MainPage_FormClosed;
             Load += MainPage_Load;
             guna2GroupBox1.ResumeLayout(false);
             guna2GroupBox1.PerformLayout();

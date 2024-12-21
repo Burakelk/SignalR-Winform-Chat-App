@@ -58,7 +58,7 @@
             ChatScreenPanelChatUserControl.BackColor = Color.IndianRed;
             ChatScreenPanelChatUserControl.Location = new Point(3, 96);
             ChatScreenPanelChatUserControl.Name = "ChatScreenPanelChatUserControl";
-            ChatScreenPanelChatUserControl.Size = new Size(737, 672);
+            ChatScreenPanelChatUserControl.Size = new Size(737, 604);
             ChatScreenPanelChatUserControl.TabIndex = 2;
             // 
             // ChatUserControl
@@ -69,7 +69,7 @@
             Controls.Add(ChatInfoPanelChatUserControl);
             Margin = new Padding(3, 4, 3, 4);
             Name = "ChatUserControl";
-            Size = new Size(743, 730);
+            Size = new Size(743, 703);
             Load += ChatUserControl_Load;
             ChatInfoPanelChatUserControl.ResumeLayout(false);
             ChatInfoPanelChatUserControl.PerformLayout();

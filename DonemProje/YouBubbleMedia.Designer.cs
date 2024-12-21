@@ -1,6 +1,6 @@
 ﻿namespace DonemProje
 {
-    partial class MeBubble
+    partial class YouBubbleMedia
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,36 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
-            MessageLabel = new Label();
+            pictureBoxYouBubble = new PictureBox();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxYouBubble).BeginInit();
             SuspendLayout();
             // 
-            // MessageLabel
+            // pictureBoxYouBubble
             // 
-            MessageLabel.AutoSize = true;
-            MessageLabel.Dock = DockStyle.Right;
-            MessageLabel.Location = new Point(259, 0);
-            MessageLabel.Name = "MessageLabel";
-            MessageLabel.Size = new Size(67, 20);
-            MessageLabel.TabIndex = 0;
-            MessageLabel.Text = "Message";
-            MessageLabel.TextAlign = ContentAlignment.MiddleRight;
+            pictureBoxYouBubble.Dock = DockStyle.Fill;
+            pictureBoxYouBubble.Location = new Point(0, 0);
+            pictureBoxYouBubble.Name = "pictureBoxYouBubble";
+            pictureBoxYouBubble.Size = new Size(150, 150);
+            pictureBoxYouBubble.TabIndex = 0;
+            pictureBoxYouBubble.TabStop = false;
             // 
-            // MeBubble
+            // YouBubbleMedia
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.Aquamarine;
-            BorderStyle = BorderStyle.FixedSingle;
-            Controls.Add(MessageLabel);
-            ForeColor = SystemColors.ActiveCaptionText;
-            Name = "MeBubble";
-            Size = new Size(326, 58);
+            Controls.Add(pictureBoxYouBubble);
+            Name = "YouBubbleMedia";
+            ((System.ComponentModel.ISupportInitialize)pictureBoxYouBubble).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
-        public Label MessageLabel;
+        public PictureBox pictureBoxYouBubble;
     }
 }

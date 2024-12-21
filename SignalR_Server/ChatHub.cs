@@ -1,15 +1,11 @@
 ﻿using Microsoft.AspNet.SignalR;
-using Microsoft.AspNet.SignalR.Messaging;
+using Microsoft.AspNet.SignalR.Infrastructure;
 using System;
 using System.Collections.Concurrent;
-using Microsoft.AspNet.SignalR;
-using System;
-using System.Collections.Concurrent;
-
 using System.Linq;
-
 using System.Threading.Tasks;
-namespace Annesikasar_Server
+
+namespace SignalR_Server
 {
     public class ChatHub : Hub
     {
@@ -18,6 +14,7 @@ namespace Annesikasar_Server
 
         public override Task OnConnected()
         {
+          
             Console.WriteLine($"New connection: {Context.ConnectionId}");
             return base.OnConnected();
         }
@@ -29,7 +26,7 @@ namespace Annesikasar_Server
             if (!string.IsNullOrEmpty(username))
             {
                 Users.TryRemove(username, out _);
-                Console.WriteLine($"{username} disconnected.");
+                Console.WriteLine($"server : {username}  { Context.ConnectionId} disconnected.");
             }
 
             return base.OnDisconnected(stopCalled);
@@ -38,6 +35,12 @@ namespace Annesikasar_Server
         public void RegisterUser(string username)
         {
             // Kullanıcıyı kaydet
+            if (Users.ContainsKey(username) || Users.Values.Contains(Context.ConnectionId))
+            {
+                Console.WriteLine($"Bu kullanıcı zaten var giriş yapılmadı: {username} ({Context.ConnectionId})");
+                SendMessageToUser("server",username, "Bu kullanıcı şuan aktif.");
+                return ;
+            }
             Users[username] = Context.ConnectionId;
             Console.WriteLine($"User registered: {username} ({Context.ConnectionId})");
         }

@@ -1,6 +1,6 @@
 ﻿namespace DonemProje
 {
-    partial class MeBubble
+    partial class MeBubbleMedia
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,36 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
-            MessageLabel = new Label();
+            pictureBoxMeBubble = new PictureBox();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxMeBubble).BeginInit();
             SuspendLayout();
             // 
-            // MessageLabel
+            // pictureBoxMeBubble
             // 
-            MessageLabel.AutoSize = true;
-            MessageLabel.Dock = DockStyle.Right;
-            MessageLabel.Location = new Point(259, 0);
-            MessageLabel.Name = "MessageLabel";
-            MessageLabel.Size = new Size(67, 20);
-            MessageLabel.TabIndex = 0;
-            MessageLabel.Text = "Message";
-            MessageLabel.TextAlign = ContentAlignment.MiddleRight;
+            pictureBoxMeBubble.Dock = DockStyle.Fill;
+            pictureBoxMeBubble.Location = new Point(0, 0);
+            pictureBoxMeBubble.Name = "pictureBoxMeBubble";
+            pictureBoxMeBubble.Size = new Size(150, 150);
+            pictureBoxMeBubble.TabIndex = 0;
+            pictureBoxMeBubble.TabStop = false;
             // 
-            // MeBubble
+            // MeBubbleMedia
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.Aquamarine;
-            BorderStyle = BorderStyle.FixedSingle;
-            Controls.Add(MessageLabel);
-            ForeColor = SystemColors.ActiveCaptionText;
-            Name = "MeBubble";
-            Size = new Size(326, 58);
+            Controls.Add(pictureBoxMeBubble);
+            Name = "MeBubbleMedia";
+            ((System.ComponentModel.ISupportInitialize)pictureBoxMeBubble).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
-        public Label MessageLabel;
+        public PictureBox pictureBoxMeBubble;
     }
 }

@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.Connections;
 using TheArtOfDevHtmlRenderer.Adapters;
 using Microsoft.AspNet.SignalR.Client.Hubs;
 using System.Data.Common;
+using Microsoft.AspNet.SignalR.Messaging;
+using ConnectionState = Microsoft.AspNet.SignalR.Client.ConnectionState;
 
 namespace DonemProje
 {
@@ -25,7 +27,6 @@ namespace DonemProje
         public string UserName;
         public int kullanıcıID;
         List<string> Friends = new List<string>();
-        int FriendListMemberUserControlCount = 0;
         private ChatUserControl chatUserControl;
         private HubConnection _connection;
         private IHubProxy _hubProxy;
@@ -38,22 +39,30 @@ namespace DonemProje
 
             InitializeComponent();
         }
-       
+
         private void MainPage_Load(object sender, EventArgs e)
         {
             UserNameMainPageLabel.Text = UserName;
+            StartConnection();
             this.MainSendButtonPanel.Hide();
             this.MainSendFilePanel.Hide();
             this.MainTextboxPanel.Hide();
+
             try
             {
-                _connection = new HubConnection("http://localhost:8080");
-                _hubProxy = _connection.CreateHubProxy("ChatHub");
+                //Gelen mesaj varsa gerçek zamanlı dinlenir.
                 _hubProxy.On<string, string>("receiveMessage", (senderName, message) =>
                 {
+                    if (sender == "server")
+                    {
+                        MessageBox.Show("Bu kullanıcı şuan aktif. başka cihazlardan çıkış yapın");
+                        Application.Exit();
+                    }
+
                     Invoke(new Action(() =>
                     {
-                        YouBubble youBubble= new YouBubble();
+
+                        YouBubble youBubble = new YouBubble();
 
 
                         if (chatUserControl != null)
@@ -69,7 +78,7 @@ namespace DonemProje
                 });
                 _hubProxy.On<string, string, int, string>("receiveMedia", (senderName, base64Chunk, totalChunk, typeOfFile) =>
                     {
-
+                        Image i=null;
                         // Fotoğraf parçalarını saklamak
                         if (!_photoChunks.ContainsKey(TargetUsername))
                         {
@@ -79,7 +88,7 @@ namespace DonemProje
                         // Parçayı ekle
                         _photoChunks[TargetUsername].Add(base64Chunk);
 
-                       
+
 
 
                         // Tüm parçalar alındıysa, fotoğrafı oluştur
@@ -101,8 +110,8 @@ namespace DonemProje
 
                                 // Windows Media Player kontrolü ile bu geçici dosyayı oynatalım
 
-                               // axWindowsMediaPlayer1.URL = tempFilePath;
-                               // axWindowsMediaPlayer1.Ctlcontrols.play();
+                                 //axWindowsMediaPlayer1.URL = tempFilePath;
+                                // axWindowsMediaPlayer1.Ctlcontrols.play();
                                 if (File.Exists(tempFilePath))
                                 {
                                     File.Delete(tempFilePath);
@@ -113,9 +122,7 @@ namespace DonemProje
                             {
 
                                 MemoryStream ms = new MemoryStream(imageBytes);
-                                Image i = Image.FromStream(ms);
-                                // pictureBox1.Image = i;
-                                // Fotoğraf verilerini sıfırla
+                                i = Image.FromStream(ms);
 
                             }
                             else
@@ -132,19 +139,32 @@ namespace DonemProje
 
                         }
 
-                        // ListBox'a mesaj ekle
                         Invoke(new Action(() =>
                         {
-                          //  listBox1.Items.Add($"{senderName}: Parça alındı. " + totalChunk);
+
+                         
+                            if (chatUserControl != null)
+                            {   
+                                YouBubbleMedia youBubbleMedia = new YouBubbleMedia();
+                                
+                                youBubbleMedia.pictureBoxYouBubble.Image = i;
+                                youBubbleMedia.Size = youBubbleMedia.pictureBoxYouBubble.Size;
+                                chatUserControl.ChatScreenPanelChatUserControl.Controls.Add(youBubbleMedia);
+                                youBubbleMedia.Dock = DockStyle.Top;
+                                youBubbleMedia.BringToFront();
+                                youBubbleMedia.Focus();
+                            }
+
+
                         }));
                     });
 
-                    
-                }
+
+            }
             catch (Exception ex)
             {
-                MessageBox.Show($"Connection error: {ex.Message}");
-            
+                MessageBox.Show($"Connection error: " + ex.ToString());
+
             };
 
         }
@@ -161,8 +181,10 @@ namespace DonemProje
 
             profileUserControl.BringToFront();
         }
-        private  async void StartConnection()
+        private async void StartConnection()
         {
+            _connection = new HubConnection("http://localhost:8080");
+            _hubProxy = _connection.CreateHubProxy("ChatHub");
             try
             {
                 // Bağlantıyı başlat
@@ -258,7 +280,7 @@ WHERE
                         this.FriendListPanelMainPage.Controls.Add(friendsListMemberUserControl);
                         friendsListMemberUserControl.Dock = DockStyle.Top;
 
-                        FriendListMemberUserControlCount++;
+
                     }
 
                     Friends.Clear();
@@ -298,12 +320,26 @@ WHERE
             findNewUserControl.BringToFront();
         }
 
+        // Alıcı tarafında fotoğraf parçalarını alıp birleştiriyoruz
+
         private void LogoutButton_Click(object sender, EventArgs e)
         {
-
+            StopConnection();
             LoginPage loginPage = new LoginPage();
             loginPage.Show();
             this.Close();
+        }
+        private async void SendMessage(string receiver, string message)
+        {
+            try
+            {
+                // Sunucuya özel mesaj gönder
+                await _hubProxy.Invoke("SendMessageToUser", UserName, receiver, message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Message send error: {ex.Message}");
+            }
         }
 
         public void guna2CirclePictureBox1_Click(object sender, EventArgs e)
@@ -333,7 +369,7 @@ WHERE
 
         private void sendButtonChat_Click(object sender, EventArgs e)
         {
-            MeBubble meBubble = new MeBubble();
+
 
 
 
@@ -341,15 +377,120 @@ WHERE
 
             if (chatUserControl != null)
             {
+                MeBubble meBubble = new MeBubble();
                 meBubble.MessageLabel.Text = textboxChat.Text;
 
+
                 chatUserControl.ChatScreenPanelChatUserControl.Controls.Add(meBubble);
+                SendMessage(TargetUsername, textboxChat.Text);
+                meBubble.Size = new Size(326, meBubble.MessageLabel.Size.Height + 20);
                 meBubble.Dock = DockStyle.Top;
                 meBubble.BringToFront();
                 meBubble.Focus();
             }
-            
+
         }
-        
+
+        private void StopConnection()
+        {
+            if (_connection != null && _connection.State == ConnectionState.Connected)
+            {
+                _connection.Stop();
+                _connection.Dispose();
+            }
+        }
+        private void guna2ControlBox1_Click(object sender, EventArgs e)
+        {
+            StopConnection();
+            Application.Exit();
+        }
+
+        private void MainPage_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            StopConnection();
+            Application.Exit();
+        }
+        public byte[] GetImageBytes(string filePath)
+        {
+            return File.ReadAllBytes(filePath);
+        }
+        public string ConvertBytesToBase64(byte[] byteArray)
+        {
+            return Convert.ToBase64String(byteArray);
+        }
+        public List<string> SplitBase64String(string base64String, int chunkSize)
+        {
+            List<string> chunks = new List<string>();
+
+            for (int i = 0; i < base64String.Length; i += chunkSize)
+            {
+                int size = Math.Min(chunkSize, base64String.Length - i);
+                string chunk = base64String.Substring(i, size);
+                chunks.Add(chunk);
+            }
+
+            return chunks;
+        }
+        public async Task SendPhotoToServer(string receiverUsername, string senderUsername, string filePath, string typeOfFile)
+        {
+
+
+         
+            byte[] fileBytes = GetImageBytes(filePath);
+
+           
+            string base64String = ConvertBytesToBase64(fileBytes);
+            MessageBox.Show(base64String.Length.ToString());
+          
+            List<string> chunks = SplitBase64String(base64String, 8192); // 8KB'lık parçalara böl
+
+            for (int i = 0; i < chunks.Count; i++)
+            {
+                // Her bir parça için hedef kullanıcıya mesaj gönder
+                await _hubProxy.Invoke("SendMediaToUser", senderUsername, receiverUsername, chunks[i], chunks.Count, typeOfFile);
+            }
+        }
+        private void sendFileButtonChat_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+
+                openFileDialog.Title = "Bir dosya seçin";
+                openFileDialog.Filter = "Resim Dosyaları|*.jpg;*.jpeg;*.png;*.gif;*.tif|Video Dosyaları|*.mp4;*.avi;*.mp3";
+                string typeOfFile = null;
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string filePath = openFileDialog.FileName;
+                    if (filePath.EndsWith(".jpg") || filePath.EndsWith(".png") || filePath.EndsWith(".jpeg") || filePath.EndsWith(".gif") || filePath.EndsWith(".tif"))
+                        typeOfFile = "photo";
+                    else if (filePath.EndsWith(".mp4") || filePath.EndsWith(".avi") || filePath.EndsWith(".mp3"))
+                        typeOfFile = "video";
+
+
+
+                    try
+                    {
+                        SendPhotoToServer(TargetUsername, UserName, filePath, typeOfFile);
+
+                        MeBubbleMedia meBubbleMedia = new MeBubbleMedia();
+                     
+                        if (chatUserControl != null)
+                        {
+                            meBubbleMedia.pictureBoxMeBubble.Image = Image.FromFile(filePath);
+                            chatUserControl.ChatScreenPanelChatUserControl.Controls.Add(meBubbleMedia);
+                            meBubbleMedia.Size = meBubbleMedia.pictureBoxMeBubble.Size;
+                            meBubbleMedia.Dock = DockStyle.Top;
+                            meBubbleMedia.BringToFront();
+                            meBubbleMedia.Focus();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Hata: {ex.Message}");
+                    }
+
+                }
+            }
+        }
     }
 }

@@ -12,13 +12,14 @@ using System.Windows.Forms;
 using Microsoft.Data.SqlClient;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Microsoft.AspNetCore.Http.Connections.Client;
 
 namespace DonemProje
 {
-    
+
     public partial class LoginPage : Form
     {
-        public  string[] allInfo = new string[6];
+        public string[] allInfo = new string[6];
         RegisterPage registerPage = new RegisterPage();
         int kullaniciID = -1;
         public LoginPage()
@@ -46,16 +47,16 @@ namespace DonemProje
         public bool ValidateUser(string userName, string password)
         {
             registerPage = new RegisterPage();
-            
+
             string hashedPassword = registerPage.ComputeHash(password); // Kullanıcının girdiği şifreyi hash et
-          
+
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                
+
                 string UserIDFetch = "SELECT USER_ID FROM users_table WHERE USERNAME = @USERNAME AND PASSW=@PASSW";
                 try
                 {
-                  
+
 
                     using (SqlCommand command = new SqlCommand(UserIDFetch, connection))
                     {
@@ -63,8 +64,8 @@ namespace DonemProje
                         command.Parameters.AddWithValue("@PASSW", hashedPassword);
 
                         connection.Open();
-                        int result = Convert.ToInt32( command.ExecuteScalar());
-                        if (result!=null && result!=0) 
+                        int result = Convert.ToInt32(command.ExecuteScalar());
+                        if (result != null && result != 0)
                         {
                             kullaniciID = result;
                             return true;
@@ -79,8 +80,8 @@ namespace DonemProje
                 catch (Exception ex)
                 {
 
-                    MessageBox.Show("HATA İLE KARŞILAŞILDI"+ ex.ToString());
-                   return false;
+                    MessageBox.Show("HATA İLE KARŞILAŞILDI" + ex.ToString());
+                    return false;
                 }
                 finally
                 {
@@ -105,7 +106,7 @@ namespace DonemProje
                 PasswordLogintextbox.Text = "";
             }
 
-            
+
         }
 
         private void PasswordShowButton_Click(object sender, EventArgs e)
@@ -113,7 +114,11 @@ namespace DonemProje
             PasswordLogintextbox.PasswordChar = PasswordLogintextbox.PasswordChar == '●' ? '\0' : '●';
             PasswordShowButton.Image = PasswordLogintextbox.PasswordChar == '●' ? Properties.Resources.gozKapali : Properties.Resources.gozAcik;
 
-           
+
         }
+
+       
+        
+      
     }
 }

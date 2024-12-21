@@ -73,7 +73,7 @@
             guna2ControlBox1.FillColor = Color.Black;
             guna2ControlBox1.IconColor = Color.White;
             guna2ControlBox1.Location = new Point(1308, 0);
-            guna2ControlBox1.Margin = new Padding(4, 4, 4, 4);
+            guna2ControlBox1.Margin = new Padding(4);
             guna2ControlBox1.Name = "guna2ControlBox1";
             guna2ControlBox1.ShadowDecoration.CustomizableEdges = customizableEdges2;
             guna2ControlBox1.Size = new Size(56, 36);
@@ -90,7 +90,7 @@
             guna2ControlBox3.ForeColor = Color.Transparent;
             guna2ControlBox3.IconColor = Color.White;
             guna2ControlBox3.Location = new Point(1244, 0);
-            guna2ControlBox3.Margin = new Padding(4, 4, 4, 4);
+            guna2ControlBox3.Margin = new Padding(4);
             guna2ControlBox3.Name = "guna2ControlBox3";
             guna2ControlBox3.ShadowDecoration.CustomizableEdges = customizableEdges4;
             guna2ControlBox3.Size = new Size(56, 36);
@@ -131,7 +131,7 @@
             pictureBox1.BackgroundImageLayout = ImageLayout.Stretch;
             guna2Transition1.SetDecoration(pictureBox1, Guna.UI2.AnimatorNS.DecorationType.None);
             pictureBox1.Location = new Point(151, 131);
-            pictureBox1.Margin = new Padding(4, 4, 4, 4);
+            pictureBox1.Margin = new Padding(4);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(459, 174);
             pictureBox1.TabIndex = 18;
@@ -150,7 +150,7 @@
             LoginButton.Font = new Font("Segoe UI", 9F);
             LoginButton.ForeColor = Color.White;
             LoginButton.Location = new Point(394, 491);
-            LoginButton.Margin = new Padding(4, 4, 4, 4);
+            LoginButton.Margin = new Padding(4);
             LoginButton.Name = "LoginButton";
             LoginButton.ShadowDecoration.CustomizableEdges = customizableEdges15;
             LoginButton.Size = new Size(90, 26);
@@ -171,7 +171,7 @@
             RegisterLoginPageButton.Font = new Font("Segoe UI", 9F);
             RegisterLoginPageButton.ForeColor = Color.White;
             RegisterLoginPageButton.Location = new Point(218, 491);
-            RegisterLoginPageButton.Margin = new Padding(4, 4, 4, 4);
+            RegisterLoginPageButton.Margin = new Padding(4);
             RegisterLoginPageButton.Name = "RegisterLoginPageButton";
             RegisterLoginPageButton.ShadowDecoration.CustomizableEdges = customizableEdges13;
             RegisterLoginPageButton.Size = new Size(90, 26);
@@ -192,7 +192,7 @@
             ForgetPasswordButton.Font = new Font("Segoe UI", 9F);
             ForgetPasswordButton.ForeColor = Color.Black;
             ForgetPasswordButton.Location = new Point(201, 525);
-            ForgetPasswordButton.Margin = new Padding(4, 4, 4, 4);
+            ForgetPasswordButton.Margin = new Padding(4);
             ForgetPasswordButton.Name = "ForgetPasswordButton";
             ForgetPasswordButton.ShadowDecoration.CustomizableEdges = customizableEdges11;
             ForgetPasswordButton.Size = new Size(142, 26);
@@ -263,7 +263,7 @@
             PasswordShowButton.ImageRotate = 0F;
             PasswordShowButton.ImageSize = new Size(30, 30);
             PasswordShowButton.Location = new Point(491, 420);
-            PasswordShowButton.Margin = new Padding(4, 4, 4, 4);
+            PasswordShowButton.Margin = new Padding(4);
             PasswordShowButton.Name = "PasswordShowButton";
             PasswordShowButton.PressedState.ImageSize = new Size(64, 64);
             PasswordShowButton.ShadowDecoration.CustomizableEdges = customizableEdges5;
@@ -301,12 +301,13 @@
             guna2Transition1.SetDecoration(this, Guna.UI2.AnimatorNS.DecorationType.None);
             ForeColor = Color.Transparent;
             FormBorderStyle = FormBorderStyle.None;
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             MaximumSize = new Size(1361, 740);
             MinimumSize = new Size(1361, 740);
             Name = "LoginPage";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "LoginPage";
+            
             Load += LoginPage_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)PasswordInCorrectErr).EndInit();
