@@ -28,31 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            pictureBoxMeBubble = new PictureBox();
-            ((System.ComponentModel.ISupportInitialize)pictureBoxMeBubble).BeginInit();
             SuspendLayout();
-            // 
-            // pictureBoxMeBubble
-            // 
-            pictureBoxMeBubble.Dock = DockStyle.Fill;
-            pictureBoxMeBubble.Location = new Point(0, 0);
-            pictureBoxMeBubble.Name = "pictureBoxMeBubble";
-            pictureBoxMeBubble.Size = new Size(150, 150);
-            pictureBoxMeBubble.TabIndex = 0;
-            pictureBoxMeBubble.TabStop = false;
             // 
             // MeBubbleMedia
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(pictureBoxMeBubble);
             Name = "MeBubbleMedia";
-            ((System.ComponentModel.ISupportInitialize)pictureBoxMeBubble).EndInit();
+            Size = new Size(329, 415);
             ResumeLayout(false);
         }
 
         #endregion
-
-        public PictureBox pictureBoxMeBubble;
     }
 }

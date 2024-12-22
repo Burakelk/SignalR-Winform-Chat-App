@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.SignalR.Client;
+using J3QQ4;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,6 +18,11 @@ using Microsoft.AspNet.SignalR.Client.Hubs;
 using System.Data.Common;
 using Microsoft.AspNet.SignalR.Messaging;
 using ConnectionState = Microsoft.AspNet.SignalR.Client.ConnectionState;
+using System.IO;
+using AxWMPLib;
+using WMPLib;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Button = System.Windows.Forms.Button;
 
 namespace DonemProje
 {
@@ -27,6 +33,7 @@ namespace DonemProje
         public string UserName;
         public int kullanıcıID;
         List<string> Friends = new List<string>();
+        
         private ChatUserControl chatUserControl;
         private HubConnection _connection;
         private IHubProxy _hubProxy;
@@ -65,7 +72,7 @@ namespace DonemProje
                         YouBubble youBubble = new YouBubble();
 
 
-                        if (chatUserControl != null)
+                        if (chatUserControl != null && chatUserControl.Name == senderName)
                         {
                             youBubble.MessageLabel.Text = message;
 
@@ -77,87 +84,127 @@ namespace DonemProje
                     }));
                 });
                 _hubProxy.On<string, string, int, string>("receiveMedia", (senderName, base64Chunk, totalChunk, typeOfFile) =>
+                {
+                    Image i = Properties.Resources.default_image;
+
+                    // Fotoğraf parçalarını saklamak
+                    if (!_photoChunks.ContainsKey(TargetUsername))
                     {
-                        Image i=null;
-                        // Fotoğraf parçalarını saklamak
-                        if (!_photoChunks.ContainsKey(TargetUsername))
+                        _photoChunks[TargetUsername] = new List<string>();
+                    }
+
+                    // Parçayı ekle
+                    _photoChunks[TargetUsername].Add(base64Chunk);
+
+
+
+
+                    // Tüm parçalar alındıysa, fotoğrafı oluştur
+                    if (_photoChunks[TargetUsername].Count == totalChunk)
+                    {
+                        // Base64 string'lerini birleştir
+                        string fullBase64 = string.Join("", _photoChunks[TargetUsername]);
+
+                        // Base64'ü byte dizisine dönüştür
+                        byte[] imageBytes = Convert.FromBase64String(fullBase64);
+
+                        // Fotoğrafı kaydet
+                        File.WriteAllBytes($"{TargetUsername}_received_image.jpg", imageBytes);
+
+                        if (typeOfFile == "video")
                         {
-                            _photoChunks[TargetUsername] = new List<string>();
-                        }
+                            string tempFilePath = Path.Combine(Path.GetTempPath(), "temp_video.mp4");
+                            File.WriteAllBytes(tempFilePath, imageBytes);
 
-                        // Parçayı ekle
-                        _photoChunks[TargetUsername].Add(base64Chunk);
-
-
-
-
-                        // Tüm parçalar alındıysa, fotoğrafı oluştur
-                        if (_photoChunks[TargetUsername].Count == totalChunk)
-                        {
-                            // Base64 string'lerini birleştir
-                            string fullBase64 = string.Join("", _photoChunks[TargetUsername]);
-
-                            // Base64'ü byte dizisine dönüştür
-                            byte[] imageBytes = Convert.FromBase64String(fullBase64);
-
-                            // Fotoğrafı kaydet
-                            File.WriteAllBytes($"{TargetUsername}_received_image.jpg", imageBytes);
-
-                            if (typeOfFile == "video")
+                            Invoke(new Action(() =>
                             {
-                                string tempFilePath = Path.Combine(Path.GetTempPath(), "temp_video.mp4");
-                                File.WriteAllBytes(tempFilePath, imageBytes);
 
-                                // Windows Media Player kontrolü ile bu geçici dosyayı oynatalım
 
-                                 //axWindowsMediaPlayer1.URL = tempFilePath;
-                                // axWindowsMediaPlayer1.Ctlcontrols.play();
-                                if (File.Exists(tempFilePath))
+                                if (chatUserControl != null && chatUserControl.Name == senderName)
                                 {
-                                    File.Delete(tempFilePath);
+                                    YouBubbleMedia youBubbleMedia = new YouBubbleMedia();
+
+                                    AxWindowsMediaPlayer axWindowsMediaPlayer1 = new AxWindowsMediaPlayer();
+
+                                    axWindowsMediaPlayer1.Enabled = true;
+                                    youBubbleMedia.Controls.Add(axWindowsMediaPlayer1);
+                                    axWindowsMediaPlayer1.CreateControl();
+                                    axWindowsMediaPlayer1.Size = new Size(youBubbleMedia.Size.Width, youBubbleMedia.Size.Height);
+
+                                    axWindowsMediaPlayer1.Dock = DockStyle.Left;
+
+                                    axWindowsMediaPlayer1.URL = tempFilePath;
+                                    axWindowsMediaPlayer1.Ctlcontrols.play();
+
+
+
+
+
+                                    youBubbleMedia.Dock = DockStyle.Fill;
+                                    chatUserControl.ChatScreenPanelChatUserControl.Controls.Add(youBubbleMedia);
+                                    youBubbleMedia.Dock = DockStyle.Top;
+                                    youBubbleMedia.BringToFront();
+                                    youBubbleMedia.Focus();
+
+                                    //axWindowsMediaPlayer.Ctlcontrols.play();
+                                    if (File.Exists(tempFilePath))
+                                    {
+                                        File.Delete(tempFilePath);
+
+                                    }
 
                                 }
-                            }
-                            else if (typeOfFile == "photo")
-                            {
-
-                                MemoryStream ms = new MemoryStream(imageBytes);
-                                i = Image.FromStream(ms);
-
-                            }
-                            else
-                            {
-                                MessageBox.Show("Dosyanın türü bilinmio la");
-                            }
-                            // Fotoğraf alındı ve birleştirildi
-                            MessageBox.Show("Fotoğraf alındı ve kaydedildi!");
+                            }));
 
 
-
-                            _photoChunks[TargetUsername].Clear();
-                            _photoChunks.Remove(TargetUsername);
 
                         }
-
-                        Invoke(new Action(() =>
+                        else if (typeOfFile == "photo")
                         {
-
-                         
-                            if (chatUserControl != null)
-                            {   
-                                YouBubbleMedia youBubbleMedia = new YouBubbleMedia();
-                                
-                                youBubbleMedia.pictureBoxYouBubble.Image = i;
-                                youBubbleMedia.Size = youBubbleMedia.pictureBoxYouBubble.Size;
-                                chatUserControl.ChatScreenPanelChatUserControl.Controls.Add(youBubbleMedia);
-                                youBubbleMedia.Dock = DockStyle.Top;
-                                youBubbleMedia.BringToFront();
-                                youBubbleMedia.Focus();
-                            }
+                            i = null;
+                            MemoryStream ms = new MemoryStream(imageBytes);
+                            i = Image.FromStream(ms);
+                            Invoke(new Action(() =>
+                            {
 
 
-                        }));
-                    });
+                                if (chatUserControl != null && chatUserControl.Name == senderName)
+                                {
+                                    PictureBox pictureBox = new PictureBox();
+
+                                    YouBubbleMedia youBubbleMedia = new YouBubbleMedia();
+                                    pictureBox.Image = i;
+                                    pictureBox.Size = new Size(youBubbleMedia.Size.Width, youBubbleMedia.Size.Height);
+                                    pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                                    pictureBox.Dock = DockStyle.Left;
+                                    pictureBox.BorderStyle = BorderStyle.FixedSingle;
+
+                                    youBubbleMedia.Controls.Add(pictureBox);
+                                    youBubbleMedia.Dock = DockStyle.Fill;
+                                    chatUserControl.ChatScreenPanelChatUserControl.Controls.Add(youBubbleMedia);
+                                    youBubbleMedia.Dock = DockStyle.Top;
+                                    youBubbleMedia.BringToFront();
+                                    youBubbleMedia.Focus();
+
+                                }
+                            }));
+                        }
+                        else
+                        {
+                            MessageBox.Show("Dosyanın türü bilinmiyor");
+                        }
+
+
+
+
+
+                        _photoChunks[TargetUsername].Clear();
+                        _photoChunks.Remove(TargetUsername);
+                        _photoChunks.Clear();
+                    }
+
+
+                });
 
 
             }
@@ -170,6 +217,7 @@ namespace DonemProje
         }
         private void ProfileButton_Click(object sender, EventArgs e)
         {
+            this.EmojiPanelMainPage.Hide();
             this.MainSendButtonPanel.Hide();
             this.MainSendFilePanel.Hide();
             this.MainTextboxPanel.Hide();
@@ -260,21 +308,25 @@ WHERE
                             Name = $"{Friends[i]}",
                             Cursor = Cursors.Hand
                         };
+
                         friendsListMemberUserControl.Click += (s, args) =>
                         {
                             if (this.MainPanelMainPage.Controls.Count > 0)
                             {
                                 this.MainPanelMainPage.Controls.Clear();
                             }
+                            ShowEmojies();
                             this.MainSendButtonPanel.Show();
                             this.MainSendFilePanel.Show();
                             this.MainTextboxPanel.Show();
+
                             chatUserControl = new ChatUserControl();
                             this.MainPanelMainPage.Controls.Add(chatUserControl);
+                            chatUserControl.Name = friendsListMemberUserControl.Name;
                             chatUserControl.UserNameLabelChatUserControl.Text = friendsListMemberUserControl.Name;
                             chatUserControl.Dock = DockStyle.Fill;
                             TargetUsername = friendsListMemberUserControl.Name;
-                            MessageBox.Show($"Tıklanan Label:{friendsListMemberUserControl.Name} ");
+
                         };
                         friendsListMemberUserControl.usernameFriendLabel.Text = Friends[i].ToString();
                         this.FriendListPanelMainPage.Controls.Add(friendsListMemberUserControl);
@@ -311,6 +363,7 @@ WHERE
         private void FindNewButton_Click(object sender, EventArgs e)
         {
             this.MainPanelMainPage.Controls.Clear();
+            this.EmojiPanelMainPage.Hide();
             this.MainSendButtonPanel.Hide();
             this.MainSendFilePanel.Hide();
             this.MainTextboxPanel.Hide();
@@ -369,19 +422,14 @@ WHERE
 
         private void sendButtonChat_Click(object sender, EventArgs e)
         {
-
-
-
-
-
-
+            
             if (chatUserControl != null)
             {
                 MeBubble meBubble = new MeBubble();
                 meBubble.MessageLabel.Text = textboxChat.Text;
 
-
                 chatUserControl.ChatScreenPanelChatUserControl.Controls.Add(meBubble);
+
                 SendMessage(TargetUsername, textboxChat.Text);
                 meBubble.Size = new Size(326, meBubble.MessageLabel.Size.Height + 20);
                 meBubble.Dock = DockStyle.Top;
@@ -435,13 +483,13 @@ WHERE
         {
 
 
-         
+
             byte[] fileBytes = GetImageBytes(filePath);
 
-           
+
             string base64String = ConvertBytesToBase64(fileBytes);
             MessageBox.Show(base64String.Length.ToString());
-          
+
             List<string> chunks = SplitBase64String(base64String, 8192); // 8KB'lık parçalara böl
 
             for (int i = 0; i < chunks.Count; i++)
@@ -450,10 +498,13 @@ WHERE
                 await _hubProxy.Invoke("SendMediaToUser", senderUsername, receiverUsername, chunks[i], chunks.Count, typeOfFile);
             }
         }
+
         private void sendFileButtonChat_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
+
+                //tipine göre dosyaları filtrele ve fotoraf mı video mu olduğunu kaydet ve server'a gönder.
 
                 openFileDialog.Title = "Bir dosya seçin";
                 openFileDialog.Filter = "Resim Dosyaları|*.jpg;*.jpeg;*.png;*.gif;*.tif|Video Dosyaları|*.mp4;*.avi;*.mp3";
@@ -470,18 +521,61 @@ WHERE
 
                     try
                     {
-                        SendPhotoToServer(TargetUsername, UserName, filePath, typeOfFile);
 
-                        MeBubbleMedia meBubbleMedia = new MeBubbleMedia();
-                     
-                        if (chatUserControl != null)
+                        if (chatUserControl != null && typeOfFile == "photo")
                         {
-                            meBubbleMedia.pictureBoxMeBubble.Image = Image.FromFile(filePath);
+                            SendPhotoToServer(TargetUsername, UserName, filePath, typeOfFile);
+                            MeBubbleMedia meBubbleMedia = new MeBubbleMedia();
+                            PictureBox pictureBox = new PictureBox();
+                            pictureBox.Image = Image.FromFile(filePath);
+                            meBubbleMedia.Controls.Add(pictureBox);
+                            pictureBox.Size = new Size(meBubbleMedia.Size.Width, meBubbleMedia.Size.Height);
+
+                            meBubbleMedia.Dock = DockStyle.Fill;
+
+                            pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                            pictureBox.Dock = DockStyle.Right;
+                            pictureBox.BorderStyle = BorderStyle.FixedSingle;
                             chatUserControl.ChatScreenPanelChatUserControl.Controls.Add(meBubbleMedia);
-                            meBubbleMedia.Size = meBubbleMedia.pictureBoxMeBubble.Size;
                             meBubbleMedia.Dock = DockStyle.Top;
                             meBubbleMedia.BringToFront();
                             meBubbleMedia.Focus();
+                        }
+                        else if (chatUserControl != null && typeOfFile == "video")
+                            try
+                            {
+                                AxWindowsMediaPlayer axWindowsMediaPlayer1 = new AxWindowsMediaPlayer();
+                                MeBubbleMedia meBubbleMedia = new MeBubbleMedia();
+                                axWindowsMediaPlayer1.Enabled = true;
+                                meBubbleMedia.Controls.Add(axWindowsMediaPlayer1);
+                                axWindowsMediaPlayer1.CreateControl();
+                                axWindowsMediaPlayer1.Size = new Size(meBubbleMedia.Size.Width, meBubbleMedia.Size.Height);
+
+                                axWindowsMediaPlayer1.Dock = DockStyle.Right;
+
+                                axWindowsMediaPlayer1.URL = filePath;
+                                axWindowsMediaPlayer1.Ctlcontrols.play();
+                                SendPhotoToServer(TargetUsername, UserName, filePath, typeOfFile);
+
+
+
+
+                                meBubbleMedia.Dock = DockStyle.Fill;
+                                chatUserControl.ChatScreenPanelChatUserControl.Controls.Add(meBubbleMedia);
+                                meBubbleMedia.Dock = DockStyle.Top;
+                                meBubbleMedia.BringToFront();
+                                meBubbleMedia.Focus();
+
+
+
+                            }
+                            catch (Exception ex)
+                            {
+
+                                MessageBox.Show("Hata ile karşılaşıldı " + ex.ToString());
+                            }
+                        {
+
                         }
                     }
                     catch (Exception ex)
@@ -491,6 +585,49 @@ WHERE
 
                 }
             }
+        }
+       
+        private void ShowEmojies()
+        {
+            Emoji emoji1 = new Emoji();
+            FlowLayoutPanel emojiPanel; emojiPanel = new FlowLayoutPanel()
+            {
+                Name = "EmojiPanel",
+                Size = new Size(200, 200),
+                AutoScroll = true,
+
+            };
+            foreach (var emoji in emoji1.emojies)
+            {
+                Button emojiButton = new Button
+                {
+                    Text = emoji,
+                    Font = new Font("Segoe UI Emoji", 12),
+                    Size = new Size(40, 40),
+                    Margin = new Padding(5,5,5,5)
+                };
+
+                // Emoji butonuna tıklama olayı
+                emojiButton.Click += (s, e) =>
+                {
+                    textboxChat.Text += emojiButton.Text; // Emoji'yi TextBox'a ekle
+
+                };
+                
+                emojiPanel.Controls.Add(emojiButton);
+            }
+            if (chatUserControl != null)
+            {
+                EmojiPanelMainPage.Controls.Add(emojiPanel);
+                emojiPanel.BringToFront();
+                emojiPanel.Show();
+                emojiPanel.Dock = DockStyle.Bottom;
+                emojiPanel.BringToFront();
+                emojiPanel.Focus();
+
+
+            }
+           
         }
     }
 }

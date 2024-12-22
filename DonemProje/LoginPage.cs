@@ -94,7 +94,7 @@ namespace DonemProje
         {
             if (ValidateUser(EmailLogintxt.Text, PasswordLogintextbox.Text))
             {
-                MessageBox.Show("Giriş başarılı!");
+               
                 MainPage mainPage = new MainPage(EmailLogintxt.Text, kullaniciID); //kullanıcı ID si zaten alındı. Eğer giriş doğruysa kullanıcı adını da buradan gönderiyoruz.
                 mainPage.Show();
                 this.Hide();

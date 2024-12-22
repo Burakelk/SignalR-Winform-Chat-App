@@ -153,6 +153,16 @@ namespace DonemProje.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap default_image {
+            get {
+                object obj = ResourceManager.GetObject("default-image", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap desktop_wallpaper_30_cool_plain_backgrounds_plain_but_nice_backgrounds {
             get {
                 object obj = ResourceManager.GetObject("desktop-wallpaper-30-cool-plain-backgrounds-plain-but-nice-backgrounds", resourceCulture);
@@ -173,6 +183,16 @@ namespace DonemProje.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap emoji_smile_1024x1024 {
+            get {
+                object obj = ResourceManager.GetObject("emoji-smile.1024x1024", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap gozAcik {
             get {
                 object obj = ResourceManager.GetObject("gozAcik", resourceCulture);
@@ -186,6 +206,16 @@ namespace DonemProje.Properties {
         internal static System.Drawing.Bitmap gozKapali {
             get {
                 object obj = ResourceManager.GetObject("gozKapali", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap happy_emo_emoticon_emoji_icon_208299 {
+            get {
+                object obj = ResourceManager.GetObject("happy_emo_emoticon_emoji_icon_208299", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

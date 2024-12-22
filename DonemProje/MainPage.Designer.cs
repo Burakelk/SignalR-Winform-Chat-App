@@ -50,6 +50,7 @@
             ProfileButton = new Button();
             UserNameMainPageLabel = new Label();
             ProfilePictureBoxMainPage = new Guna.UI2.WinForms.Guna2CirclePictureBox();
+            EmojiPanelMainPage = new Panel();
             FriendListPanelMainPage = new Panel();
             MainPanelMainPage = new Panel();
             MainTextboxPanel = new Panel();
@@ -204,27 +205,36 @@
             ProfilePictureBoxMainPage.TabStop = false;
             ProfilePictureBoxMainPage.Click += guna2CirclePictureBox1_Click;
             // 
+            // EmojiPanelMainPage
+            // 
+            EmojiPanelMainPage.AutoScroll = true;
+            EmojiPanelMainPage.BackColor = Color.Transparent;
+            EmojiPanelMainPage.Location = new Point(940, 757);
+            EmojiPanelMainPage.Name = "EmojiPanelMainPage";
+            EmojiPanelMainPage.Size = new Size(139, 133);
+            EmojiPanelMainPage.TabIndex = 14;
+            // 
             // FriendListPanelMainPage
             // 
             FriendListPanelMainPage.BackColor = Color.DarkSlateGray;
             FriendListPanelMainPage.Location = new Point(185, 0);
             FriendListPanelMainPage.Name = "FriendListPanelMainPage";
-            FriendListPanelMainPage.Size = new Size(250, 901);
+            FriendListPanelMainPage.Size = new Size(237, 901);
             FriendListPanelMainPage.TabIndex = 8;
             // 
             // MainPanelMainPage
             // 
-            MainPanelMainPage.Location = new Point(441, 45);
+            MainPanelMainPage.Location = new Point(428, 45);
             MainPanelMainPage.Name = "MainPanelMainPage";
-            MainPanelMainPage.Size = new Size(743, 703);
+            MainPanelMainPage.Size = new Size(756, 703);
             MainPanelMainPage.TabIndex = 9;
             // 
             // MainTextboxPanel
             // 
             MainTextboxPanel.Controls.Add(textboxChat);
-            MainTextboxPanel.Location = new Point(441, 781);
+            MainTextboxPanel.Location = new Point(428, 781);
             MainTextboxPanel.Name = "MainTextboxPanel";
-            MainTextboxPanel.Size = new Size(539, 108);
+            MainTextboxPanel.Size = new Size(413, 108);
             MainTextboxPanel.TabIndex = 12;
             // 
             // textboxChat
@@ -247,13 +257,13 @@
             textboxChat.PlaceholderText = "";
             textboxChat.SelectedText = "";
             textboxChat.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            textboxChat.Size = new Size(539, 108);
+            textboxChat.Size = new Size(413, 108);
             textboxChat.TabIndex = 0;
             // 
             // MainSendButtonPanel
             // 
             MainSendButtonPanel.Controls.Add(sendButtonChat);
-            MainSendButtonPanel.Location = new Point(986, 781);
+            MainSendButtonPanel.Location = new Point(847, 782);
             MainSendButtonPanel.Name = "MainSendButtonPanel";
             MainSendButtonPanel.Size = new Size(87, 108);
             MainSendButtonPanel.TabIndex = 13;
@@ -277,9 +287,9 @@
             // MainSendFilePanel
             // 
             MainSendFilePanel.Controls.Add(sendFileButtonChat);
-            MainSendFilePanel.Location = new Point(1079, 782);
+            MainSendFilePanel.Location = new Point(1085, 783);
             MainSendFilePanel.Name = "MainSendFilePanel";
-            MainSendFilePanel.Size = new Size(87, 108);
+            MainSendFilePanel.Size = new Size(87, 106);
             MainSendFilePanel.TabIndex = 12;
             MainSendFilePanel.Paint += panel3_Paint;
             // 
@@ -295,7 +305,7 @@
             sendFileButtonChat.Name = "sendFileButtonChat";
             sendFileButtonChat.PressedState.ImageSize = new Size(64, 64);
             sendFileButtonChat.ShadowDecoration.CustomizableEdges = customizableEdges1;
-            sendFileButtonChat.Size = new Size(87, 108);
+            sendFileButtonChat.Size = new Size(87, 106);
             sendFileButtonChat.TabIndex = 0;
             sendFileButtonChat.Click += sendFileButtonChat_Click;
             // 
@@ -306,6 +316,7 @@
             BackColor = Color.BlanchedAlmond;
             ClientSize = new Size(1184, 901);
             ControlBox = false;
+            Controls.Add(EmojiPanelMainPage);
             Controls.Add(MainSendFilePanel);
             Controls.Add(MainSendButtonPanel);
             Controls.Add(MainTextboxPanel);
@@ -342,7 +353,6 @@
         private Button ChatButton;
         public Guna.UI2.WinForms.Guna2CirclePictureBox ProfilePictureBoxMainPage;
         private Panel FriendListPanelMainPage;
-        private Guna.UI2.WinForms.Guna2ImageButton guna2ImageButton1;
         private Guna.UI2.WinForms.Guna2TextBox ChatTextbox;
         private Panel MainPanelMainPage;
         private Panel MainTextboxPanel;
@@ -351,5 +361,6 @@
         private Guna.UI2.WinForms.Guna2ImageButton sendFileButtonChat;
         private Guna.UI2.WinForms.Guna2ImageButton sendButtonChat;
         private Guna.UI2.WinForms.Guna2TextBox textboxChat;
+        private Panel EmojiPanelMainPage;
     }
 }
