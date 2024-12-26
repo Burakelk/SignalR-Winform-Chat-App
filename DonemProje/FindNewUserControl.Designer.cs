@@ -58,7 +58,7 @@
             findFriendTextBox.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             findFriendTextBox.Font = new Font("Segoe UI", 9F);
             findFriendTextBox.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            findFriendTextBox.Location = new Point(182, 219);
+            findFriendTextBox.Location = new Point(168, 217);
             findFriendTextBox.Margin = new Padding(3, 4, 3, 4);
             findFriendTextBox.Name = "findFriendTextBox";
             findFriendTextBox.PasswordChar = '\0';
@@ -77,13 +77,13 @@
             findFriendsButton.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
             findFriendsButton.Font = new Font("Segoe UI", 9F);
             findFriendsButton.ForeColor = Color.White;
-            findFriendsButton.Location = new Point(258, 348);
+            findFriendsButton.Location = new Point(250, 338);
             findFriendsButton.Name = "findFriendsButton";
             findFriendsButton.ShadowDecoration.CustomizableEdges = customizableEdges4;
             findFriendsButton.Size = new Size(225, 56);
             findFriendsButton.TabIndex = 4;
-            findFriendsButton.Text = "Send Request";
-            findFriendsButton.Click += findFriendsButton_Click;
+            findFriendsButton.Text = "SendRequest";
+            findFriendsButton.Click += findFriendsButton_Click_1;
             // 
             // FindNewUserControl
             // 

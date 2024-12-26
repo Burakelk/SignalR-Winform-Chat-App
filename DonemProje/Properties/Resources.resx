@@ -127,8 +127,8 @@
   <data name="Character with phone 1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Character with phone 1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="png-clipart-password-computer-icons-security-safety-icon-safety-icon-child-safety-lock-thumbnail" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\png-clipart-password-computer-icons-security-safety-icon-safety-icon-child-safety-lock-thumbnail1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="default-image" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\default-image.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="gozAcik" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gozAcik.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -160,6 +160,9 @@
   <data name="Ekran görüntüsü 2024-02-06 205958" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Ekran görüntüsü 2024-02-06 205958.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="emoji-smile.1024x1024" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\emoji-smile.1024x1024.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="arrowback21" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\arrowback21.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -169,8 +172,8 @@
   <data name="koyu-siyah-arka-plan-dokusu_297412-original" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\koyu-siyah-arka-plan-dokusu_297412-original.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="default-image" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\default-image.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="png-clipart-password-computer-icons-security-safety-icon-safety-icon-child-safety-lock-thumbnail" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\png-clipart-password-computer-icons-security-safety-icon-safety-icon-child-safety-lock-thumbnail1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="istockphoto-1294603953-612x612" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\istockphoto-1294603953-612x612.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -184,7 +187,7 @@
   <data name="desktop-wallpaper-30-cool-plain-backgrounds-plain-but-nice-backgrounds" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\desktop-wallpaper-30-cool-plain-backgrounds-plain-but-nice-backgrounds.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="emoji-smile.1024x1024" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\emoji-smile.1024x1024.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="microphone" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\microphone.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

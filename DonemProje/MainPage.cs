@@ -23,6 +23,7 @@ using AxWMPLib;
 using WMPLib;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using Button = System.Windows.Forms.Button;
+using Microsoft.IdentityModel.Tokens;
 
 namespace DonemProje
 {
@@ -33,8 +34,11 @@ namespace DonemProje
         public string UserName;
         public int kullanıcıID;
         List<string> Friends = new List<string>();
-        
+        Control SelectedControl;
+
+
         private ChatUserControl chatUserControl;
+  
         private HubConnection _connection;
         private IHubProxy _hubProxy;
         private static Dictionary<string, List<string>> _photoChunks = new Dictionary<string, List<string>>();
@@ -46,14 +50,21 @@ namespace DonemProje
 
             InitializeComponent();
         }
-
+         private void CreateChatUserControl(string name)
+        {
+            chatUserControl = new ChatUserControl()
+            {
+                Name = name
+            };
+            MainPanelMainPage.Controls.Add(chatUserControl);
+            chatUserControl.UserNameLabelChatUserControl.Text= name;
+            chatUserControl.Hide();
+        }
         private void MainPage_Load(object sender, EventArgs e)
         {
             UserNameMainPageLabel.Text = UserName;
             StartConnection();
-            this.MainSendButtonPanel.Hide();
-            this.MainSendFilePanel.Hide();
-            this.MainTextboxPanel.Hide();
+            ShowChatElements(false);
 
             try
             {
@@ -68,19 +79,33 @@ namespace DonemProje
 
                     Invoke(new Action(() =>
                     {
+                        if (!MainPanelMainPage.Controls.ContainsKey(senderName))
+                        {
+                            CreateChatUserControl(senderName);
 
+                        }
                         YouBubble youBubble = new YouBubble();
 
 
-                        if (chatUserControl != null && chatUserControl.Name == senderName)
+                        if (chatUserControl != null && MainPanelMainPage.Controls.ContainsKey(senderName))
                         {
                             youBubble.MessageLabel.Text = message;
-
+                            chatUserControl = (ChatUserControl)MainPanelMainPage.Controls.Find(senderName, true).First();
                             chatUserControl.ChatScreenPanelChatUserControl.Controls.Add(youBubble);
                             youBubble.Dock = DockStyle.Top;
                             youBubble.BringToFront();
                             youBubble.Focus();
                         }
+                    }));
+                });
+                _hubProxy.On<string, string>("receiveRequest", (senderName, message) =>
+                {
+
+
+                    Invoke(new Action(() =>
+                    {
+
+
                     }));
                 });
                 _hubProxy.On<string, string, int, string>("receiveMedia", (senderName, base64Chunk, totalChunk, typeOfFile) =>
@@ -125,7 +150,7 @@ namespace DonemProje
                                     YouBubbleMedia youBubbleMedia = new YouBubbleMedia();
 
                                     AxWindowsMediaPlayer axWindowsMediaPlayer1 = new AxWindowsMediaPlayer();
-
+                                    chatUserControl = (ChatUserControl)MainPanelMainPage.Controls.Find(senderName, true).First();
                                     axWindowsMediaPlayer1.Enabled = true;
                                     youBubbleMedia.Controls.Add(axWindowsMediaPlayer1);
                                     axWindowsMediaPlayer1.CreateControl();
@@ -215,20 +240,59 @@ namespace DonemProje
             };
 
         }
+      
+        private void ShowChatElements(bool show)
+        {
+            if (show)
+            {
+                this.EmojiPanelMainPage.Show();
+                this.EmojiPanelMainPage.Show();
+                this.MainSendButtonPanel.Show();
+                this.MainSendFilePanel.Show();
+                this.MainTextboxPanel.Show();
+                this.MicrofonPanelMainPage.Show();
+            }
+            else
+            {
+                this.EmojiPanelMainPage.Hide();
+                this.EmojiPanelMainPage.Hide();
+                this.MainSendButtonPanel.Hide();
+                this.MainSendFilePanel.Hide();
+                this.MainTextboxPanel.Hide();
+                this.MicrofonPanelMainPage.Hide();
+            }
+        }
         private void ProfileButton_Click(object sender, EventArgs e)
         {
-            this.EmojiPanelMainPage.Hide();
-            this.MainSendButtonPanel.Hide();
-            this.MainSendFilePanel.Hide();
-            this.MainTextboxPanel.Hide();
-            this.MainPanelMainPage.Controls.Clear();
-            ProfileUserControl profileUserControl = new ProfileUserControl();
+            ShowChatElements(false);
+               ProfileUserControl profileUserControl= new ProfileUserControl();
+            
+            if (MainPanelMainPage.Controls.ContainsKey("ProfilUserControl"))
+            {
+                MainPanelMainPage.Controls.Remove(profileUserControl);
+      
+
+            }
+            profileUserControl = new ProfileUserControl() { 
+            Name="ProfilUserControl"};
             this.MainPanelMainPage.Controls.Add(profileUserControl);
             profileUserControl.Dock = DockStyle.Fill;
 
 
             profileUserControl.BringToFront();
         }
+        private void ShowUserControl(Control controlToShow)
+        {
+            foreach (Control item in MainPanelMainPage.Controls)
+            {
+                item.Visible = false;
+            }
+            controlToShow.Visible = true;
+            SelectedControl= chatUserControl.ChatScreenPanelChatUserControl;
+
+
+        }
+      
         private async void StartConnection()
         {
             _connection = new HubConnection("http://localhost:8080");
@@ -246,10 +310,134 @@ namespace DonemProje
             // Kullanıcıyı sunucuda kaydet
             await _hubProxy.Invoke("RegisterUser", UserName);
         }
+        private void FriendList()
+        {
+            if (this.FriendListPanelMainPage.Controls.Count > 0)
+            {
+                this.FriendListPanelMainPage.Controls.Clear();
+            }
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    // string query = "SELECT TARGET_USER_ID FROM User_Relations_table WHERE _CASE = @CASE AND USER_ID=@USERID ";
+                    string query = @" SELECT 
+u2.username AS TargetUserName      
+
+FROM 
+    User_Relations_table o
+INNER JOIN 
+    users_table u
+ON 
+    u.USER_ID = o.USER_ID
+INNER JOIN 
+    users_table u2
+ON 
+    o.TARGET_USER_ID = u2.USER_ID
+WHERE 
+    o._CASE = @CASE 
+    AND o.USER_ID = @USERID;";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@CASE", "F");
+                        command.Parameters.AddWithValue("@USERID", kullanıcıID);
+
+                        connection.Open();
+                        SqlDataReader reader = command.ExecuteReader();
+                        int i = 0;
+                        while (reader.Read())
+                        {
+
+                            string friendName = reader["TargetUserName"].ToString();
+                            Friends.Add(friendName);
+
+                            i++;
+
+                        }
+
+                        reader.Close();
+                    }
+
+
+                    for (int i = 0; i < Friends.Count; i++)
+                    {
+
+
+                        FriendsListMemberUserControl friendsListMemberUserControl = new FriendsListMemberUserControl
+                        {
+                            Name = $"{Friends[i]}",
+                            Cursor = Cursors.Hand
+                        };
+
+                        friendsListMemberUserControl.Click += (s, args) =>
+                        {
+                            if (this.MainPanelMainPage.Controls.ContainsKey(friendsListMemberUserControl.Name))
+                            {
+                                TargetUsername = friendsListMemberUserControl.Name;
+                                SelectedControl = MainPanelMainPage.Controls.Find(friendsListMemberUserControl.Name, true).FirstOrDefault();
+                                MainPanelMainPage.Controls.Find(friendsListMemberUserControl.Name, true).FirstOrDefault();
+                                chatUserControl = (ChatUserControl)MainPanelMainPage.Controls.Find(friendsListMemberUserControl.Name, true).First();
+                                ShowUserControl(SelectedControl);
+
+
+
+                                return;
+                            }
+                            ShowChatElements(true);
+
+                            chatUserControl = new ChatUserControl()
+                            {
+                                Name = friendsListMemberUserControl.Name
+                            };
+
+                            this.MainPanelMainPage.Controls.Add(chatUserControl);
+                            chatUserControl.UserNameLabelChatUserControl.Text = friendsListMemberUserControl.Name;
+                            chatUserControl.Visible = true;
+                            chatUserControl.Dock = DockStyle.Fill;
+                            // ShowUserControl(chatUserControl);
+
+                            TargetUsername = friendsListMemberUserControl.Name;
+                            listBox1.Items.Clear();
+                            foreach (Control item in MainPanelMainPage.Controls)
+                            {
+                                listBox1.Items.Add(item.Name.ToString());
+                            }
+                           
+                            ShowUserControl(chatUserControl);
+                            chatUserControl.Select();
+
+                        };
+
+                        friendsListMemberUserControl.usernameFriendLabel.Text = Friends[i].ToString();
+                        this.FriendListPanelMainPage.Controls.Add(friendsListMemberUserControl);
+                        friendsListMemberUserControl.Dock = DockStyle.Top;
+                        friendsListMemberUserControl.BringToFront();
+                    }
+
+                    Friends.Clear();
+
+
+                }
+                catch (Exception ex)
+                {
+
+                    MessageBox.Show("HATA İLE KARŞILAŞILDI" + ex.ToString());
+
+                }
+                finally
+                {
+                    connection.Close();
+                }
+
+            }
+
+
+        }
         private void ChatButton_Click(object sender, EventArgs e)
         {
 
-
+            #region oldCode
             if (this.FriendListPanelMainPage.Controls.Count > 0)
             {
                 this.FriendListPanelMainPage.Controls.Clear();
@@ -308,31 +496,56 @@ WHERE
                             Name = $"{Friends[i]}",
                             Cursor = Cursors.Hand
                         };
-
+                    
                         friendsListMemberUserControl.Click += (s, args) =>
                         {
-                            if (this.MainPanelMainPage.Controls.Count > 0)
+                            if (this.MainPanelMainPage.Controls.ContainsKey(friendsListMemberUserControl.Name))
                             {
-                                this.MainPanelMainPage.Controls.Clear();
+                                TargetUsername = friendsListMemberUserControl.Name;
+                                SelectedControl = MainPanelMainPage.Controls.Find(friendsListMemberUserControl.Name, true).FirstOrDefault();
+                                MainPanelMainPage.Controls.Find(friendsListMemberUserControl.Name, true).FirstOrDefault();
+                                chatUserControl= (ChatUserControl)MainPanelMainPage.Controls.Find(friendsListMemberUserControl.Name, true).First();
+                                ShowUserControl(SelectedControl);
+
+                                
+
+                                return ;
                             }
-                            ShowEmojies();
+                            this.EmojiPanelMainPage.Show();
+                            this.EmojiPanelMainPage.Show();
                             this.MainSendButtonPanel.Show();
                             this.MainSendFilePanel.Show();
                             this.MainTextboxPanel.Show();
+                            this.MicrofonPanelMainPage.Show();
 
-                            chatUserControl = new ChatUserControl();
+                            chatUserControl = new ChatUserControl()
+                            {
+                                Name=friendsListMemberUserControl.Name
+                            };
+                            
                             this.MainPanelMainPage.Controls.Add(chatUserControl);
+                            chatUserControl.Visible = true;
                             chatUserControl.Name = friendsListMemberUserControl.Name;
                             chatUserControl.UserNameLabelChatUserControl.Text = friendsListMemberUserControl.Name;
                             chatUserControl.Dock = DockStyle.Fill;
+                           // ShowUserControl(chatUserControl);
+                            
                             TargetUsername = friendsListMemberUserControl.Name;
+                            listBox1.Items.Clear();
+                            foreach (Control item in MainPanelMainPage.Controls)
+                            {
+                                listBox1.Items.Add(item.Name.ToString());
+                            }
+
+                            ShowUserControl(chatUserControl);
+                            chatUserControl.Select();
 
                         };
+                      
                         friendsListMemberUserControl.usernameFriendLabel.Text = Friends[i].ToString();
                         this.FriendListPanelMainPage.Controls.Add(friendsListMemberUserControl);
                         friendsListMemberUserControl.Dock = DockStyle.Top;
-
-
+                        friendsListMemberUserControl.BringToFront();
                     }
 
                     Friends.Clear();
@@ -351,8 +564,8 @@ WHERE
                 }
 
             }
-
-
+            #endregion
+            FriendList();
 
 
         }
@@ -362,7 +575,9 @@ WHERE
         }
         private void FindNewButton_Click(object sender, EventArgs e)
         {
+            
             this.MainPanelMainPage.Controls.Clear();
+            this.MicrofonPanelMainPage.Hide();
             this.EmojiPanelMainPage.Hide();
             this.MainSendButtonPanel.Hide();
             this.MainSendFilePanel.Hide();
@@ -422,19 +637,20 @@ WHERE
 
         private void sendButtonChat_Click(object sender, EventArgs e)
         {
+           
             
-            if (chatUserControl != null)
+            if (chatUserControl != null && !string.IsNullOrEmpty(textboxChat.Text) && textboxChat.Text.Length < 250)
             {
                 MeBubble meBubble = new MeBubble();
                 meBubble.MessageLabel.Text = textboxChat.Text;
-
+                MainPanelMainPage.Controls.Find(TargetUsername, true).First();
                 chatUserControl.ChatScreenPanelChatUserControl.Controls.Add(meBubble);
-
                 SendMessage(TargetUsername, textboxChat.Text);
                 meBubble.Size = new Size(326, meBubble.MessageLabel.Size.Height + 20);
                 meBubble.Dock = DockStyle.Top;
                 meBubble.BringToFront();
                 meBubble.Focus();
+                textboxChat.Text = "";
             }
 
         }
@@ -586,17 +802,15 @@ WHERE
                 }
             }
         }
-       
+
         private void ShowEmojies()
         {
-            Emoji emoji1 = new Emoji();
-            FlowLayoutPanel emojiPanel; emojiPanel = new FlowLayoutPanel()
+            if (EmojiPanelMainPage.Controls.Count > 0)
             {
-                Name = "EmojiPanel",
-                Size = new Size(200, 200),
-                AutoScroll = true,
+                EmojiPanelMainPage.Controls.Clear();
+            }
+            Emoji emoji1 = new Emoji();
 
-            };
             foreach (var emoji in emoji1.emojies)
             {
                 Button emojiButton = new Button
@@ -604,7 +818,7 @@ WHERE
                     Text = emoji,
                     Font = new Font("Segoe UI Emoji", 12),
                     Size = new Size(40, 40),
-                    Margin = new Padding(5,5,5,5)
+                    Margin = new Padding(5, 5, 5, 5)
                 };
 
                 // Emoji butonuna tıklama olayı
@@ -613,21 +827,22 @@ WHERE
                     textboxChat.Text += emojiButton.Text; // Emoji'yi TextBox'a ekle
 
                 };
-                
-                emojiPanel.Controls.Add(emojiButton);
+
+                EmojiPanelMainPage.Controls.Add(emojiButton);
             }
-            if (chatUserControl != null)
-            {
-                EmojiPanelMainPage.Controls.Add(emojiPanel);
-                emojiPanel.BringToFront();
-                emojiPanel.Show();
-                emojiPanel.Dock = DockStyle.Bottom;
-                emojiPanel.BringToFront();
-                emojiPanel.Focus();
 
 
-            }
-           
+        }
+        public async void SendFriendRequest(string sender, string reciever)
+        {
+
+        }
+
+        private void guna2ImageButton1_Click_1(object sender, EventArgs e)
+        {
+
+
+
         }
     }
 }

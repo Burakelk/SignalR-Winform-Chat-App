@@ -56,9 +56,10 @@
             // 
             ChatScreenPanelChatUserControl.AutoScroll = true;
             ChatScreenPanelChatUserControl.BackColor = Color.IndianRed;
-            ChatScreenPanelChatUserControl.Location = new Point(3, 96);
+            ChatScreenPanelChatUserControl.Dock = DockStyle.Bottom;
+            ChatScreenPanelChatUserControl.Location = new Point(0, 99);
             ChatScreenPanelChatUserControl.Name = "ChatScreenPanelChatUserControl";
-            ChatScreenPanelChatUserControl.Size = new Size(737, 604);
+            ChatScreenPanelChatUserControl.Size = new Size(743, 604);
             ChatScreenPanelChatUserControl.TabIndex = 2;
             // 
             // ChatUserControl

@@ -60,7 +60,21 @@ namespace SignalR_Server
             }
         }
 
-
+        public void SendRequestToUser(string sender, string receiver, string message)
+        {
+            if (Users.TryGetValue(receiver, out var connectionId))
+            {
+                
+                Clients.Client(connectionId).receiveRequest(sender, message);
+                Console.WriteLine($"Message from {sender} to {receiver}: {message}");
+            }
+            else
+            {
+                // Kullanıcı bulunamazsa hata mesajı gönder
+                Clients.Client(Context.ConnectionId).receiveMessage("server", $"{receiver} is not online.");
+            }
+        }
+        
         public async Task SendMediaToUser(string senderUsername, string receiverUsername, string chunkData, int chunkCount, string typeOfFile)
         {
             // Alıcının bağlantı ID'sini al
