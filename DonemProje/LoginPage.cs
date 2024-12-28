@@ -92,10 +92,10 @@ namespace DonemProje
         }
         private void LoginButton_Click(object sender, EventArgs e)
         {
-            if (ValidateUser(EmailLogintxt.Text, PasswordLogintextbox.Text))
+            if (ValidateUser(EmailLogintxt.Text.Trim(), PasswordLogintextbox.Text))
             {
                
-                MainPage mainPage = new MainPage(EmailLogintxt.Text, kullaniciID); //kullanıcı ID si zaten alındı. Eğer giriş doğruysa kullanıcı adını da buradan gönderiyoruz.
+                MainPage mainPage = new MainPage(EmailLogintxt.Text.Trim(), kullaniciID); //kullanıcı ID si zaten alındı. Eğer giriş doğruysa kullanıcı adını da buradan gönderiyoruz.
                 mainPage.Show();
                 this.Hide();
             }
@@ -117,8 +117,5 @@ namespace DonemProje
 
         }
 
-       
-        
-      
     }
 }

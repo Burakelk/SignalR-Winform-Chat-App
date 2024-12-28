@@ -32,32 +32,57 @@ namespace DonemProje
         string TargetUsername = null;
         string connectionString = " Data Source=LAPTOP-5188NCUM;Initial Catalog=users;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
         public string UserName;
-        public int kullanıcıID;
+        public int UserID;
+        string SelectedReqUsername;
         List<string> Friends = new List<string>();
+        List<string> FriendsReq = new List<string>();
+        List<string> BlockedFriends = new List<string>();
         Control SelectedControl;
 
 
         private ChatUserControl chatUserControl;
-  
+
         private HubConnection _connection;
         private IHubProxy _hubProxy;
         private static Dictionary<string, List<string>> _photoChunks = new Dictionary<string, List<string>>();
         public MainPage(string userName, int KullanıcıID)
         {
             UserName = userName;
-            this.kullanıcıID = KullanıcıID;
+            this.UserID = KullanıcıID;
 
 
             InitializeComponent();
         }
-         private void CreateChatUserControl(string name)
+        public MainPage(string FriendInviteUserName)
+        {
+            SendFriendRequest(FriendInviteUserName);
+            InitializeComponent();
+        }
+        public MainPage()
+        {
+            
+            InitializeComponent();
+        }
+        public async void  SendFriendRequest(string FriendInviteUserName)
+        {
+            try
+            {
+                // Sunucuya özel istek gönderilir
+                await _hubProxy.Invoke("SendRequestToUser", UserName, FriendInviteUserName);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Request send error: {ex.Message}");
+            }
+        }
+        private void CreateChatUserControl(string name)
         {
             chatUserControl = new ChatUserControl()
             {
                 Name = name
             };
             MainPanelMainPage.Controls.Add(chatUserControl);
-            chatUserControl.UserNameLabelChatUserControl.Text= name;
+            chatUserControl.UserNameLabelChatUserControl.Text = name;
             chatUserControl.Hide();
         }
         private void MainPage_Load(object sender, EventArgs e)
@@ -98,13 +123,11 @@ namespace DonemProje
                         }
                     }));
                 });
-                _hubProxy.On<string, string>("receiveRequest", (senderName, message) =>
+                _hubProxy.On<string, char>("receiveRequest", (senderName, _case) =>
                 {
-
-
                     Invoke(new Action(() =>
                     {
-
+                        
 
                     }));
                 });
@@ -240,7 +263,7 @@ namespace DonemProje
             };
 
         }
-      
+
         private void ShowChatElements(bool show)
         {
             if (show)
@@ -251,6 +274,7 @@ namespace DonemProje
                 this.MainSendFilePanel.Show();
                 this.MainTextboxPanel.Show();
                 this.MicrofonPanelMainPage.Show();
+                ShowEmojies();
             }
             else
             {
@@ -265,16 +289,18 @@ namespace DonemProje
         private void ProfileButton_Click(object sender, EventArgs e)
         {
             ShowChatElements(false);
-               ProfileUserControl profileUserControl= new ProfileUserControl();
-            
+            ProfileUserControl profileUserControl = new ProfileUserControl();
+
             if (MainPanelMainPage.Controls.ContainsKey("ProfilUserControl"))
             {
                 MainPanelMainPage.Controls.Remove(profileUserControl);
-      
+
 
             }
-            profileUserControl = new ProfileUserControl() { 
-            Name="ProfilUserControl"};
+            profileUserControl = new ProfileUserControl()
+            {
+                Name = "ProfilUserControl"
+            };
             this.MainPanelMainPage.Controls.Add(profileUserControl);
             profileUserControl.Dock = DockStyle.Fill;
 
@@ -288,11 +314,11 @@ namespace DonemProje
                 item.Visible = false;
             }
             controlToShow.Visible = true;
-            SelectedControl= chatUserControl.ChatScreenPanelChatUserControl;
+            SelectedControl = chatUserControl.ChatScreenPanelChatUserControl;
 
 
         }
-      
+
         private async void StartConnection()
         {
             _connection = new HubConnection("http://localhost:8080");
@@ -341,7 +367,7 @@ WHERE
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@CASE", "F");
-                        command.Parameters.AddWithValue("@USERID", kullanıcıID);
+                        command.Parameters.AddWithValue("@USERID", UserID);
 
                         connection.Open();
                         SqlDataReader reader = command.ExecuteReader();
@@ -403,7 +429,7 @@ WHERE
                             {
                                 listBox1.Items.Add(item.Name.ToString());
                             }
-                           
+
                             ShowUserControl(chatUserControl);
                             chatUserControl.Select();
 
@@ -468,7 +494,7 @@ WHERE
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@CASE", "F");
-                        command.Parameters.AddWithValue("@USERID", kullanıcıID);
+                        command.Parameters.AddWithValue("@USERID", UserID);
 
                         connection.Open();
                         SqlDataReader reader = command.ExecuteReader();
@@ -496,7 +522,7 @@ WHERE
                             Name = $"{Friends[i]}",
                             Cursor = Cursors.Hand
                         };
-                    
+
                         friendsListMemberUserControl.Click += (s, args) =>
                         {
                             if (this.MainPanelMainPage.Controls.ContainsKey(friendsListMemberUserControl.Name))
@@ -504,12 +530,12 @@ WHERE
                                 TargetUsername = friendsListMemberUserControl.Name;
                                 SelectedControl = MainPanelMainPage.Controls.Find(friendsListMemberUserControl.Name, true).FirstOrDefault();
                                 MainPanelMainPage.Controls.Find(friendsListMemberUserControl.Name, true).FirstOrDefault();
-                                chatUserControl= (ChatUserControl)MainPanelMainPage.Controls.Find(friendsListMemberUserControl.Name, true).First();
+                                chatUserControl = (ChatUserControl)MainPanelMainPage.Controls.Find(friendsListMemberUserControl.Name, true).First();
                                 ShowUserControl(SelectedControl);
 
-                                
 
-                                return ;
+
+                                return;
                             }
                             this.EmojiPanelMainPage.Show();
                             this.EmojiPanelMainPage.Show();
@@ -520,16 +546,16 @@ WHERE
 
                             chatUserControl = new ChatUserControl()
                             {
-                                Name=friendsListMemberUserControl.Name
+                                Name = friendsListMemberUserControl.Name
                             };
-                            
+
                             this.MainPanelMainPage.Controls.Add(chatUserControl);
                             chatUserControl.Visible = true;
                             chatUserControl.Name = friendsListMemberUserControl.Name;
                             chatUserControl.UserNameLabelChatUserControl.Text = friendsListMemberUserControl.Name;
                             chatUserControl.Dock = DockStyle.Fill;
-                           // ShowUserControl(chatUserControl);
-                            
+                            // ShowUserControl(chatUserControl);
+
                             TargetUsername = friendsListMemberUserControl.Name;
                             listBox1.Items.Clear();
                             foreach (Control item in MainPanelMainPage.Controls)
@@ -541,7 +567,7 @@ WHERE
                             chatUserControl.Select();
 
                         };
-                      
+
                         friendsListMemberUserControl.usernameFriendLabel.Text = Friends[i].ToString();
                         this.FriendListPanelMainPage.Controls.Add(friendsListMemberUserControl);
                         friendsListMemberUserControl.Dock = DockStyle.Top;
@@ -569,13 +595,10 @@ WHERE
 
 
         }
-        private void DeleteChatPanel()
-        {
 
-        }
         private void FindNewButton_Click(object sender, EventArgs e)
         {
-            
+
             this.MainPanelMainPage.Controls.Clear();
             this.MicrofonPanelMainPage.Hide();
             this.EmojiPanelMainPage.Hide();
@@ -637,8 +660,8 @@ WHERE
 
         private void sendButtonChat_Click(object sender, EventArgs e)
         {
-           
-            
+
+
             if (chatUserControl != null && !string.IsNullOrEmpty(textboxChat.Text) && textboxChat.Text.Length < 250)
             {
                 MeBubble meBubble = new MeBubble();
@@ -840,6 +863,203 @@ WHERE
 
         private void guna2ImageButton1_Click_1(object sender, EventArgs e)
         {
+
+
+
+        }
+
+        private void FetchFriendRequests()
+        {
+            FriendRequestListUserControl friendRequestListUserControl = new FriendRequestListUserControl();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    // string query = "SELECT TARGET_USER_ID FROM User_Relations_table WHERE _CASE = @CASE AND USER_ID=@USERID ";
+                    string query = @" SELECT 
+u2.username AS TargetUserName      
+
+FROM 
+    User_Relations_table o
+INNER JOIN 
+    users_table u
+ON 
+    u.USER_ID = o.USER_ID
+INNER JOIN 
+    users_table u2
+ON 
+    o.TARGET_USER_ID = u2.USER_ID
+WHERE 
+    o._CASE = @CASE
+    AND o.USER_ID = @USERID ";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@CASE", "W");
+                        command.Parameters.AddWithValue("@USERID", UserID);
+
+                        connection.Open();
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+
+                            string friendName = reader["TargetUserName"].ToString();
+                            FriendsReq.Add(friendName);
+
+
+
+                        }
+
+                        reader.Close();
+                    }
+
+
+                    for (int i = 0; i < FriendsReq.Count; i++)
+                    {
+
+                        RadioButton radioButton = new RadioButton
+                        {
+                            Name = $"{FriendsReq[i]}",
+                            Text = FriendsReq[i],
+                            Cursor = Cursors.Hand,
+                            BackColor = Color.WhiteSmoke,
+
+                        };
+
+                        friendRequestListUserControl.FriendReqListGroupBox.Controls.Add(radioButton);
+                        radioButton.Dock = DockStyle.Top;
+                        MainPanelMainPage.Controls.Add(friendRequestListUserControl);
+                        friendRequestListUserControl.Dock = DockStyle.Fill;
+                        friendRequestListUserControl.BringToFront();
+
+                    }
+
+                    FriendsReq.Clear();
+
+
+                }
+                catch (Exception ex)
+                {
+
+                    MessageBox.Show("HATA İLE KARŞILAŞILDI" + ex.ToString());
+
+                }
+                finally
+                {
+                    connection.Close();
+                }
+
+            }
+        }
+        private void FetchBlockedUsers()
+        {
+            FriendRequestListUserControl friendRequestListUserControl = new FriendRequestListUserControl();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    // string query = "SELECT TARGET_USER_ID FROM User_Relations_table WHERE _CASE = @CASE AND USER_ID=@USERID ";
+                    string query = @" SELECT 
+u2.username AS TargetUserName      
+
+FROM 
+    User_Relations_table o
+INNER JOIN 
+    users_table u
+ON 
+    u.USER_ID = o.USER_ID
+INNER JOIN 
+    users_table u2
+ON 
+    o.TARGET_USER_ID = u2.USER_ID
+WHERE 
+    o._CASE = @CASE
+    AND o.USER_ID = @USERID ";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@CASE", "B");
+                        command.Parameters.AddWithValue("@USERID", UserID);
+
+                        connection.Open();
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+
+                            string friendName = reader["TargetUserName"].ToString();
+                            BlockedFriends.Add(friendName);
+
+
+
+                        }
+
+                        reader.Close();
+                    }
+                    if (BlockedFriends.Count<1)
+                    {
+
+                        MainPanelMainPage.Controls.Add(friendRequestListUserControl);
+                        friendRequestListUserControl.BringToFront();
+                    }
+                    for (int i = 0; i < BlockedFriends.Count; i++)
+                    {
+
+                        RadioButton radioButton = new RadioButton
+                        {
+                            Name = $"{BlockedFriends[i]}",
+                            Text = BlockedFriends[i],
+                            Cursor = Cursors.Hand,
+                            BackColor = Color.WhiteSmoke,
+
+                        };
+
+                        friendRequestListUserControl.BlockedUserListGroupBox.Controls.Add(radioButton);
+                        radioButton.Dock = DockStyle.Top;
+                        
+                        friendRequestListUserControl.Dock = DockStyle.Fill;
+                        friendRequestListUserControl.BringToFront();
+
+                    }
+
+                    FriendsReq.Clear();
+
+
+                }
+                catch (Exception ex)
+                {
+
+                    MessageBox.Show("HATA İLE KARŞILAŞILDI" + ex.ToString());
+
+                }
+                finally
+                {
+                    connection.Close();
+                }
+
+            }
+        }
+        private void FriendReqButton_Click(object sender, EventArgs e)
+        {
+            ShowChatElements(false);
+
+            FriendRequestListUserControl friendRequestListUserControl = new FriendRequestListUserControl();
+            if (MainPanelMainPage.Controls.ContainsKey("friendRequestListUserControl"))
+            {
+                MainPanelMainPage.Controls.Remove(friendRequestListUserControl);
+
+
+            }
+            friendRequestListUserControl = new FriendRequestListUserControl()
+            {
+                Name = "friendRequestListUserControl"
+            };
+
+            ///////////////////////////
+
+            FetchFriendRequests();
+            FetchBlockedUsers();
 
 
 

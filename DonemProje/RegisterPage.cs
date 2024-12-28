@@ -68,7 +68,7 @@ namespace DonemProje
 
                         string insertQuery = "INSERT INTO users_table (USERNAME, PASSW,NAME_SURNAME,E_MAIL,BIRTH_DAY,GENDER) VALUES (@USERNAME, @PASSW,@NAME_SURNAME,@E_MAIL,@BIRTH_DAY,@GENDER)";
                         SqlCommand command = new SqlCommand(insertQuery, connection);
-                        command.Parameters.AddWithValue("@USERNAME", UserNametxt.Text);
+                        command.Parameters.AddWithValue("@USERNAME", UserNametxt.Text.Trim());
                         command.Parameters.AddWithValue("@PASSW", hashedPassword);
                         command.Parameters.AddWithValue("@NAME_SURNAME", fullNametxt.Text);
                         command.Parameters.AddWithValue("@E_MAIL", EmailRegistertxt.Text);

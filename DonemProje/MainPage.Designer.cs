@@ -45,6 +45,7 @@
             guna2ControlBox3 = new Guna.UI2.WinForms.Guna2ControlBox();
             guna2ControlBox1 = new Guna.UI2.WinForms.Guna2ControlBox();
             guna2GroupBox1 = new Guna.UI2.WinForms.Guna2GroupBox();
+            listBox1 = new ListBox();
             FriendReqButton = new Button();
             FindNewButton = new Button();
             LogoutButton = new Button();
@@ -63,7 +64,6 @@
             EmojiPanelMainPage = new FlowLayoutPanel();
             MicrofonPanelMainPage = new Panel();
             MicrofonButtonMainPage = new Guna.UI2.WinForms.Guna2ImageButton();
-            listBox1 = new ListBox();
             guna2GroupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ProfilePictureBoxMainPage).BeginInit();
             MainTextboxPanel.SuspendLayout();
@@ -134,17 +134,26 @@
             guna2GroupBox1.TabIndex = 7;
             guna2GroupBox1.TabStop = false;
             // 
+            // listBox1
+            // 
+            listBox1.FormattingEnabled = true;
+            listBox1.Location = new Point(12, 765);
+            listBox1.Name = "listBox1";
+            listBox1.Size = new Size(150, 104);
+            listBox1.TabIndex = 20;
+            // 
             // FriendReqButton
             // 
             FriendReqButton.Font = new Font("Microsoft Sans Serif", 17.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FriendReqButton.ForeColor = Color.Black;
-            FriendReqButton.Location = new Point(0, 743);
+            FriendReqButton.Location = new Point(-3, 527);
             FriendReqButton.Margin = new Padding(3, 4, 3, 4);
             FriendReqButton.Name = "FriendReqButton";
             FriendReqButton.Size = new Size(186, 83);
             FriendReqButton.TabIndex = 19;
             FriendReqButton.Text = "Friend Requests";
             FriendReqButton.UseVisualStyleBackColor = true;
+            FriendReqButton.Click += FriendReqButton_Click;
             // 
             // FindNewButton
             // 
@@ -352,14 +361,6 @@
             MicrofonButtonMainPage.Size = new Size(86, 108);
             MicrofonButtonMainPage.TabIndex = 0;
             MicrofonButtonMainPage.Click += guna2ImageButton1_Click_1;
-            // 
-            // listBox1
-            // 
-            listBox1.FormattingEnabled = true;
-            listBox1.Location = new Point(12, 578);
-            listBox1.Name = "listBox1";
-            listBox1.Size = new Size(150, 104);
-            listBox1.TabIndex = 20;
             // 
             // MainPage
             // 

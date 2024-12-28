@@ -83,7 +83,7 @@
             findFriendsButton.Size = new Size(225, 56);
             findFriendsButton.TabIndex = 4;
             findFriendsButton.Text = "SendRequest";
-            findFriendsButton.Click += findFriendsButton_Click_1;
+            findFriendsButton.Click += findFriendsButton_Click;
             // 
             // FindNewUserControl
             // 

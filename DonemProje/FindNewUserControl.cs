@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNet.SignalR.Client;
-
+using Microsoft.Data.SqlClient;
 using System;
 using System.ComponentModel;
 using System.Data;
@@ -13,9 +13,12 @@ namespace DonemProje
 {
     public partial class FindNewUserControl : UserControl
     {
+        string connectionString = " Data Source=LAPTOP-5188NCUM;Initial Catalog=users;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
         private ChatUserControl chatUserControl;
         private HubConnection _connection;
         private IHubProxy _hubProxy;
+        int TargetUserID;
+        int UserID;
         public FindNewUserControl()
         {
             InitializeComponent();
@@ -25,28 +28,185 @@ namespace DonemProje
         {
 
         }
+        private bool IsUserExist()
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+               
 
+                string UserIDFetch = "SELECT USER_ID  FROM users_table WHERE USERNAME = @USERNAME ";
+                try
+                {
+
+
+                    using (SqlCommand command = new SqlCommand(UserIDFetch, connection))
+                    {
+                        command.Parameters.AddWithValue("@USERNAME", findFriendTextBox.Text.Trim());
+
+
+                        connection.Open();
+                        int result = Convert.ToInt32(command.ExecuteScalar());
+                        if (result != null && result != 0)
+                        {
+                            TargetUserID = result;
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    MessageBox.Show("HATA İLE KARŞILAŞILDI" + ex.ToString());
+                    return false;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+
+            }
+
+
+
+        
+        }
+        private int FindFriendCase()
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+
+
+                string FindFriendCase = @"SELECT COUNT(*) FROM User_Relations_table
+WHERE 
+    (
+        (USER_ID = @USER_ID AND TARGET_USER_ID = @TARGET_USER_ID) 
+		OR 
+		(USER_ID = @TARGET_USER_ID AND TARGET_USER_ID = @USER_ID) 
+    ) ";
+                
+                try
+                {
+                    int result = -1;
+                    MainPage mainPage = new MainPage();
+
+
+                    using (SqlCommand command = new SqlCommand(FindFriendCase, connection))
+                    {
+                        command.Parameters.AddWithValue(" @USER_ID", mainPage.UserID);
+                        command.Parameters.AddWithValue("@TARGET_USER_ID", TargetUserID);
+
+                        connection.Open();
+                        result = Convert.ToInt32(command.ExecuteScalar());
+                        if (result !=-1)
+                        {
+                            
+                            return result; // result 0 ise hiç ilişkiyok 
+                                           // result 1 ise engellenmiş ya da zaten bir istek gönderilmiş
+                                           // result 2 ise zaten arkadaşlar
+                        }
+                    
+                        
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    MessageBox.Show("HATA İLE KARŞILAŞILDI" + ex.ToString());
+                   // return false;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+                return -1;
+            }
+        }
+        private void DbAddRequest()
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+
+                try
+                {
+                    connection.Open();
+
+                    string insertQuery = "INSERT INTO User_Relations_table (USER_ID,TARGET_USER_ID,_CASE) VALUES (@USER_ID, @TARGET_USER_ID,@_CASE)";
+                    SqlCommand command = new SqlCommand(insertQuery, connection);
+                    command.Parameters.AddWithValue("@USER_ID", UserID);
+                    command.Parameters.AddWithValue("@TARGET_USER_ID", TargetUserID);
+                    command.Parameters.AddWithValue("@_CASE", 'W');
+
+                    command.ExecuteNonQuery();
+                    MessageBox.Show("Friend request sended");
+
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("ERROR: \n" + ex.Message);
+                }
+                finally
+                {
+                    connection?.Close();
+
+                }
+            }
+        }
         private async void findFriendsButton_Click(object sender, EventArgs e)
         {
 
-
             try
             {
-                // Sunucuya özel mesaj gönder
-                await _hubProxy.Invoke("SendMessageToUser");
+                MainPage mainPage = new MainPage();
+                this.UserID=mainPage.UserID;
+                if (IsUserExist() && findFriendTextBox.Text.Trim() != mainPage.UserName)    // böyle bir kullanıcı varsa ve yazdığı kullanıcı adı kendisi değilse
+                {
+                    if (FindFriendCase() == 0)     // aralarında hiç ilişki yoksa istek gönderir
+                    {
+                        // database kaydı yapılacak
+                        DbAddRequest();
+
+                        //kullanıcıya hubproxy üzerinden istek gönderilecek
+                        mainPage.SendFriendRequest(findFriendsButton.Text.Trim());
+
+                        MessageBox.Show("Arkadaşlık isteği gönderildi");
+                    }
+                    else if (FindFriendCase() == 1)  // aralarında ilişki var  ve işlem yapılmaz
+                    {
+                        MessageBox.Show("Bu kullanıcı için işlem gerçekleştiremiyoruz");
+                        return;
+                    }
+                    else if (FindFriendCase() == 2) // arkadaşlar. Bu yüzden işlem yapılmaz
+                    {
+                        MessageBox.Show("Bu kullanıcı ile zaten arkadaşsınız");
+                        return;
+
+                    }
+
+                   
+                }else if (findFriendTextBox.Text.Trim() == mainPage.UserName)
+                {
+                    MessageBox.Show("Kendinizi arkadaş ekleyemezsiniz!");
+                }
+                else
+                {
+                    MessageBox.Show("Böyle bir kullanıcı yok.");
+                }
+
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Message send error: {ex.Message}");
+
+                MessageBox.Show("HATA" + ex.ToString());
             }
-
+           
+         
         }
-
-        private void findFriendsButton_Click_1(object sender, EventArgs e)
-        {
-            
-
-           // mainPage.SendFriendRequest();
-        }
+      
     }
 }
