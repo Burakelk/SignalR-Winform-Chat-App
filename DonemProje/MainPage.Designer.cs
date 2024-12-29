@@ -401,7 +401,6 @@
         private Guna.UI2.WinForms.Guna2ControlBox guna2ControlBox3;
         private Guna.UI2.WinForms.Guna2ControlBox guna2ControlBox1;
         private Guna.UI2.WinForms.Guna2GroupBox guna2GroupBox1;
-        private Label UserNameMainPageLabel;
         private Button ProfileButton;
         private Button FindNewButton;
         private Button LogoutButton;
@@ -409,7 +408,6 @@
         public Guna.UI2.WinForms.Guna2CirclePictureBox ProfilePictureBoxMainPage;
         private Panel FriendListPanelMainPage;
         private Guna.UI2.WinForms.Guna2TextBox ChatTextbox;
-        private Panel MainPanelMainPage;
         private Panel MainTextboxPanel;
         private Panel MainSendButtonPanel;
         private Panel MainSendFilePanel;
@@ -421,5 +419,7 @@
         private Panel MicrofonPanelMainPage;
         private Guna.UI2.WinForms.Guna2ImageButton MicrofonButtonMainPage;
         private ListBox listBox1;
+        public Label UserNameMainPageLabel;
+        public Panel MainPanelMainPage;
     }
 }

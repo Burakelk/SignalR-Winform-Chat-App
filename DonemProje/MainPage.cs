@@ -38,6 +38,8 @@ namespace DonemProje
         List<string> FriendsReq = new List<string>();
         List<string> BlockedFriends = new List<string>();
         Control SelectedControl;
+        public string SelectedUserForFriend;
+        public string SelectedUserForBlock;
 
 
         private ChatUserControl chatUserControl;
@@ -48,33 +50,22 @@ namespace DonemProje
         public MainPage(string userName, int KullanıcıID)
         {
             UserName = userName;
-            this.UserID = KullanıcıID;
+            UserID = KullanıcıID;
 
 
             InitializeComponent();
         }
         public MainPage(string FriendInviteUserName)
         {
-            SendFriendRequest(FriendInviteUserName);
+            //SendFriendRequest(FriendInviteUserName);
             InitializeComponent();
         }
         public MainPage()
         {
-            
+           
             InitializeComponent();
         }
-        public async void  SendFriendRequest(string FriendInviteUserName)
-        {
-            try
-            {
-                // Sunucuya özel istek gönderilir
-                await _hubProxy.Invoke("SendRequestToUser", UserName, FriendInviteUserName);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Request send error: {ex.Message}");
-            }
-        }
+
         private void CreateChatUserControl(string name)
         {
             chatUserControl = new ChatUserControl()
@@ -87,7 +78,7 @@ namespace DonemProje
         }
         private void MainPage_Load(object sender, EventArgs e)
         {
-            UserNameMainPageLabel.Text = UserName;
+            UserNameMainPageLabel.Text = UserName.Trim();
             StartConnection();
             ShowChatElements(false);
 
@@ -127,7 +118,8 @@ namespace DonemProje
                 {
                     Invoke(new Action(() =>
                     {
-                        
+                        MessageBox.Show($"{senderName} tarafından yeni arklık isteği");
+                        FetchFriendRequests();
 
                     }));
                 });
@@ -599,20 +591,14 @@ WHERE
         private void FindNewButton_Click(object sender, EventArgs e)
         {
 
-            this.MainPanelMainPage.Controls.Clear();
-            this.MicrofonPanelMainPage.Hide();
-            this.EmojiPanelMainPage.Hide();
-            this.MainSendButtonPanel.Hide();
-            this.MainSendFilePanel.Hide();
-            this.MainTextboxPanel.Hide();
-            FindNewUserControl findNewUserControl = new FindNewUserControl();
+            ShowChatElements(false);
+            FindNewUserControl findNewUserControl = new FindNewUserControl(UserName,UserID);
             this.MainPanelMainPage.Controls.Add(findNewUserControl);
             findNewUserControl.Dock = DockStyle.Fill;
             findNewUserControl.BringToFront();
         }
 
-        // Alıcı tarafında fotoğraf parçalarını alıp birleştiriyoruz
-
+      
         private void LogoutButton_Click(object sender, EventArgs e)
         {
             StopConnection();
@@ -694,8 +680,10 @@ WHERE
 
         private void MainPage_FormClosed(object sender, FormClosedEventArgs e)
         {
+           
             StopConnection();
             Application.Exit();
+          
         }
         public byte[] GetImageBytes(string filePath)
         {
@@ -856,10 +844,6 @@ WHERE
 
 
         }
-        public async void SendFriendRequest(string sender, string reciever)
-        {
-
-        }
 
         private void guna2ImageButton1_Click_1(object sender, EventArgs e)
         {
@@ -868,182 +852,9 @@ WHERE
 
         }
 
+        
         private void FetchFriendRequests()
         {
-            FriendRequestListUserControl friendRequestListUserControl = new FriendRequestListUserControl();
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                try
-                {
-                    // string query = "SELECT TARGET_USER_ID FROM User_Relations_table WHERE _CASE = @CASE AND USER_ID=@USERID ";
-                    string query = @" SELECT 
-u2.username AS TargetUserName      
-
-FROM 
-    User_Relations_table o
-INNER JOIN 
-    users_table u
-ON 
-    u.USER_ID = o.USER_ID
-INNER JOIN 
-    users_table u2
-ON 
-    o.TARGET_USER_ID = u2.USER_ID
-WHERE 
-    o._CASE = @CASE
-    AND o.USER_ID = @USERID ";
-
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@CASE", "W");
-                        command.Parameters.AddWithValue("@USERID", UserID);
-
-                        connection.Open();
-                        SqlDataReader reader = command.ExecuteReader();
-
-                        while (reader.Read())
-                        {
-
-                            string friendName = reader["TargetUserName"].ToString();
-                            FriendsReq.Add(friendName);
-
-
-
-                        }
-
-                        reader.Close();
-                    }
-
-
-                    for (int i = 0; i < FriendsReq.Count; i++)
-                    {
-
-                        RadioButton radioButton = new RadioButton
-                        {
-                            Name = $"{FriendsReq[i]}",
-                            Text = FriendsReq[i],
-                            Cursor = Cursors.Hand,
-                            BackColor = Color.WhiteSmoke,
-
-                        };
-
-                        friendRequestListUserControl.FriendReqListGroupBox.Controls.Add(radioButton);
-                        radioButton.Dock = DockStyle.Top;
-                        MainPanelMainPage.Controls.Add(friendRequestListUserControl);
-                        friendRequestListUserControl.Dock = DockStyle.Fill;
-                        friendRequestListUserControl.BringToFront();
-
-                    }
-
-                    FriendsReq.Clear();
-
-
-                }
-                catch (Exception ex)
-                {
-
-                    MessageBox.Show("HATA İLE KARŞILAŞILDI" + ex.ToString());
-
-                }
-                finally
-                {
-                    connection.Close();
-                }
-
-            }
-        }
-        private void FetchBlockedUsers()
-        {
-            FriendRequestListUserControl friendRequestListUserControl = new FriendRequestListUserControl();
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                try
-                {
-                    // string query = "SELECT TARGET_USER_ID FROM User_Relations_table WHERE _CASE = @CASE AND USER_ID=@USERID ";
-                    string query = @" SELECT 
-u2.username AS TargetUserName      
-
-FROM 
-    User_Relations_table o
-INNER JOIN 
-    users_table u
-ON 
-    u.USER_ID = o.USER_ID
-INNER JOIN 
-    users_table u2
-ON 
-    o.TARGET_USER_ID = u2.USER_ID
-WHERE 
-    o._CASE = @CASE
-    AND o.USER_ID = @USERID ";
-
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@CASE", "B");
-                        command.Parameters.AddWithValue("@USERID", UserID);
-
-                        connection.Open();
-                        SqlDataReader reader = command.ExecuteReader();
-
-                        while (reader.Read())
-                        {
-
-                            string friendName = reader["TargetUserName"].ToString();
-                            BlockedFriends.Add(friendName);
-
-
-
-                        }
-
-                        reader.Close();
-                    }
-                    if (BlockedFriends.Count<1)
-                    {
-
-                        MainPanelMainPage.Controls.Add(friendRequestListUserControl);
-                        friendRequestListUserControl.BringToFront();
-                    }
-                    for (int i = 0; i < BlockedFriends.Count; i++)
-                    {
-
-                        RadioButton radioButton = new RadioButton
-                        {
-                            Name = $"{BlockedFriends[i]}",
-                            Text = BlockedFriends[i],
-                            Cursor = Cursors.Hand,
-                            BackColor = Color.WhiteSmoke,
-
-                        };
-
-                        friendRequestListUserControl.BlockedUserListGroupBox.Controls.Add(radioButton);
-                        radioButton.Dock = DockStyle.Top;
-                        
-                        friendRequestListUserControl.Dock = DockStyle.Fill;
-                        friendRequestListUserControl.BringToFront();
-
-                    }
-
-                    FriendsReq.Clear();
-
-
-                }
-                catch (Exception ex)
-                {
-
-                    MessageBox.Show("HATA İLE KARŞILAŞILDI" + ex.ToString());
-
-                }
-                finally
-                {
-                    connection.Close();
-                }
-
-            }
-        }
-        private void FriendReqButton_Click(object sender, EventArgs e)
-        {
-            ShowChatElements(false);
-
             FriendRequestListUserControl friendRequestListUserControl = new FriendRequestListUserControl();
             if (MainPanelMainPage.Controls.ContainsKey("friendRequestListUserControl"))
             {
@@ -1056,12 +867,153 @@ WHERE
                 Name = "friendRequestListUserControl"
             };
 
-            ///////////////////////////
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    // Arkadaşlık sorgusu
+                    string query1 = @"
+            SELECT  
+                u.USERNAME as TargetUserName
+            FROM 
+                User_Relations_table o
+            INNER JOIN 
+                users_table u
+            ON 
+                u.USER_ID = o.USER_ID
+            INNER JOIN 
+                users_table u2
+            ON 
+                o.TARGET_USER_ID = u2.USER_ID
+            WHERE 
+                o._CASE = @CASEFriend AND o.TARGET_USER_ID = @USERID";
+
+                    using (SqlCommand command1 = new SqlCommand(query1, connection))
+                    {
+                        command1.Parameters.AddWithValue("@CASEFriend", 'W');
+                        command1.Parameters.AddWithValue("@USERID", UserID);
+
+                        connection.Open();
+
+                        using (SqlDataReader reader1 = command1.ExecuteReader())
+                        {
+                            while (reader1.Read())
+                            {
+                                string friendName = reader1["TargetUserName"].ToString();
+                                FriendsReq.Add(friendName);
+                            }
+                        }
+                    }
+
+                    // Bloklu kullanıcı sorgusu
+                    string query2 = @"
+            SELECT  
+                u2.USERNAME as TargetUserName
+            FROM 
+                User_Relations_table o
+            INNER JOIN 
+                users_table u
+            ON 
+                u.USER_ID = o.USER_ID
+            INNER JOIN 
+                users_table u2
+            ON 
+                o.TARGET_USER_ID = u2.USER_ID
+            WHERE 
+                o._CASE = @CASE AND o.USER_ID = @USERID";
+
+                    using (SqlCommand command2 = new SqlCommand(query2, connection))
+                    {
+                        command2.Parameters.AddWithValue("@CASE", 'B');
+                        command2.Parameters.AddWithValue("@USERID", UserID);
+
+                        using (SqlDataReader reader2 = command2.ExecuteReader())
+                        {
+                            while (reader2.Read())
+                            {
+                                string friendName = reader2["TargetUserName"].ToString();
+                                BlockedFriends.Add(friendName);
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Hata: " + ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+
+
+
+
+            for (int i = 0; i < FriendsReq.Count; i++)
+                    {
+
+                        RadioButton radioButton = new RadioButton
+                        {
+                            Name = $"{FriendsReq[i]}",
+                            Text = FriendsReq[i],
+                            Cursor = Cursors.Hand,
+                            BackColor = Color.WhiteSmoke,
+
+                        };
+                radioButton.CheckedChanged += (sender, args) =>
+                {
+                    if (radioButton.Checked)
+                    {
+                        SelectedReqUsername= radioButton.Text;
+                    }
+                };
+
+                friendRequestListUserControl.FriendReqListGroupBox.Controls.Add(radioButton);
+                radioButton.Dock = DockStyle.Top;
+
+
+            }
+
+                   
+                    for (int i = 0; i < BlockedFriends.Count; i++)
+                    {
+
+                        RadioButton radioButton = new RadioButton
+                        {
+                            Name = $"{BlockedFriends[i]}",
+                            Text = BlockedFriends[i],
+                            Cursor = Cursors.Hand,
+                            BackColor = Color.WhiteSmoke,
+
+                        };
+                radioButton.CheckedChanged += (sender, args) =>
+                {
+                    if (radioButton.Checked) 
+                    {
+                        SelectedUserForBlock = radioButton.Text;
+                        
+                    }
+                };
+                friendRequestListUserControl.BlockedUserListGroupBox.Controls.Add(radioButton);
+                        radioButton.Dock = DockStyle.Top;
+
+
+                    }
+                    FriendsReq.Clear();
+                    BlockedFriends.Clear();
+                    MainPanelMainPage.Controls.Add(friendRequestListUserControl);
+                    friendRequestListUserControl.Dock = DockStyle.Fill;
+                    friendRequestListUserControl.BringToFront();
+                
+             
+            
+        }
+        private void FriendReqButton_Click(object sender, EventArgs e)
+        {
+            ShowChatElements(false);
 
             FetchFriendRequests();
-            FetchBlockedUsers();
-
-
 
         }
     }

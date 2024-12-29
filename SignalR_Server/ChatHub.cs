@@ -60,20 +60,20 @@ namespace SignalR_Server
             }
         }
 
-        public void SendRequestToUser(string sender, string receiver)
-        {
-            if (Users.TryGetValue(receiver, out var connectionId))
-            {
+        //public void SendRequestToUser(string sender, string receiver)
+        //{
+        //    if (Users.TryGetValue(receiver, out var connectionId))
+        //    {
 
-                Clients.Client(connectionId).receiveRequest(sender,'W');   // W = wait for accept friend request
-                Console.WriteLine($"Friend request from {sender} to {receiver} ");
-            }
-            else
-            {
-                // Kullanıcı bulunamazsa hata mesajı gönder
-                Clients.Client(Context.ConnectionId).receiveMessage("server", $"{receiver} is not online.");
-            }
-        }
+        //        Clients.Client(connectionId).receiveRequest(sender,'W');   // W = wait for accept friend request
+        //        Console.WriteLine($"Friend request from {sender} to {receiver} ");
+        //    }
+        //    else
+        //    {
+        //        // Kullanıcı bulunamazsa hata mesajı gönder
+        //        Clients.Client(Context.ConnectionId).receiveMessage("server", $"{receiver} is not online.");
+        //    }
+        //}
 
         public async Task SendMediaToUser(string senderUsername, string receiverUsername, string chunkData, int chunkCount, string typeOfFile)
         {

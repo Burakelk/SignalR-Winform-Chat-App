@@ -53,7 +53,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI Symbol", 48F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(64, 13);
+            label1.Location = new Point(75, 0);
             label1.Name = "label1";
             label1.Size = new Size(606, 106);
             label1.TabIndex = 0;
@@ -74,6 +74,7 @@
             AcceptButton.Size = new Size(91, 44);
             AcceptButton.TabIndex = 1;
             AcceptButton.Text = "Accept";
+            AcceptButton.Click += AcceptButton_Click;
             // 
             // rejectButton
             // 
@@ -90,6 +91,7 @@
             rejectButton.Size = new Size(91, 44);
             rejectButton.TabIndex = 2;
             rejectButton.Text = "Reject";
+            rejectButton.Click += rejectButton_Click;
             // 
             // BlockButton
             // 

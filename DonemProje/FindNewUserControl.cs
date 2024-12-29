@@ -18,9 +18,12 @@ namespace DonemProje
         private HubConnection _connection;
         private IHubProxy _hubProxy;
         int TargetUserID;
+        string UserName;
         int UserID;
-        public FindNewUserControl()
+        public FindNewUserControl(string username,int ID)
         {
+            UserName = username;
+            UserID = ID;    
             InitializeComponent();
         }
 
@@ -92,12 +95,11 @@ WHERE
                 try
                 {
                     int result = -1;
-                    MainPage mainPage = new MainPage();
-
+            MainPage mainPage = new MainPage(); 
 
                     using (SqlCommand command = new SqlCommand(FindFriendCase, connection))
                     {
-                        command.Parameters.AddWithValue(" @USER_ID", mainPage.UserID);
+                        command.Parameters.AddWithValue("@USER_ID", UserID);
                         command.Parameters.AddWithValue("@TARGET_USER_ID", TargetUserID);
 
                         connection.Open();
@@ -128,32 +130,35 @@ WHERE
         }
         private void DbAddRequest()
         {
+            string insertQuery = @"
+    INSERT INTO User_Relations_table (USER_ID, TARGET_USER_ID, _CASE) 
+    VALUES (@USER_ID, @TARGET_USER_ID, @_CASE)";
+
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-
                 try
                 {
-                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(insertQuery, connection))
+                    {MainPage mainPage = new MainPage();
+                       
+                        command.Parameters.AddWithValue("@USER_ID", UserID);         
+                        command.Parameters.AddWithValue("@TARGET_USER_ID", TargetUserID); 
+                        command.Parameters.AddWithValue("@_CASE", 'W');              
 
-                    string insertQuery = "INSERT INTO User_Relations_table (USER_ID,TARGET_USER_ID,_CASE) VALUES (@USER_ID, @TARGET_USER_ID,@_CASE)";
-                    SqlCommand command = new SqlCommand(insertQuery, connection);
-                    command.Parameters.AddWithValue("@USER_ID", UserID);
-                    command.Parameters.AddWithValue("@TARGET_USER_ID", TargetUserID);
-                    command.Parameters.AddWithValue("@_CASE", 'W');
+                        connection.Open(); 
+                        int rowsAffected = command.ExecuteNonQuery(); 
 
-                    command.ExecuteNonQuery();
-                    MessageBox.Show("Friend request sended");
-
-
+                       
+                    }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("ERROR: \n" + ex.Message);
+                    
+                    Console.WriteLine("An error occurred: " + ex.Message);
                 }
                 finally
                 {
-                    connection?.Close();
-
+                    connection.Close(); 
                 }
             }
         }
@@ -163,16 +168,13 @@ WHERE
             try
             {
                 MainPage mainPage = new MainPage();
-                this.UserID=mainPage.UserID;
-                if (IsUserExist() && findFriendTextBox.Text.Trim() != mainPage.UserName)    // böyle bir kullanıcı varsa ve yazdığı kullanıcı adı kendisi değilse
+
+                if (IsUserExist() && findFriendTextBox.Text.Trim() != UserName.Trim())    // böyle bir kullanıcı varsa ve yazdığı kullanıcı adı kendisi değilse
                 {
                     if (FindFriendCase() == 0)     // aralarında hiç ilişki yoksa istek gönderir
                     {
                         // database kaydı yapılacak
                         DbAddRequest();
-
-                        //kullanıcıya hubproxy üzerinden istek gönderilecek
-                        mainPage.SendFriendRequest(findFriendsButton.Text.Trim());
 
                         MessageBox.Show("Arkadaşlık isteği gönderildi");
                     }
@@ -189,7 +191,7 @@ WHERE
                     }
 
                    
-                }else if (findFriendTextBox.Text.Trim() == mainPage.UserName)
+                }else if (findFriendTextBox.Text.Trim() == UserName)
                 {
                     MessageBox.Show("Kendinizi arkadaş ekleyemezsiniz!");
                 }
