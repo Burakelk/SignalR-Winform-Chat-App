@@ -63,6 +63,16 @@ namespace DonemProje.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _26504941 {
+            get {
+                object obj = ResourceManager.GetObject("26504941", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap _4_characters {
             get {
                 object obj = ResourceManager.GetObject("4 characters", resourceCulture);
@@ -133,6 +143,16 @@ namespace DonemProje.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap block {
+            get {
+                object obj = ResourceManager.GetObject("block", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Character_with_phone_1 {
             get {
                 object obj = ResourceManager.GetObject("Character with phone 1", resourceCulture);
@@ -156,6 +176,17 @@ namespace DonemProje.Properties {
         internal static System.Drawing.Bitmap default_image {
             get {
                 object obj = ResourceManager.GetObject("default-image", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap depositphotos_452055694_stock_illustration_people_conversation_communication_one_another {
+            get {
+                object obj = ResourceManager.GetObject("depositphotos_452055694-stock-illustration-people-conversation-communication-one-" +
+                        "another", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

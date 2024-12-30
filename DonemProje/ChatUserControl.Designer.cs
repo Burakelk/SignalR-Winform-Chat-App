@@ -28,8 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             UserNameLabelChatUserControl = new Label();
             ChatInfoPanelChatUserControl = new Panel();
+            guna2ImageButton1 = new Guna.UI2.WinForms.Guna2ImageButton();
             ChatScreenPanelChatUserControl = new Panel();
             ChatInfoPanelChatUserControl.SuspendLayout();
             SuspendLayout();
@@ -45,17 +47,36 @@
             // 
             // ChatInfoPanelChatUserControl
             // 
-            ChatInfoPanelChatUserControl.BackColor = Color.Turquoise;
+            ChatInfoPanelChatUserControl.BackColor = Color.Gainsboro;
+            ChatInfoPanelChatUserControl.Controls.Add(guna2ImageButton1);
             ChatInfoPanelChatUserControl.Controls.Add(UserNameLabelChatUserControl);
-            ChatInfoPanelChatUserControl.Location = new Point(3, 3);
+            ChatInfoPanelChatUserControl.Dock = DockStyle.Top;
+            ChatInfoPanelChatUserControl.Location = new Point(0, 0);
             ChatInfoPanelChatUserControl.Name = "ChatInfoPanelChatUserControl";
-            ChatInfoPanelChatUserControl.Size = new Size(737, 87);
+            ChatInfoPanelChatUserControl.Size = new Size(743, 93);
             ChatInfoPanelChatUserControl.TabIndex = 1;
+            // 
+            // guna2ImageButton1
+            // 
+            guna2ImageButton1.CheckedState.ImageSize = new Size(64, 64);
+            guna2ImageButton1.HoverState.ImageSize = new Size(64, 64);
+            guna2ImageButton1.Image = Properties.Resources.block;
+            guna2ImageButton1.ImageOffset = new Point(0, 0);
+            guna2ImageButton1.ImageRotate = 0F;
+            guna2ImageButton1.Location = new Point(657, 3);
+            guna2ImageButton1.Name = "guna2ImageButton1";
+            guna2ImageButton1.PressedState.ImageSize = new Size(64, 64);
+            guna2ImageButton1.ShadowDecoration.CustomizableEdges = customizableEdges1;
+            guna2ImageButton1.Size = new Size(80, 81);
+            guna2ImageButton1.TabIndex = 1;
+            guna2ImageButton1.Click += guna2ImageButton1_Click_1;
+            guna2ImageButton1.Leave += guna2ImageButton1_Leave;
+            guna2ImageButton1.MouseHover += guna2ImageButton1_MouseHover;
             // 
             // ChatScreenPanelChatUserControl
             // 
             ChatScreenPanelChatUserControl.AutoScroll = true;
-            ChatScreenPanelChatUserControl.BackColor = Color.IndianRed;
+            ChatScreenPanelChatUserControl.BackColor = Color.WhiteSmoke;
             ChatScreenPanelChatUserControl.Dock = DockStyle.Bottom;
             ChatScreenPanelChatUserControl.Location = new Point(0, 99);
             ChatScreenPanelChatUserControl.Name = "ChatScreenPanelChatUserControl";
@@ -82,5 +103,6 @@
         public Label UserNameLabelChatUserControl;
         private Panel ChatInfoPanelChatUserControl;
         public Panel ChatScreenPanelChatUserControl;
+        private Guna.UI2.WinForms.Guna2ImageButton guna2ImageButton1;
     }
 }

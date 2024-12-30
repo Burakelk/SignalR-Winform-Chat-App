@@ -52,10 +52,10 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI Symbol", 48F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(75, 0);
+            label1.Font = new Font("News706 BT", 48F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(16, 12);
             label1.Name = "label1";
-            label1.Size = new Size(606, 106);
+            label1.Size = new Size(687, 96);
             label1.TabIndex = 0;
             label1.Text = "Friend Requests";
             // 
@@ -66,7 +66,8 @@
             AcceptButton.DisabledState.CustomBorderColor = Color.DarkGray;
             AcceptButton.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             AcceptButton.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            AcceptButton.Font = new Font("Segoe UI", 9F);
+            AcceptButton.FillColor = Color.Black;
+            AcceptButton.Font = new Font("News706 BT", 9F, FontStyle.Bold, GraphicsUnit.Point, 162);
             AcceptButton.ForeColor = Color.White;
             AcceptButton.Location = new Point(16, 468);
             AcceptButton.Name = "AcceptButton";
@@ -83,7 +84,8 @@
             rejectButton.DisabledState.CustomBorderColor = Color.DarkGray;
             rejectButton.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             rejectButton.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            rejectButton.Font = new Font("Segoe UI", 9F);
+            rejectButton.FillColor = Color.Black;
+            rejectButton.Font = new Font("News706 BT", 9F, FontStyle.Bold, GraphicsUnit.Point, 162);
             rejectButton.ForeColor = Color.White;
             rejectButton.Location = new Point(123, 468);
             rejectButton.Name = "rejectButton";
@@ -100,7 +102,8 @@
             BlockButton.DisabledState.CustomBorderColor = Color.DarkGray;
             BlockButton.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             BlockButton.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            BlockButton.Font = new Font("Segoe UI", 9F);
+            BlockButton.FillColor = Color.Black;
+            BlockButton.Font = new Font("News706 BT", 9F, FontStyle.Bold, GraphicsUnit.Point, 162);
             BlockButton.ForeColor = Color.White;
             BlockButton.IndicateFocus = true;
             BlockButton.Location = new Point(229, 468);
@@ -109,6 +112,7 @@
             BlockButton.Size = new Size(91, 44);
             BlockButton.TabIndex = 3;
             BlockButton.Text = "Block";
+            BlockButton.Click += BlockButton_Click;
             // 
             // UnBlockUserButton
             // 
@@ -117,7 +121,8 @@
             UnBlockUserButton.DisabledState.CustomBorderColor = Color.DarkGray;
             UnBlockUserButton.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             UnBlockUserButton.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            UnBlockUserButton.Font = new Font("Segoe UI", 9F);
+            UnBlockUserButton.FillColor = Color.Black;
+            UnBlockUserButton.Font = new Font("News706 BT", 9F, FontStyle.Bold, GraphicsUnit.Point, 162);
             UnBlockUserButton.ForeColor = Color.White;
             UnBlockUserButton.Location = new Point(456, 468);
             UnBlockUserButton.Name = "UnBlockUserButton";
@@ -125,6 +130,7 @@
             UnBlockUserButton.Size = new Size(225, 44);
             UnBlockUserButton.TabIndex = 6;
             UnBlockUserButton.Text = "Unblock";
+            UnBlockUserButton.Click += UnBlockUserButton_Click;
             // 
             // FriendReqListGroupBox
             // 

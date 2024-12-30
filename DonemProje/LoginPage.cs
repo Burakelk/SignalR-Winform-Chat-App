@@ -94,7 +94,7 @@ namespace DonemProje
         {
             if (ValidateUser(EmailLogintxt.Text.Trim(), PasswordLogintextbox.Text))
             {
-               
+
                 MainPage mainPage = new MainPage(EmailLogintxt.Text.Trim(), kullaniciID); //kullanıcı ID si zaten alındı. Eğer giriş doğruysa kullanıcı adını da buradan gönderiyoruz.
                 mainPage.Show();
                 this.Hide();
@@ -117,5 +117,15 @@ namespace DonemProje
 
         }
 
+        private void EmailLogintxt_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ForgetPasswordButton_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            registerPage.Show();
+        }
     }
 }

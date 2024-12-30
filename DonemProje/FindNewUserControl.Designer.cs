@@ -40,10 +40,10 @@
             // findNewUserLabel
             // 
             findNewUserLabel.AutoSize = true;
-            findNewUserLabel.Font = new Font("Microsoft Sans Serif", 71.99999F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            findNewUserLabel.Location = new Point(3, 17);
+            findNewUserLabel.Font = new Font("News706 BT", 72F, FontStyle.Bold, GraphicsUnit.Point, 162);
+            findNewUserLabel.Location = new Point(-30, 12);
             findNewUserLabel.Name = "findNewUserLabel";
-            findNewUserLabel.Size = new Size(724, 135);
+            findNewUserLabel.Size = new Size(822, 143);
             findNewUserLabel.TabIndex = 2;
             findNewUserLabel.Text = "Find Friends";
             // 
@@ -58,7 +58,7 @@
             findFriendTextBox.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             findFriendTextBox.Font = new Font("Segoe UI", 9F);
             findFriendTextBox.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            findFriendTextBox.Location = new Point(168, 217);
+            findFriendTextBox.Location = new Point(157, 209);
             findFriendTextBox.Margin = new Padding(3, 4, 3, 4);
             findFriendTextBox.Name = "findFriendTextBox";
             findFriendTextBox.PasswordChar = '\0';
@@ -70,19 +70,21 @@
             // 
             // findFriendsButton
             // 
+            findFriendsButton.BackColor = Color.Black;
             findFriendsButton.CustomizableEdges = customizableEdges3;
             findFriendsButton.DisabledState.BorderColor = Color.DarkGray;
             findFriendsButton.DisabledState.CustomBorderColor = Color.DarkGray;
             findFriendsButton.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             findFriendsButton.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            findFriendsButton.Font = new Font("Segoe UI", 9F);
+            findFriendsButton.FillColor = Color.Black;
+            findFriendsButton.Font = new Font("News706 BT", 9F, FontStyle.Bold, GraphicsUnit.Point, 162);
             findFriendsButton.ForeColor = Color.White;
-            findFriendsButton.Location = new Point(250, 338);
+            findFriendsButton.Location = new Point(247, 385);
             findFriendsButton.Name = "findFriendsButton";
             findFriendsButton.ShadowDecoration.CustomizableEdges = customizableEdges4;
             findFriendsButton.Size = new Size(225, 56);
             findFriendsButton.TabIndex = 4;
-            findFriendsButton.Text = "SendRequest";
+            findFriendsButton.Text = "Send Request";
             findFriendsButton.Click += findFriendsButton_Click;
             // 
             // FindNewUserControl

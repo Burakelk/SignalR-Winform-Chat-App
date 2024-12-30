@@ -46,7 +46,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.Aquamarine;
+            BackColor = Color.White;
             BorderStyle = BorderStyle.FixedSingle;
             Controls.Add(MessageLabel);
             ForeColor = SystemColors.ActiveCaptionText;

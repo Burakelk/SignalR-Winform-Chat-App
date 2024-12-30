@@ -34,6 +34,8 @@
             // MessageLabel
             // 
             MessageLabel.AutoSize = true;
+            MessageLabel.BackColor = Color.Transparent;
+            MessageLabel.ForeColor = Color.White;
             MessageLabel.Location = new Point(14, 18);
             MessageLabel.Name = "MessageLabel";
             MessageLabel.Size = new Size(67, 20);
@@ -45,7 +47,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.Red;
+            BackColor = Color.Black;
             Controls.Add(MessageLabel);
             Name = "YouBubble";
             Size = new Size(326, 58);

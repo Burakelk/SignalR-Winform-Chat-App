@@ -14,19 +14,16 @@ namespace DonemProje
 {
     public partial class FriendRequestListUserControl : UserControl
     {
-        string Username;
+        public string Username;
         string userID;
         string TargetUserName;
-        public FriendRequestListUserControl(string username)
-        {
-            Username = username;
-            InitializeComponent();
-        }
+        string BlockTargetUserName;
         public FriendRequestListUserControl()
         {
 
             InitializeComponent();
         }
+
         string connectionString = " Data Source=LAPTOP-5188NCUM;Initial Catalog=users;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
         private void AddFriendCaseDB()
         {
@@ -52,8 +49,8 @@ WHERE
     u1.USERNAME = @ME AND u2.USERNAME = @Friend;
 ";
                     SqlCommand command = new SqlCommand(insert, connection);
-                    command.Parameters.AddWithValue("@Friend", mainPage.SelectedUserForFriend);
-                    command.Parameters.AddWithValue("@ME", mainPage.Name);
+                    command.Parameters.AddWithValue("@Friend", TargetUserName);
+                    command.Parameters.AddWithValue("@ME", Username);
 
                     command.ExecuteNonQuery();
                     MessageBox.Show("Yeni arkadaşlık kaydı eklendi");
@@ -68,15 +65,59 @@ WHERE
             }
 
         }
-        public string GetCheckedRadioButtonName( )
+        public void DeleteRadioButton()
         {
-            MainPage mainPage= new MainPage();
-            // Paneldeki tüm RadioButton kontrollerini dolaş
+            MainPage mainPage = new MainPage();
+
             foreach (Control control in FriendReqListGroupBox.Controls)
             {
                 if (control is RadioButton radioButton && radioButton.Checked)
                 {
-                    // İşaretli olan RadioButton'un adını döndür
+                    FriendReqListGroupBox.Controls.Remove(control);
+
+
+                }
+            }
+          
+
+        }
+        public void DeleteRadioButtonBlockedGroup()
+        {
+            foreach (Control control in BlockedUserListGroupBox.Controls)
+            {
+                if (control is RadioButton radioButton && radioButton.Checked)
+                {
+                    BlockedUserListGroupBox.Controls.Remove(control);
+
+
+                }
+            }
+        }
+        public string GetCheckedRadioButtonName()
+        {
+            MainPage mainPage = new MainPage();
+
+            foreach (Control control in FriendReqListGroupBox.Controls)
+            {
+                if (control is RadioButton radioButton && radioButton.Checked)
+                {
+
+                    return radioButton.Name;
+                }
+            }
+
+            // Eğer işaretli bir RadioButton yoksa null döndür
+            return null;
+        }
+        public string GetCheckBlockedRadioButtonName()
+        {
+            MainPage mainPage = new MainPage();
+
+            foreach (Control control in BlockedUserListGroupBox.Controls)
+            {
+                if (control is RadioButton radioButton && radioButton.Checked)
+                {
+
                     return radioButton.Name;
                 }
             }
@@ -86,13 +127,17 @@ WHERE
         }
         private void AcceptButton_Click(object sender, EventArgs e)
         {
-             TargetUserName= GetCheckedRadioButtonName();
+            if (GetCheckedRadioButtonName() != null)
+            {
+                TargetUserName = GetCheckedRadioButtonName();
+            }
+
             if (string.IsNullOrEmpty(TargetUserName))
             {
                 MessageBox.Show("Bir seçenek işaretle");
                 return;
             }
-            MainPage mainPage = new MainPage();
+
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -118,11 +163,14 @@ WHERE o._CASE = 'W' AND (u1.USERNAME = @RECIEVER AND u2.USERNAME = @ME);";
 
 
                     SqlCommand command = new SqlCommand(query, connection);
-                    command.Parameters.AddWithValue("@RECIEVER",TargetUserName);
+                    command.Parameters.AddWithValue("@RECIEVER", TargetUserName);
                     command.Parameters.AddWithValue("@ME", Username);
 
                     command.ExecuteNonQuery();
+                    AddFriendCaseDB();
                     MessageBox.Show("Arkadaşlık kaydı güncellendi");
+                    DeleteRadioButton();
+
 
                 }
                 catch (Exception ex)
@@ -137,16 +185,178 @@ WHERE o._CASE = 'W' AND (u1.USERNAME = @RECIEVER AND u2.USERNAME = @ME);";
 
             }
         }
-        private  void RejectFriendReq()
+        private void RejectFriendReq()
         {
+            if (GetCheckedRadioButtonName() != null)
+            {
+                TargetUserName = GetCheckedRadioButtonName();
+            }
+
+            if (string.IsNullOrEmpty(TargetUserName))
+            {
+                MessageBox.Show("Bir seçenek işaretle");
+                return;
+            }
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+
+                try
+                {
+                    connection.Open();
+                    string query = @" DELETE o
+
+FROM User_Relations_table o
+
+INNER JOIN users_table u1
+
+    ON o.USER_ID = u1.USER_ID
+
+INNER JOIN users_table u2
+
+    ON o.TARGET_USER_ID = u2.USER_ID
+
+WHERE o._CASE = 'W' AND (u1.USERNAME = @RECIEVER AND u2.USERNAME = @ME);";
 
 
+
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@RECIEVER", TargetUserName);
+                    command.Parameters.AddWithValue("@ME", Username);
+
+                    command.ExecuteNonQuery();
+                    MessageBox.Show("Arkadaşlık isteği reddedildi");
+                    DeleteRadioButton();
+
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Hata: " + ex.Message);
+                }
+                finally
+                {
+                    connection?.Close();
+
+                }
+
+            }
 
         }
         private void rejectButton_Click(object sender, EventArgs e)
         {
             RejectFriendReq();
 
+        }
+
+        private void BlockButton_Click(object sender, EventArgs e)
+        {
+
+            if (GetCheckedRadioButtonName() != null)
+            {
+                TargetUserName = GetCheckedRadioButtonName();
+            }
+            if (string.IsNullOrEmpty(TargetUserName))
+            {
+                MessageBox.Show("Bir seçenek işaretle");
+                return;
+            }
+            RejectFriendReq(); // ÖNCE DATABASE DEN İSTEK REDDEDİLİR SONRA BLOCKLAMA İŞLEMİ GERÇEKLEŞTİRİLİR.
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+
+                try
+                {
+                    connection.Open();
+                    string query = @" 
+INSERT INTO User_Relations_table (USER_ID, TARGET_USER_ID, _CASE)
+SELECT 
+    u1.USER_ID,
+    u2.USER_ID,
+    'B'
+FROM users_table u1
+INNER JOIN users_table u2
+    ON 1 = 1
+WHERE u1.USERNAME = @ME AND u2.USERNAME = @RECIEVER;";
+
+
+
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@RECIEVER", TargetUserName);
+                    command.Parameters.AddWithValue("@ME", Username);
+                    command.ExecuteNonQuery();
+                    DeleteRadioButton();
+
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Hata: " + ex.Message);
+                }
+                finally
+                {
+                    connection?.Close();
+
+                }
+
+            }
+
+
+
+        }
+
+        private void UnBlockUserButton_Click(object sender, EventArgs e)
+        {
+            if (GetCheckBlockedRadioButtonName() != null)
+            {
+                BlockTargetUserName = GetCheckBlockedRadioButtonName();
+            }
+            if (string.IsNullOrEmpty(BlockTargetUserName))
+            {
+                MessageBox.Show("Bir seçenek işaretle");
+                return;
+            }
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+
+                try
+                {
+                    connection.Open();
+                    string query = @" DELETE o
+
+FROM User_Relations_table o
+
+INNER JOIN users_table u1
+
+    ON o.USER_ID = u1.USER_ID
+
+INNER JOIN users_table u2
+
+    ON o.TARGET_USER_ID = u2.USER_ID
+
+WHERE o._CASE = 'B' AND (u1.USERNAME = @ME AND u2.USERNAME =@RECIEVER );";
+
+
+
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@RECIEVER", BlockTargetUserName);
+                    command.Parameters.AddWithValue("@ME", Username);
+                    command.ExecuteNonQuery();
+                    MessageBox.Show("Bu kişinin engeli kalktı");
+                    DeleteRadioButtonBlockedGroup();
+
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Hata: " + ex.Message);
+                }
+                finally
+                {
+                    connection?.Close();
+
+                }
+
+            }
         }
     }
 }

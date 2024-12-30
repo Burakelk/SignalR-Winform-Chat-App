@@ -6,10 +6,14 @@ using System.Text;
 using System.Security.Cryptography;
 using Microsoft.AspNet.SignalR.Client;
 using System.Diagnostics.Eventing.Reader;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using Guna.UI2.WinForms;
+using Microsoft.IdentityModel.Tokens;
 namespace DonemProje
 {
     public partial class RegisterPage : Form
     {
+        int kullaniciID;
         string connectionString = " Data Source=LAPTOP-5188NCUM;Initial Catalog=users;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
         public RegisterPage()
         {
@@ -18,9 +22,10 @@ namespace DonemProje
 
         // hiç kod oluşturulmamışsa ilk fonksiyon çalışır
         string verificationCode;
+        string verificationCodeForResetPass;
         public string VerifCodeCreater()
         {
-            // creating verification code 
+            // doğrulama kodu oluştur
             string VerfCode = null;
             for (int i = 0; i < 5; i++)
             {
@@ -46,7 +51,7 @@ namespace DonemProje
         private void RegisterAcceptanceOfValuen()
         {
             #region DbRegister
-
+            // database e kullanıcıları kaydet
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 string hashedPassword = ComputeHash(Password1textbox.Text); // Şifreyi hash et
@@ -77,7 +82,7 @@ namespace DonemProje
                         command.ExecuteNonQuery();
                         MessageBox.Show("KAYIT BAŞARILI");
                     }
-                   
+
                 }
                 catch (Exception ex)
                 {
@@ -107,7 +112,7 @@ namespace DonemProje
             {
                 UserNameErr.Clear();
 
-            }// buraya ekstra olarak Diğer kullanıcı adlarıyla aynı olamaması için veritabanı sorgulama eklenecek ***********************************
+            }
 
             // İsim ve soyisim içnin TextBox'ın boş olup olmadığını kontrol etme
             if (string.IsNullOrEmpty(fullNametxt.Text))
@@ -158,7 +163,7 @@ namespace DonemProje
             }
 
 
-            if (UserNameErr.HasErrors || fullNameErr.HasErrors || EmailRegisterErr.HasErrors || Password1Err.HasErrors || Password2Err.HasErrors || GenderErr.HasErrors || ApprovErr.HasErrors)
+            if (UserNameErr.HasErrors || fullNameErr.HasErrors || EmailRegisterErr.HasErrors || Password1Err.HasErrors || Password2Err.HasErrors  || ApprovErr.HasErrors)
             {
 
                 return false;
@@ -211,11 +216,11 @@ namespace DonemProje
                 UserNameErr.SetError(UserNametxt, "Bu kullanıcı adı zaten kullanılıyor. Lütfen başka bir kullanıcı adı giriniz.");
                 connection.Close();
                 return false;
-                
+
             }
             connection.Close();
             return true;
-          
+
         }
         private void RegisterRegisterpageTxt_Click(object sender, EventArgs e)
         {
@@ -238,21 +243,19 @@ namespace DonemProje
             }
             else
             {
-               return;
+                return;
             }
 
-        } 
-        
-        private void verificationCodeSendertxt_Click(object sender, EventArgs e)
+        }
+        private void SendCode(string alici)
         {
-
             verificationCode = VerifCodeCreater();
 
             // Gönderen ve alıcı e-posta adreslerini ve şifreyi girin.
             string gonderen = "celikburak4999@gmail.com";
             string sifre = "fncm ofpw nhjq yrei";
-            string alici = EmailRegistertxt.Text;
-            if (string.IsNullOrEmpty( alici))
+         
+            if (string.IsNullOrEmpty(alici))
             {
                 MessageBox.Show("Lütfen geçerli bir e-posta giriniz");
                 return;
@@ -284,6 +287,10 @@ namespace DonemProje
 
             // Gönderme işleminin başarılı olduğunu gösteren bir mesaj gösterin.
             MessageBox.Show("E-posta başarıyla gönderildi! \nKodu almadıysanız girdiğiniz E-Posta adresini kontrol ediniz. ");
+        }
+        private void verificationCodeSendertxt_Click(object sender, EventArgs e)
+        {
+            SendCode(EmailRegistertxt.Text);
 
         }
 
@@ -304,11 +311,12 @@ namespace DonemProje
 
         private void approveTheCodebutton_Click(object sender, EventArgs e)
         {
-            if (maskedTextBox1.Text == verificationCode && !string.IsNullOrEmpty( maskedTextBox1.Text))
+            if (maskedTextBox1.Text == verificationCode && !string.IsNullOrEmpty(maskedTextBox1.Text))
             {
                 VerfCodeCheck.Visible = true;
                 MessageBox.Show("E-posta doğrulama başarılı!");
                 ApprovErr.Clear();
+
             }
             else
             {
@@ -321,7 +329,14 @@ namespace DonemProje
         {
 
         }
+         
+        private void PasswordShowButton2_Click(object sender, EventArgs e)
+        {
+            PasswordForgatTxt.PasswordChar = PasswordForgatTxt.PasswordChar == '●' ? '\0' : '●';
+            guna2ImageButton1.Image = PasswordForgatTxt.PasswordChar == '●' ? Properties.Resources.gozKapali : Properties.Resources.gozAcik;
 
+            guna2TextBox3.PasswordChar = guna2TextBox3.PasswordChar == '●' ? '\0' : '●';
+        }
         private void PasswordShowButton_Click(object sender, EventArgs e)
         {
 
@@ -340,6 +355,140 @@ namespace DonemProje
             this.Close();
         }
 
-        
+
+        private void SendRandomCode_Click(object sender, EventArgs e)
+        {
+            SendCode(guna2TextBox2.Text);
+
+        }
+
+        private void VerifyCodeButton_Click(object sender, EventArgs e)
+        {
+            if (maskedTextBox2.Text == verificationCode && !string.IsNullOrEmpty(maskedTextBox2.Text))
+            {
+                guna2CirclePictureBox1.Visible = true;
+                MessageBox.Show("E-posta doğrulama başarılı!");
+                ApprErrForget.Clear();
+            }
+            else
+            {
+                ApprErrForget.SetError(maskedTextBox2,"Verify the code");
+                MessageBox.Show("Kod hatalı, Lütfen tekrar deneyin.");
+            }
+        }
+        private bool IsValuesRight()
+        {
+            if (UserNameErr.HasErrors )
+            {
+                return false;
+            }
+            if ( PasswordForgatTxt.Text.Trim() != guna2TextBox3.Text.Trim()|| string.IsNullOrEmpty(PasswordForgatTxt.Text))
+            {
+                return false;
+            }
+            return true;
+        }
+        private bool  isUserExist()
+        {
+            if (string.IsNullOrEmpty( UserNameForgettxt.Text))
+            {
+                return false;
+            }
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+
+                string UserIDFetch = "SELECT USER_ID FROM users_table WHERE USERNAME = @USERNAME";
+                try
+                {
+
+
+                    using (SqlCommand command = new SqlCommand(UserIDFetch, connection))
+                    {
+                        command.Parameters.AddWithValue("@USERNAME", UserNameForgettxt.Text.Trim());
+                 
+
+                        connection.Open();
+                        int result = Convert.ToInt32(command.ExecuteScalar());
+                        if (result != null && result != 0)
+                        {
+                            kullaniciID = result;
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    MessageBox.Show("HATA İLE KARŞILAŞILDI" + ex.ToString());
+                    return false;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+
+            }
+        }
+        private  void DBUpdatePass()
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string hashedPassword = ComputeHash(PasswordForgatTxt.Text); // Şifreyi hash et
+                try
+                {
+                    connection.Open();
+
+                    string query = "UPDATE users_table SET PASSW = @NewPassw WHERE USER_ID = @USERID AND E_MAIL=@EMAIL";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        // Parametreleri ekle
+                        command.Parameters.AddWithValue("@NewPassw", hashedPassword);
+                        command.Parameters.AddWithValue("@USERID", kullaniciID);
+                        command.Parameters.AddWithValue("@EMAIL", guna2TextBox2.Text);
+                      
+
+                        command.ExecuteNonQuery();
+
+                      
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Bir hata oluştu: " + ex.Message);
+                }
+            
+
+        }
+        }
+        private void UpdatePassword_Click(object sender, EventArgs e)
+        {
+            if (IsValuesRight())
+            {
+                if (!isUserExist())
+                {
+                    MessageBox.Show("This user name does not exist");
+                    return;
+                }
+                else
+                {
+                    DBUpdatePass();
+                    MessageBox.Show("Your password has been updated");
+                    LoginPage loginPage = new LoginPage();
+                    loginPage.Show();
+                    this.Close();
+
+                }
+            }
+            else {
+                MessageBox.Show("Please enter values right");
+            }
+
+        }
     }
 }

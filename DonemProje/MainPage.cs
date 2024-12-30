@@ -30,7 +30,7 @@ namespace DonemProje
     public partial class MainPage : Form
     {
         string TargetUsername = null;
-        string connectionString = " Data Source=LAPTOP-5188NCUM;Initial Catalog=users;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
+        readonly string  connectionString = " Data Source=LAPTOP-5188NCUM;Initial Catalog=users;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
         public string UserName;
         public int UserID;
         string SelectedReqUsername;
@@ -40,8 +40,6 @@ namespace DonemProje
         Control SelectedControl;
         public string SelectedUserForFriend;
         public string SelectedUserForBlock;
-
-
         private ChatUserControl chatUserControl;
 
         private HubConnection _connection;
@@ -53,11 +51,6 @@ namespace DonemProje
             UserID = KullanıcıID;
 
 
-            InitializeComponent();
-        }
-        public MainPage(string FriendInviteUserName)
-        {
-            //SendFriendRequest(FriendInviteUserName);
             InitializeComponent();
         }
         public MainPage()
@@ -108,21 +101,14 @@ namespace DonemProje
                             youBubble.MessageLabel.Text = message;
                             chatUserControl = (ChatUserControl)MainPanelMainPage.Controls.Find(senderName, true).First();
                             chatUserControl.ChatScreenPanelChatUserControl.Controls.Add(youBubble);
+                            
                             youBubble.Dock = DockStyle.Top;
                             youBubble.BringToFront();
                             youBubble.Focus();
                         }
                     }));
                 });
-                _hubProxy.On<string, char>("receiveRequest", (senderName, _case) =>
-                {
-                    Invoke(new Action(() =>
-                    {
-                        MessageBox.Show($"{senderName} tarafından yeni arklık isteği");
-                        FetchFriendRequests();
-
-                    }));
-                });
+           
                 _hubProxy.On<string, string, int, string>("receiveMedia", (senderName, base64Chunk, totalChunk, typeOfFile) =>
                 {
                     Image i = Properties.Resources.default_image;
@@ -265,7 +251,7 @@ namespace DonemProje
                 this.MainSendButtonPanel.Show();
                 this.MainSendFilePanel.Show();
                 this.MainTextboxPanel.Show();
-                this.MicrofonPanelMainPage.Show();
+
                 ShowEmojies();
             }
             else
@@ -275,30 +261,30 @@ namespace DonemProje
                 this.MainSendButtonPanel.Hide();
                 this.MainSendFilePanel.Hide();
                 this.MainTextboxPanel.Hide();
-                this.MicrofonPanelMainPage.Hide();
+       
             }
         }
-        private void ProfileButton_Click(object sender, EventArgs e)
-        {
-            ShowChatElements(false);
-            ProfileUserControl profileUserControl = new ProfileUserControl();
+        //private void ProfileButton_Click(object sender, EventArgs e)
+        //{
+        //    ShowChatElements(false);
+        //    ProfileUserControl profileUserControl = new ProfileUserControl();
 
-            if (MainPanelMainPage.Controls.ContainsKey("ProfilUserControl"))
-            {
-                MainPanelMainPage.Controls.Remove(profileUserControl);
-
-
-            }
-            profileUserControl = new ProfileUserControl()
-            {
-                Name = "ProfilUserControl"
-            };
-            this.MainPanelMainPage.Controls.Add(profileUserControl);
-            profileUserControl.Dock = DockStyle.Fill;
+        //    if (MainPanelMainPage.Controls.ContainsKey("ProfilUserControl"))
+        //    {
+        //        MainPanelMainPage.Controls.Remove(profileUserControl);
 
 
-            profileUserControl.BringToFront();
-        }
+        //    }
+        //    profileUserControl = new ProfileUserControl()
+        //    {
+        //        Name = "ProfilUserControl"
+        //    };
+        //    this.MainPanelMainPage.Controls.Add(profileUserControl);
+        //    profileUserControl.Dock = DockStyle.Fill;
+
+
+        //    profileUserControl.BringToFront();
+        //}
         private void ShowUserControl(Control controlToShow)
         {
             foreach (Control item in MainPanelMainPage.Controls)
@@ -398,7 +384,7 @@ WHERE
                                 chatUserControl = (ChatUserControl)MainPanelMainPage.Controls.Find(friendsListMemberUserControl.Name, true).First();
                                 ShowUserControl(SelectedControl);
 
-
+                                ShowChatElements(true);
 
                                 return;
                             }
@@ -408,22 +394,18 @@ WHERE
                             {
                                 Name = friendsListMemberUserControl.Name
                             };
+                            chatUserControl._username = UserName;
 
                             this.MainPanelMainPage.Controls.Add(chatUserControl);
                             chatUserControl.UserNameLabelChatUserControl.Text = friendsListMemberUserControl.Name;
                             chatUserControl.Visible = true;
                             chatUserControl.Dock = DockStyle.Fill;
-                            // ShowUserControl(chatUserControl);
+
 
                             TargetUsername = friendsListMemberUserControl.Name;
-                            listBox1.Items.Clear();
-                            foreach (Control item in MainPanelMainPage.Controls)
-                            {
-                                listBox1.Items.Add(item.Name.ToString());
-                            }
-
+                         
                             ShowUserControl(chatUserControl);
-                            chatUserControl.Select();
+                      
 
                         };
 
@@ -534,7 +516,7 @@ WHERE
                             this.MainSendButtonPanel.Show();
                             this.MainSendFilePanel.Show();
                             this.MainTextboxPanel.Show();
-                            this.MicrofonPanelMainPage.Show();
+                          
 
                             chatUserControl = new ChatUserControl()
                             {
@@ -549,11 +531,7 @@ WHERE
                             // ShowUserControl(chatUserControl);
 
                             TargetUsername = friendsListMemberUserControl.Name;
-                            listBox1.Items.Clear();
-                            foreach (Control item in MainPanelMainPage.Controls)
-                            {
-                                listBox1.Items.Add(item.Name.ToString());
-                            }
+                           
 
                             ShowUserControl(chatUserControl);
                             chatUserControl.Select();
@@ -864,8 +842,10 @@ WHERE
             }
             friendRequestListUserControl = new FriendRequestListUserControl()
             {
+                
                 Name = "friendRequestListUserControl"
             };
+            friendRequestListUserControl.Username = this.UserName;
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

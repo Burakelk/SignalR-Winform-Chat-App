@@ -64,7 +64,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.DarkSalmon;
+            BackColor = Color.Snow;
             BorderStyle = BorderStyle.Fixed3D;
             Controls.Add(dateTimeLastMessageFriendListMemberLabel);
             Controls.Add(LastMessageFriendListMemberLabel);
