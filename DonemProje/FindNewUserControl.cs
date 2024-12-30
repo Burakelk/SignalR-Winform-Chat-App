@@ -14,9 +14,6 @@ namespace DonemProje
     public partial class FindNewUserControl : UserControl
     {
         string connectionString = " Data Source=LAPTOP-5188NCUM;Initial Catalog=users;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
-        private ChatUserControl chatUserControl;
-        private HubConnection _connection;
-        private IHubProxy _hubProxy;
         int TargetUserID;
         string UserName;
         int UserID;
@@ -85,7 +82,7 @@ namespace DonemProje
 
 
                 string FindFriendCase = @"SELECT COUNT(*) FROM User_Relations_table
-WHERE 
+        WHERE 
     (
         (USER_ID = @USER_ID AND TARGET_USER_ID = @TARGET_USER_ID) 
 		OR 
@@ -118,7 +115,7 @@ WHERE
                 catch (Exception ex)
                 {
 
-                    MessageBox.Show("HATA İLE KARŞILAŞILDI" + ex.ToString());
+                    MessageBox.Show("HATA İLE KARŞILAŞILDI" + ex.Message);
                    // return false;
                 }
                 finally
@@ -146,7 +143,7 @@ WHERE
                         command.Parameters.AddWithValue("@_CASE", 'W');              
 
                         connection.Open(); 
-                        int rowsAffected = command.ExecuteNonQuery(); 
+                        command.ExecuteNonQuery(); 
 
                        
                     }
@@ -176,16 +173,16 @@ WHERE
                         // database kaydı yapılacak
                         DbAddRequest();
 
-                        MessageBox.Show("Arkadaşlık isteği gönderildi");
+                        MessageBox.Show("Friend request sent!");
                     }
                     else if (FindFriendCase() == 1)  // aralarında ilişki var  ve işlem yapılmaz
                     {
-                        MessageBox.Show("Bu kullanıcı için işlem gerçekleştiremiyoruz");
+                        MessageBox.Show("We can't perform an action for this user.");
                         return;
                     }
                     else if (FindFriendCase() == 2) // arkadaşlar. Bu yüzden işlem yapılmaz
                     {
-                        MessageBox.Show("Bu kullanıcı ile zaten arkadaşsınız");
+                        MessageBox.Show("You are already friends with this user");
                         return;
 
                     }
@@ -193,18 +190,18 @@ WHERE
                    
                 }else if (findFriendTextBox.Text.Trim() == UserName)
                 {
-                    MessageBox.Show("Kendinizi arkadaş ekleyemezsiniz!");
+                    MessageBox.Show("You cannot add yourself as a friend!");
                 }
                 else
                 {
-                    MessageBox.Show("Böyle bir kullanıcı yok.");
+                    MessageBox.Show("There is no such user.");
                 }
 
             }
             catch (Exception ex)
             {
 
-                MessageBox.Show("HATA" + ex.ToString());
+                MessageBox.Show("ERROR" + ex.Message);
             }
            
          

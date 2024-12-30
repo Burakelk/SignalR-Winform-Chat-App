@@ -29,48 +29,28 @@
         private void InitializeComponent()
         {
             usernameFriendLabel = new Label();
-            LastMessageFriendListMemberLabel = new Label();
-            dateTimeLastMessageFriendListMemberLabel = new Label();
             SuspendLayout();
             // 
             // usernameFriendLabel
             // 
             usernameFriendLabel.AutoSize = true;
-            usernameFriendLabel.Location = new Point(41, 23);
+            usernameFriendLabel.Font = new Font("Swis721 Blk BT", 12F, FontStyle.Regular, GraphicsUnit.Point, 162);
+            usernameFriendLabel.Location = new Point(18, 36);
             usernameFriendLabel.Name = "usernameFriendLabel";
-            usernameFriendLabel.Size = new Size(78, 20);
+            usernameFriendLabel.Size = new Size(123, 24);
             usernameFriendLabel.TabIndex = 0;
             usernameFriendLabel.Text = "UserName";
-            // 
-            // LastMessageFriendListMemberLabel
-            // 
-            LastMessageFriendListMemberLabel.AutoSize = true;
-            LastMessageFriendListMemberLabel.Location = new Point(41, 53);
-            LastMessageFriendListMemberLabel.Name = "LastMessageFriendListMemberLabel";
-            LastMessageFriendListMemberLabel.Size = new Size(97, 20);
-            LastMessageFriendListMemberLabel.TabIndex = 1;
-            LastMessageFriendListMemberLabel.Text = "Last Message";
-            // 
-            // dateTimeLastMessageFriendListMemberLabel
-            // 
-            dateTimeLastMessageFriendListMemberLabel.AutoSize = true;
-            dateTimeLastMessageFriendListMemberLabel.Location = new Point(248, 35);
-            dateTimeLastMessageFriendListMemberLabel.Name = "dateTimeLastMessageFriendListMemberLabel";
-            dateTimeLastMessageFriendListMemberLabel.Size = new Size(79, 20);
-            dateTimeLastMessageFriendListMemberLabel.TabIndex = 2;
-            dateTimeLastMessageFriendListMemberLabel.Text = "19.12.2024";
             // 
             // FriendsListMemberUserControl
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Snow;
-            BorderStyle = BorderStyle.Fixed3D;
-            Controls.Add(dateTimeLastMessageFriendListMemberLabel);
-            Controls.Add(LastMessageFriendListMemberLabel);
+            BorderStyle = BorderStyle.FixedSingle;
             Controls.Add(usernameFriendLabel);
             Name = "FriendsListMemberUserControl";
-            Size = new Size(331, 96);
+            Padding = new Padding(0, 7, 0, 7);
+            Size = new Size(333, 98);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -78,7 +58,5 @@
         #endregion
 
         public Label usernameFriendLabel;
-        public Label LastMessageFriendListMemberLabel;
-        public Label dateTimeLastMessageFriendListMemberLabel;
     }
 }

@@ -30,7 +30,7 @@ namespace DonemProje
     public partial class MainPage : Form
     {
         string TargetUsername = null;
-        readonly string  connectionString = " Data Source=LAPTOP-5188NCUM;Initial Catalog=users;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
+        readonly string connectionString = " Data Source=LAPTOP-5188NCUM;Initial Catalog=users;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
         public string UserName;
         public int UserID;
         string SelectedReqUsername;
@@ -55,7 +55,7 @@ namespace DonemProje
         }
         public MainPage()
         {
-           
+
             InitializeComponent();
         }
 
@@ -77,13 +77,13 @@ namespace DonemProje
 
             try
             {
-                //Gelen mesaj varsa gerçek zamanlı dinlenir.
+                //Gelen mesaj varsa gerçek zamanlı dinlenir
                 _hubProxy.On<string, string>("receiveMessage", (senderName, message) =>
                 {
-                    if (sender == "server")
+                    if (senderName == "server")
                     {
-                        MessageBox.Show("Bu kullanıcı şuan aktif. başka cihazlardan çıkış yapın");
-                        Application.Exit();
+                        MessageBox.Show(message, "Information", MessageBoxButtons.OK);
+                        return;
                     }
 
                     Invoke(new Action(() =>
@@ -101,25 +101,25 @@ namespace DonemProje
                             youBubble.MessageLabel.Text = message;
                             chatUserControl = (ChatUserControl)MainPanelMainPage.Controls.Find(senderName, true).First();
                             chatUserControl.ChatScreenPanelChatUserControl.Controls.Add(youBubble);
-                            
+
                             youBubble.Dock = DockStyle.Top;
                             youBubble.BringToFront();
                             youBubble.Focus();
                         }
                     }));
                 });
-           
+
                 _hubProxy.On<string, string, int, string>("receiveMedia", (senderName, base64Chunk, totalChunk, typeOfFile) =>
                 {
                     Image i = Properties.Resources.default_image;
 
-                    // Fotoğraf parçalarını saklamak
+                    // Fotoğraf parçalarını sakla
                     if (!_photoChunks.ContainsKey(TargetUsername))
                     {
                         _photoChunks[TargetUsername] = new List<string>();
                     }
 
-                    // Parçayı ekle
+
                     _photoChunks[TargetUsername].Add(base64Chunk);
 
 
@@ -217,7 +217,7 @@ namespace DonemProje
                         }
                         else
                         {
-                            MessageBox.Show("Dosyanın türü bilinmiyor");
+                            MessageBox.Show("The type of file is unknown");
                         }
 
 
@@ -236,7 +236,7 @@ namespace DonemProje
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Connection error: " + ex.ToString());
+                MessageBox.Show($"Connection error: " + ex.Message);
 
             };
 
@@ -261,30 +261,10 @@ namespace DonemProje
                 this.MainSendButtonPanel.Hide();
                 this.MainSendFilePanel.Hide();
                 this.MainTextboxPanel.Hide();
-       
+
             }
         }
-        //private void ProfileButton_Click(object sender, EventArgs e)
-        //{
-        //    ShowChatElements(false);
-        //    ProfileUserControl profileUserControl = new ProfileUserControl();
 
-        //    if (MainPanelMainPage.Controls.ContainsKey("ProfilUserControl"))
-        //    {
-        //        MainPanelMainPage.Controls.Remove(profileUserControl);
-
-
-        //    }
-        //    profileUserControl = new ProfileUserControl()
-        //    {
-        //        Name = "ProfilUserControl"
-        //    };
-        //    this.MainPanelMainPage.Controls.Add(profileUserControl);
-        //    profileUserControl.Dock = DockStyle.Fill;
-
-
-        //    profileUserControl.BringToFront();
-        //}
         private void ShowUserControl(Control controlToShow)
         {
             foreach (Control item in MainPanelMainPage.Controls)
@@ -324,7 +304,7 @@ namespace DonemProje
             {
                 try
                 {
-                    // string query = "SELECT TARGET_USER_ID FROM User_Relations_table WHERE _CASE = @CASE AND USER_ID=@USERID ";
+
                     string query = @" SELECT 
 u2.username AS TargetUserName      
 
@@ -403,9 +383,9 @@ WHERE
 
 
                             TargetUsername = friendsListMemberUserControl.Name;
-                         
+
                             ShowUserControl(chatUserControl);
-                      
+
 
                         };
 
@@ -422,7 +402,7 @@ WHERE
                 catch (Exception ex)
                 {
 
-                    MessageBox.Show("HATA İLE KARŞILAŞILDI" + ex.ToString());
+                    MessageBox.Show("ERROR" + ex.Message);
 
                 }
                 finally
@@ -494,7 +474,9 @@ WHERE
                         FriendsListMemberUserControl friendsListMemberUserControl = new FriendsListMemberUserControl
                         {
                             Name = $"{Friends[i]}",
-                            Cursor = Cursors.Hand
+                            Cursor = Cursors.Hand,
+                            BorderStyle = BorderStyle.None,
+                            Padding = new Padding(5, 5, 5, 5)
                         };
 
                         friendsListMemberUserControl.Click += (s, args) =>
@@ -516,7 +498,7 @@ WHERE
                             this.MainSendButtonPanel.Show();
                             this.MainSendFilePanel.Show();
                             this.MainTextboxPanel.Show();
-                          
+
 
                             chatUserControl = new ChatUserControl()
                             {
@@ -531,7 +513,7 @@ WHERE
                             // ShowUserControl(chatUserControl);
 
                             TargetUsername = friendsListMemberUserControl.Name;
-                           
+
 
                             ShowUserControl(chatUserControl);
                             chatUserControl.Select();
@@ -570,13 +552,13 @@ WHERE
         {
 
             ShowChatElements(false);
-            FindNewUserControl findNewUserControl = new FindNewUserControl(UserName,UserID);
+            FindNewUserControl findNewUserControl = new FindNewUserControl(UserName, UserID);
             this.MainPanelMainPage.Controls.Add(findNewUserControl);
             findNewUserControl.Dock = DockStyle.Fill;
             findNewUserControl.BringToFront();
         }
 
-      
+
         private void LogoutButton_Click(object sender, EventArgs e)
         {
             StopConnection();
@@ -588,7 +570,7 @@ WHERE
         {
             try
             {
-                // Sunucuya özel mesaj gönder
+                // Sunucuya mesaj gönder
                 await _hubProxy.Invoke("SendMessageToUser", UserName, receiver, message);
             }
             catch (Exception ex)
@@ -596,35 +578,9 @@ WHERE
                 MessageBox.Show($"Message send error: {ex.Message}");
             }
         }
-
-        public void guna2CirclePictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void findNewUserControl1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void FriendListPanelMainPage_Click(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void guna2ImageButton1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel3_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void sendButtonChat_Click(object sender, EventArgs e)
         {
-
+            // mesaj gönderme baloncuğu oluştur ve mesaj gönder
 
             if (chatUserControl != null && !string.IsNullOrEmpty(textboxChat.Text) && textboxChat.Text.Length < 250)
             {
@@ -652,16 +608,17 @@ WHERE
         }
         private void guna2ControlBox1_Click(object sender, EventArgs e)
         {
+            // control box ile kapatınca olacak şey
             StopConnection();
             Application.Exit();
         }
 
         private void MainPage_FormClosed(object sender, FormClosedEventArgs e)
         {
-           
+
             StopConnection();
             Application.Exit();
-          
+
         }
         public byte[] GetImageBytes(string filePath)
         {
@@ -693,7 +650,7 @@ WHERE
 
 
             string base64String = ConvertBytesToBase64(fileBytes);
-            MessageBox.Show(base64String.Length.ToString());
+
 
             List<string> chunks = SplitBase64String(base64String, 8192); // 8KB'lık parçalara böl
 
@@ -747,45 +704,40 @@ WHERE
                             meBubbleMedia.Focus();
                         }
                         else if (chatUserControl != null && typeOfFile == "video")
-                            try
-                            {
-                                AxWindowsMediaPlayer axWindowsMediaPlayer1 = new AxWindowsMediaPlayer();
-                                MeBubbleMedia meBubbleMedia = new MeBubbleMedia();
-                                axWindowsMediaPlayer1.Enabled = true;
-                                meBubbleMedia.Controls.Add(axWindowsMediaPlayer1);
-                                axWindowsMediaPlayer1.CreateControl();
-                                axWindowsMediaPlayer1.Size = new Size(meBubbleMedia.Size.Width, meBubbleMedia.Size.Height);
-
-                                axWindowsMediaPlayer1.Dock = DockStyle.Right;
-
-                                axWindowsMediaPlayer1.URL = filePath;
-                                axWindowsMediaPlayer1.Ctlcontrols.play();
-                                SendPhotoToServer(TargetUsername, UserName, filePath, typeOfFile);
-
-
-
-
-                                meBubbleMedia.Dock = DockStyle.Fill;
-                                chatUserControl.ChatScreenPanelChatUserControl.Controls.Add(meBubbleMedia);
-                                meBubbleMedia.Dock = DockStyle.Top;
-                                meBubbleMedia.BringToFront();
-                                meBubbleMedia.Focus();
-
-
-
-                            }
-                            catch (Exception ex)
-                            {
-
-                                MessageBox.Show("Hata ile karşılaşıldı " + ex.ToString());
-                            }
                         {
 
+                            AxWindowsMediaPlayer axWindowsMediaPlayer1 = new AxWindowsMediaPlayer();
+
+                            MeBubbleMedia meBubbleMedia = new MeBubbleMedia();
+
+                            axWindowsMediaPlayer1.Enabled = true;
+
+                            meBubbleMedia.Controls.Add(axWindowsMediaPlayer1);
+
+                            axWindowsMediaPlayer1.CreateControl();
+                            axWindowsMediaPlayer1.Size = new Size(meBubbleMedia.Size.Width, meBubbleMedia.Size.Height);
+                            axWindowsMediaPlayer1.Dock = DockStyle.Right;
+
+                            axWindowsMediaPlayer1.URL = filePath;
+                            axWindowsMediaPlayer1.Ctlcontrols.play();
+
+                            SendPhotoToServer(TargetUsername, UserName, filePath, typeOfFile);
+
+                            meBubbleMedia.Dock = DockStyle.Fill;
+
+                            chatUserControl.ChatScreenPanelChatUserControl.Controls.Add(meBubbleMedia);
+
+                            meBubbleMedia.Dock = DockStyle.Top;
+                            meBubbleMedia.BringToFront();
+                            meBubbleMedia.Focus();
+
                         }
+
+
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Hata: {ex.Message}");
+                        MessageBox.Show("ERROR: " + ex.Message);
                     }
 
                 }
@@ -823,14 +775,6 @@ WHERE
 
         }
 
-        private void guna2ImageButton1_Click_1(object sender, EventArgs e)
-        {
-
-
-
-        }
-
-        
         private void FetchFriendRequests()
         {
             FriendRequestListUserControl friendRequestListUserControl = new FriendRequestListUserControl();
@@ -842,7 +786,7 @@ WHERE
             }
             friendRequestListUserControl = new FriendRequestListUserControl()
             {
-                
+
                 Name = "friendRequestListUserControl"
             };
             friendRequestListUserControl.Username = this.UserName;
@@ -919,7 +863,7 @@ WHERE
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Hata: " + ex.Message);
+                    Console.WriteLine("ERROR: " + ex.Message);
                 }
                 finally
                 {
@@ -931,21 +875,21 @@ WHERE
 
 
             for (int i = 0; i < FriendsReq.Count; i++)
-                    {
+            {
 
-                        RadioButton radioButton = new RadioButton
-                        {
-                            Name = $"{FriendsReq[i]}",
-                            Text = FriendsReq[i],
-                            Cursor = Cursors.Hand,
-                            BackColor = Color.WhiteSmoke,
+                RadioButton radioButton = new RadioButton
+                {
+                    Name = $"{FriendsReq[i]}",
+                    Text = FriendsReq[i],
+                    Cursor = Cursors.Hand,
+                    BackColor = Color.WhiteSmoke,
 
-                        };
+                };
                 radioButton.CheckedChanged += (sender, args) =>
                 {
                     if (radioButton.Checked)
                     {
-                        SelectedReqUsername= radioButton.Text;
+                        SelectedReqUsername = radioButton.Text;
                     }
                 };
 
@@ -955,39 +899,39 @@ WHERE
 
             }
 
-                   
-                    for (int i = 0; i < BlockedFriends.Count; i++)
-                    {
 
-                        RadioButton radioButton = new RadioButton
-                        {
-                            Name = $"{BlockedFriends[i]}",
-                            Text = BlockedFriends[i],
-                            Cursor = Cursors.Hand,
-                            BackColor = Color.WhiteSmoke,
+            for (int i = 0; i < BlockedFriends.Count; i++)
+            {
 
-                        };
+                RadioButton radioButton = new RadioButton
+                {
+                    Name = $"{BlockedFriends[i]}",
+                    Text = BlockedFriends[i],
+                    Cursor = Cursors.Hand,
+                    BackColor = Color.WhiteSmoke,
+
+                };
                 radioButton.CheckedChanged += (sender, args) =>
                 {
-                    if (radioButton.Checked) 
+                    if (radioButton.Checked)
                     {
                         SelectedUserForBlock = radioButton.Text;
-                        
+
                     }
                 };
                 friendRequestListUserControl.BlockedUserListGroupBox.Controls.Add(radioButton);
-                        radioButton.Dock = DockStyle.Top;
+                radioButton.Dock = DockStyle.Top;
 
 
-                    }
-                    FriendsReq.Clear();
-                    BlockedFriends.Clear();
-                    MainPanelMainPage.Controls.Add(friendRequestListUserControl);
-                    friendRequestListUserControl.Dock = DockStyle.Fill;
-                    friendRequestListUserControl.BringToFront();
-                
-             
-            
+            }
+            FriendsReq.Clear();
+            BlockedFriends.Clear();
+            MainPanelMainPage.Controls.Add(friendRequestListUserControl);
+            friendRequestListUserControl.Dock = DockStyle.Fill;
+            friendRequestListUserControl.BringToFront();
+
+
+
         }
         private void FriendReqButton_Click(object sender, EventArgs e)
         {
@@ -995,6 +939,16 @@ WHERE
 
             FetchFriendRequests();
 
+        }
+
+        private void textboxChat_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                sendButtonChat.PerformClick();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
         }
     }
 }

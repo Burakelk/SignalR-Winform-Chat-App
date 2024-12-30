@@ -27,17 +27,6 @@ namespace DonemProje
             InitializeComponent();
         }
         string connectionString = " Data Source=LAPTOP-5188NCUM;Initial Catalog=users;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
-        private void LoginPage_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-
-
-
-        }
 
         private void RegisterLoginPageButton_Click(object sender, EventArgs e)
         {
@@ -80,7 +69,7 @@ namespace DonemProje
                 catch (Exception ex)
                 {
 
-                    MessageBox.Show("HATA İLE KARŞILAŞILDI" + ex.ToString());
+                    MessageBox.Show("ERROR" + ex.Message);
                     return false;
                 }
                 finally
@@ -99,8 +88,19 @@ namespace DonemProje
                 mainPage.Show();
                 this.Hide();
             }
+            else if (string.IsNullOrEmpty(EmailLogintxt.Text.Trim()) || string.IsNullOrEmpty(PasswordLogintextbox.Text))
+            {
+                PasswordInCorrectErr.Clear();
+                UserNameerrorProvider1.Clear();
+                PasswordInCorrectErr.SetError(PasswordLogintextbox, "Can not be empty");
+                UserNameerrorProvider1.SetError(EmailLogintxt, "Can not be empty");
+            }
             else
             {
+                PasswordInCorrectErr.Clear();
+                UserNameerrorProvider1.Clear();
+                PasswordInCorrectErr.SetError(EmailLogintxt, "Password or user name is incorrect");
+
                 MessageBox.Show("Kullanıcı adı veya şifre hatalı.");
                 EmailLogintxt.Text = "";
                 PasswordLogintextbox.Text = "";
@@ -117,15 +117,21 @@ namespace DonemProje
 
         }
 
-        private void EmailLogintxt_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void ForgetPasswordButton_Click(object sender, EventArgs e)
         {
             this.Hide();
             registerPage.Show();
+        }
+
+       
+        private void PasswordLogintextbox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                LoginButton.PerformClick();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
         }
     }
 }

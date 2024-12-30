@@ -188,7 +188,7 @@
             UserNametxt.Size = new Size(243, 51);
             UserNametxt.TabIndex = 1;
             UserNametxt.TextOffset = new Point(0, 2);
-            UserNametxt.TextChanged += UserNametxt_TextChanged;
+ 
             // 
             // pictureBox1
             // 
@@ -277,7 +277,7 @@
             maskedTextBox1.Size = new Size(57, 16);
             maskedTextBox1.TabIndex = 5;
             maskedTextBox1.ValidatingType = typeof(int);
-            maskedTextBox1.MaskInputRejected += maskedTextBox1_MaskInputRejected;
+      
             // 
             // verificationtxt
             // 
@@ -485,7 +485,7 @@
             // GoBackLoginButton
             // 
             GoBackLoginButton.Anchor = AnchorStyles.None;
-            GoBackLoginButton.BorderColor = Color.DimGray;
+            GoBackLoginButton.BorderColor = Color.Transparent;
             GoBackLoginButton.CustomizableEdges = customizableEdges14;
             GoBackLoginButton.DisabledState.BorderColor = Color.DarkGray;
             GoBackLoginButton.DisabledState.CustomBorderColor = Color.DarkGray;
@@ -733,7 +733,7 @@
             UserNameForgettxt.Size = new Size(243, 51);
             UserNameForgettxt.TabIndex = 1;
             UserNameForgettxt.TextOffset = new Point(0, 2);
-            UserNameForgettxt.TextChanged += UserNametxt_TextChanged;
+ 
             // 
             // pictureBox2
             // 
@@ -810,7 +810,7 @@
             SizeGripStyle = SizeGripStyle.Hide;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "RegisterPage";
-            Load += RegisterPage_Load;
+     
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)VerfCodeCheck).EndInit();
             ((System.ComponentModel.ISupportInitialize)UserNameErr).EndInit();

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.SignalR.Client;
+﻿using Azure.Core;
+using Microsoft.AspNet.SignalR.Client;
 using Microsoft.Data.SqlClient;
 using System;
 
@@ -21,44 +22,8 @@ namespace DonemProje
             InitializeComponent();
         }
         string connectionString = " Data Source=LAPTOP-5188NCUM;Initial Catalog=users;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
-        private HubConnection _connection;
-        private IHubProxy _hubProxy;
         public string _username;
-
         private string _targetUsername;
-        private static Dictionary<string, List<string>> _photoChunks = new Dictionary<string, List<string>>();
-        private void ChatUserControl_Load(object sender, EventArgs e)
-        {
-
-        }
-
-
-        private void guna2ImageButton1_Click(object sender, EventArgs e)
-        {
-
-            //MeBubble meBubble = new MeBubble
-            //{
-            //    Name = $"MeBubble_{MeBubbleCount}",
-
-            //};
-            //meBubble.label1.Text = ChatTextbox.Text;
-            //meBubble.label1.Dock = DockStyle.Right;
-            //meBubble.Size = new Size(670, meBubble.label1.Height + 5);
-
-            //ChatPanelChatUserControl.Controls.Add(meBubble);
-            //meBubble.Location = new Point(meBubble.Location.X + 500, meBubble.Location.Y - 20);
-            //meBubble.Dock = DockStyle.Top;
-
-            //meBubble.BringToFront();
-            //meBubble.Focus();
-            //MeBubbleCount++;
-
-        }
-
-        private void FriendsListPanel_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
 
         private void BlockFriend()
         {
@@ -66,30 +31,12 @@ namespace DonemProje
             AddBlock();
         }
         private void guna2ImageButton1_Click_1(object sender, EventArgs e)
-        {
+        { //kullanıcıyı engelleme butonu
             _targetUsername = UserNameLabelChatUserControl.Text; ;
             BlockFriend();
             MainPage mainPage = new MainPage();
-            foreach (Control control in mainPage.FriendListPanelMainPage.Controls)
-            {
-                if (control is UserControl userControl && control.Name==_username)
-                {
-
-                    mainPage.FriendListPanelMainPage.Controls.Remove(control);
-
-                }
-                
-            }
-            foreach (Control control in mainPage.MainPanelMainPage.Controls)
-            {
-                if ( control.Name == _username)
-                {
-
-                    mainPage.MainPanelMainPage.Controls.Remove(control);
-
-                }
-
-            }
+          
+          
 
         }
         private void DeleteFriendColum()
@@ -122,14 +69,14 @@ WHERE o._CASE = 'F' AND ((u1.USERNAME = @RECIEVER AND u2.USERNAME = @ME)OR(u1.US
                     command.Parameters.AddWithValue("@ME", _username);
 
                     command.ExecuteNonQuery();
-                    MessageBox.Show("Arkadaşlık isteği reddedildi");
+                    MessageBox.Show("This user is now blocked", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 
 
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Hata: " + ex.Message);
+                    MessageBox.Show("Error: " + ex.Message);
                 }
                 finally
                 {
@@ -183,14 +130,5 @@ WHERE u1.USERNAME = @ME AND u2.USERNAME = @RECIEVER;";
             }
         }
 
-        private void guna2ImageButton1_MouseHover(object sender, EventArgs e)
-        {
-            guna2ImageButton1.BackColor = Color.White;
-        }
-
-        private void guna2ImageButton1_Leave(object sender, EventArgs e)
-        {
-            guna2ImageButton1.BackColor = Color.Bisque;
-        }
     }
 }

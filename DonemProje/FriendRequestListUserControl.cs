@@ -73,7 +73,7 @@ WHERE
             {
                 if (control is RadioButton radioButton && radioButton.Checked)
                 {
-                    FriendReqListGroupBox.Controls.Remove(control);
+                    FriendReqListGroupBox.Controls.Remove(control); // arkadaşlık isteği listesindeki zaten işlem yapılmış butonları siler
 
 
                 }
@@ -87,8 +87,7 @@ WHERE
             {
                 if (control is RadioButton radioButton && radioButton.Checked)
                 {
-                    BlockedUserListGroupBox.Controls.Remove(control);
-
+                    BlockedUserListGroupBox.Controls.Remove(control);  // bloklanmış  kullanıcılar listesindeki zaten işlem yapılmış butonları siler
 
                 }
             }
@@ -102,7 +101,7 @@ WHERE
                 if (control is RadioButton radioButton && radioButton.Checked)
                 {
 
-                    return radioButton.Name;
+                    return radioButton.Name;     
                 }
             }
 
@@ -134,7 +133,7 @@ WHERE
 
             if (string.IsNullOrEmpty(TargetUserName))
             {
-                MessageBox.Show("Bir seçenek işaretle");
+                MessageBox.Show("Select an option","WARNING!");
                 return;
             }
 
@@ -168,14 +167,13 @@ WHERE o._CASE = 'W' AND (u1.USERNAME = @RECIEVER AND u2.USERNAME = @ME);";
 
                     command.ExecuteNonQuery();
                     AddFriendCaseDB();
-                    MessageBox.Show("Arkadaşlık kaydı güncellendi");
                     DeleteRadioButton();
 
 
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Hata: " + ex.Message);
+                    MessageBox.Show("ERROR: " + ex.Message);
                 }
                 finally
                 {
@@ -194,7 +192,7 @@ WHERE o._CASE = 'W' AND (u1.USERNAME = @RECIEVER AND u2.USERNAME = @ME);";
 
             if (string.IsNullOrEmpty(TargetUserName))
             {
-                MessageBox.Show("Bir seçenek işaretle");
+                MessageBox.Show("Select an option");
                 return;
             }
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -224,14 +222,13 @@ WHERE o._CASE = 'W' AND (u1.USERNAME = @RECIEVER AND u2.USERNAME = @ME);";
                     command.Parameters.AddWithValue("@ME", Username);
 
                     command.ExecuteNonQuery();
-                    MessageBox.Show("Arkadaşlık isteği reddedildi");
                     DeleteRadioButton();
 
 
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Hata: " + ex.Message);
+                    MessageBox.Show("ERROR: " + ex.Message);
                 }
                 finally
                 {
@@ -257,7 +254,7 @@ WHERE o._CASE = 'W' AND (u1.USERNAME = @RECIEVER AND u2.USERNAME = @ME);";
             }
             if (string.IsNullOrEmpty(TargetUserName))
             {
-                MessageBox.Show("Bir seçenek işaretle");
+                MessageBox.Show("Select an option");
                 return;
             }
             RejectFriendReq(); // ÖNCE DATABASE DEN İSTEK REDDEDİLİR SONRA BLOCKLAMA İŞLEMİ GERÇEKLEŞTİRİLİR.
@@ -290,7 +287,7 @@ WHERE u1.USERNAME = @ME AND u2.USERNAME = @RECIEVER;";
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Hata: " + ex.Message);
+                    MessageBox.Show("ERROR: " + ex.Message);
                 }
                 finally
                 {
@@ -312,7 +309,7 @@ WHERE u1.USERNAME = @ME AND u2.USERNAME = @RECIEVER;";
             }
             if (string.IsNullOrEmpty(BlockTargetUserName))
             {
-                MessageBox.Show("Bir seçenek işaretle");
+                MessageBox.Show("Select an option");
                 return;
             }
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -341,14 +338,13 @@ WHERE o._CASE = 'B' AND (u1.USERNAME = @ME AND u2.USERNAME =@RECIEVER );";
                     command.Parameters.AddWithValue("@RECIEVER", BlockTargetUserName);
                     command.Parameters.AddWithValue("@ME", Username);
                     command.ExecuteNonQuery();
-                    MessageBox.Show("Bu kişinin engeli kalktı");
                     DeleteRadioButtonBlockedGroup();
 
 
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Hata: " + ex.Message);
+                    MessageBox.Show("ERROR: " + ex.Message);
                 }
                 finally
                 {

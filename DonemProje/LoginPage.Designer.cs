@@ -60,10 +60,14 @@
             pictureBox2 = new PictureBox();
             PasswordInCorrectErr = new ErrorProvider(components);
             EmailErr = new ErrorProvider(components);
+            UserNameerrorProvider1 = new ErrorProvider(components);
+            errorProvider2 = new ErrorProvider(components);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PasswordInCorrectErr).BeginInit();
             ((System.ComponentModel.ISupportInitialize)EmailErr).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)UserNameerrorProvider1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)errorProvider2).BeginInit();
             SuspendLayout();
             // 
             // guna2ControlBox1
@@ -229,7 +233,6 @@
             EmailLogintxt.Size = new Size(266, 48);
             EmailLogintxt.TabIndex = 36;
             EmailLogintxt.TextOffset = new Point(0, 2);
-            EmailLogintxt.TextChanged += EmailLogintxt_TextChanged;
             // 
             // PasswordLogintextbox
             // 
@@ -255,6 +258,7 @@
             PasswordLogintextbox.ShadowDecoration.CustomizableEdges = customizableEdges7;
             PasswordLogintextbox.Size = new Size(266, 48);
             PasswordLogintextbox.TabIndex = 37;
+            PasswordLogintextbox.KeyDown += PasswordLogintextbox_KeyDown;
             // 
             // PasswordShowButton
             // 
@@ -298,6 +302,14 @@
             EmailErr.ContainerControl = EmailLogintxt;
             EmailErr.RightToLeft = true;
             // 
+            // UserNameerrorProvider1
+            // 
+            UserNameerrorProvider1.ContainerControl = this;
+            // 
+            // errorProvider2
+            // 
+            errorProvider2.ContainerControl = this;
+            // 
             // LoginPage
             // 
             AutoScaleDimensions = new SizeF(120F, 120F);
@@ -323,11 +335,12 @@
             Name = "LoginPage";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "LoginPage";
-            Load += LoginPage_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)PasswordInCorrectErr).EndInit();
             ((System.ComponentModel.ISupportInitialize)EmailErr).EndInit();
+            ((System.ComponentModel.ISupportInitialize)UserNameerrorProvider1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)errorProvider2).EndInit();
             ResumeLayout(false);
         }
 
@@ -349,5 +362,7 @@
         private ErrorProvider EmailErr;
         private Guna.UI2.WinForms.Guna2ImageButton PasswordShowButton;
         private PictureBox pictureBox2;
+        private ErrorProvider UserNameerrorProvider1;
+        private ErrorProvider errorProvider2;
     }
 }

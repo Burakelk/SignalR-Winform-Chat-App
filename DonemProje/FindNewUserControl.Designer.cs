@@ -35,17 +35,20 @@
             findNewUserLabel = new Label();
             findFriendTextBox = new Guna.UI2.WinForms.Guna2TextBox();
             findFriendsButton = new Guna.UI2.WinForms.Guna2Button();
+            pictureBox1 = new PictureBox();
+            label1 = new Label();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // findNewUserLabel
             // 
             findNewUserLabel.AutoSize = true;
-            findNewUserLabel.Font = new Font("News706 BT", 72F, FontStyle.Bold, GraphicsUnit.Point, 162);
-            findNewUserLabel.Location = new Point(-30, 12);
+            findNewUserLabel.Font = new Font("News706 BT", 64.8F, FontStyle.Bold, GraphicsUnit.Point, 162);
+            findNewUserLabel.Location = new Point(21, 0);
             findNewUserLabel.Name = "findNewUserLabel";
-            findNewUserLabel.Size = new Size(822, 143);
+            findNewUserLabel.Size = new Size(304, 131);
             findNewUserLabel.TabIndex = 2;
-            findNewUserLabel.Text = "Find Friends";
+            findNewUserLabel.Text = "Find";
             // 
             // findFriendTextBox
             // 
@@ -58,7 +61,7 @@
             findFriendTextBox.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             findFriendTextBox.Font = new Font("Segoe UI", 9F);
             findFriendTextBox.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            findFriendTextBox.Location = new Point(157, 209);
+            findFriendTextBox.Location = new Point(343, 308);
             findFriendTextBox.Margin = new Padding(3, 4, 3, 4);
             findFriendTextBox.Name = "findFriendTextBox";
             findFriendTextBox.PasswordChar = '\0';
@@ -79,7 +82,7 @@
             findFriendsButton.FillColor = Color.Black;
             findFriendsButton.Font = new Font("News706 BT", 9F, FontStyle.Bold, GraphicsUnit.Point, 162);
             findFriendsButton.ForeColor = Color.White;
-            findFriendsButton.Location = new Point(247, 385);
+            findFriendsButton.Location = new Point(452, 393);
             findFriendsButton.Name = "findFriendsButton";
             findFriendsButton.ShadowDecoration.CustomizableEdges = customizableEdges4;
             findFriendsButton.Size = new Size(225, 56);
@@ -87,17 +90,40 @@
             findFriendsButton.Text = "Send Request";
             findFriendsButton.Click += findFriendsButton_Click;
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = Properties.Resources.multiple_users_silhouette;
+            pictureBox1.Location = new Point(16, 165);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(309, 617);
+            pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureBox1.TabIndex = 5;
+            pictureBox1.TabStop = false;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("News706 BT", 64.2000046F, FontStyle.Bold, GraphicsUnit.Point, 162);
+            label1.Location = new Point(247, 122);
+            label1.Name = "label1";
+            label1.Size = new Size(496, 129);
+            label1.TabIndex = 6;
+            label1.Text = " Friends";
+            // 
             // FindNewUserControl
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(findFriendsButton);
+            Controls.Add(label1);
             Controls.Add(findFriendTextBox);
+            Controls.Add(findFriendsButton);
             Controls.Add(findNewUserLabel);
+            Controls.Add(pictureBox1);
             Margin = new Padding(3, 4, 3, 4);
             Name = "FindNewUserControl";
             Size = new Size(743, 730);
             Load += FindNewUserControl_Load;
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -107,5 +133,7 @@
         private Label findNewUserLabel;
         private Guna.UI2.WinForms.Guna2TextBox findFriendTextBox;
         private Guna.UI2.WinForms.Guna2Button findFriendsButton;
+        private PictureBox pictureBox1;
+        private Label label1;
     }
 }

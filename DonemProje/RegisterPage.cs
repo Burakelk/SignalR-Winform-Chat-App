@@ -19,8 +19,6 @@ namespace DonemProje
         {
             InitializeComponent();
         }
-
-        // hiç kod oluşturulmamışsa ilk fonksiyon çalışır
         string verificationCode;
         string verificationCodeForResetPass;
         public string VerifCodeCreater()
@@ -66,27 +64,25 @@ namespace DonemProje
 
                     if (count > 0)
                     {
-                        MessageBox.Show("Bu kullanıcı adı zaten kullanılıyor.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("This username is already in use.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
 
-                        string insertQuery = "INSERT INTO users_table (USERNAME, PASSW,NAME_SURNAME,E_MAIL,BIRTH_DAY,GENDER) VALUES (@USERNAME, @PASSW,@NAME_SURNAME,@E_MAIL,@BIRTH_DAY,@GENDER)";
+                        string insertQuery = "INSERT INTO users_table (USERNAME, PASSW,NAME_SURNAME,E_MAIL,BIRTH_DAY) VALUES (@USERNAME, @PASSW,@NAME_SURNAME,@E_MAIL,@BIRTH_DAY)";
                         SqlCommand command = new SqlCommand(insertQuery, connection);
                         command.Parameters.AddWithValue("@USERNAME", UserNametxt.Text.Trim());
                         command.Parameters.AddWithValue("@PASSW", hashedPassword);
                         command.Parameters.AddWithValue("@NAME_SURNAME", fullNametxt.Text);
                         command.Parameters.AddWithValue("@E_MAIL", EmailRegistertxt.Text);
                         command.Parameters.AddWithValue("@BIRTH_DAY", DateTimePickertxt.Value);
-                        command.Parameters.AddWithValue("@GENDER", 'M');
                         command.ExecuteNonQuery();
-                        MessageBox.Show("KAYIT BAŞARILI");
                     }
 
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Hata: " + ex.Message);
+                    MessageBox.Show("ERROR: " + ex.Message);
                 }
                 finally
                 {
@@ -171,13 +167,11 @@ namespace DonemProje
             // şifrelerin aynı olup olmadığını kontrol etme
             if (Password1textbox.Text != Password2textbox.Text)
             {
-                MessageBox.Show("Girilen Şifrelerin Aynı olması lazım");
                 return false;
             }
             DateTime birthDate = DateTimePickertxt.Value;
             if (DateTimePickertxt.Value > DateTime.Now)
             {
-                MessageBox.Show("Lütfen geçerli bir tarih giriniz");
                 return false;
             }
             // Bugünün tarihini alma
@@ -198,7 +192,7 @@ namespace DonemProje
 
             if (age < 18)
             {
-                MessageBox.Show("Yaşın henüz " + age + " bu uygulamayı kullanmak için yeterince büyük değilsin.\n" + (18 - age) + " yıl sonra tekrar bekleriz :)");
+                MessageBox.Show("You are under 18 years old sorry :(");
                 return false;
 
             }
@@ -213,7 +207,7 @@ namespace DonemProje
 
             if (count > 0)
             {
-                UserNameErr.SetError(UserNametxt, "Bu kullanıcı adı zaten kullanılıyor. Lütfen başka bir kullanıcı adı giriniz.");
+                UserNameErr.SetError(UserNametxt, "This username is already in use. Please enter another username.");
                 connection.Close();
                 return false;
 
@@ -237,7 +231,7 @@ namespace DonemProje
                 catch (Exception ex)
                 {
 
-                    MessageBox.Show("Bir hata ile karşılaşıldı" + ex.ToString());
+                    MessageBox.Show("ERROR" + ex.Message);
                     return;
                 }
             }
@@ -250,8 +244,8 @@ namespace DonemProje
         private void SendCode(string alici)
         {
             verificationCode = VerifCodeCreater();
-
-            // Gönderen ve alıcı e-posta adreslerini ve şifreyi girin.
+            
+            // Gönderen ve alıcı e-posta adreslerini ve şifreyi girin. 
             string gonderen = "celikburak4999@gmail.com";
             string sifre = "fncm ofpw nhjq yrei";
          
@@ -264,11 +258,11 @@ namespace DonemProje
             string konu = "Kodunuz: " + verificationCode;
             string govde = "Uygulamaya giriş yapmak için kodunuz:  " + verificationCode;
 
-            // SmtpClient nesnesini oluşturun ve ayarlarını belirleyin.
+            
             SmtpClient smtpClient = new SmtpClient();
-            smtpClient.Host = "smtp.gmail.com"; // SMTP sunucu adresini girin.
-            smtpClient.Port = 587; // SMTP sunucu portunu girin.
-            smtpClient.EnableSsl = true; // SSL'yi etkinleştirin.
+            smtpClient.Host = "smtp.gmail.com"; 
+            smtpClient.Port = 587; 
+            smtpClient.EnableSsl = true; 
             smtpClient.Credentials = new NetworkCredential(gonderen, sifre);
 
             // E-posta mesajını oluşturun ve gönderin.
@@ -280,13 +274,11 @@ namespace DonemProje
             }
             catch (Exception)
             {
-                MessageBox.Show("Girdiğiniz e-posta adresi eksik veya hatalı lütfen konrol ediniz.");
+                MessageBox.Show("The e-mail address you entered is missing or incorrect, please check your E-mail address.");
                 return;
             }
 
-
-            // Gönderme işleminin başarılı olduğunu gösteren bir mesaj gösterin.
-            MessageBox.Show("E-posta başarıyla gönderildi! \nKodu almadıysanız girdiğiniz E-Posta adresini kontrol ediniz. ");
+            MessageBox.Show("Email sent successfully! \nIf you did not receive the code, please check the e-mail address you entered. ");
         }
         private void verificationCodeSendertxt_Click(object sender, EventArgs e)
         {
@@ -294,41 +286,23 @@ namespace DonemProje
 
         }
 
-        private void RegisterPage_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void maskedTextBox1_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
-        {
-
-        }
-
-        private void verCodeCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
+   
 
         private void approveTheCodebutton_Click(object sender, EventArgs e)
         {
             if (maskedTextBox1.Text == verificationCode && !string.IsNullOrEmpty(maskedTextBox1.Text))
             {
                 VerfCodeCheck.Visible = true;
-                MessageBox.Show("E-posta doğrulama başarılı!");
                 ApprovErr.Clear();
 
             }
             else
             {
-                MessageBox.Show("Kod hatalı, Lütfen tekrar deneyin.");
+                MessageBox.Show("The code is incorrect. Please try again.");
             }
 
         }
 
-        private void UserNametxt_TextChanged(object sender, EventArgs e)
-        {
-
-        }
          
         private void PasswordShowButton2_Click(object sender, EventArgs e)
         {
@@ -367,13 +341,13 @@ namespace DonemProje
             if (maskedTextBox2.Text == verificationCode && !string.IsNullOrEmpty(maskedTextBox2.Text))
             {
                 guna2CirclePictureBox1.Visible = true;
-                MessageBox.Show("E-posta doğrulama başarılı!");
+
                 ApprErrForget.Clear();
             }
             else
             {
                 ApprErrForget.SetError(maskedTextBox2,"Verify the code");
-                MessageBox.Show("Kod hatalı, Lütfen tekrar deneyin.");
+                MessageBox.Show("The code is incorrect. Please try again.");
             }
         }
         private bool IsValuesRight()
@@ -424,7 +398,7 @@ namespace DonemProje
                 catch (Exception ex)
                 {
 
-                    MessageBox.Show("HATA İLE KARŞILAŞILDI" + ex.ToString());
+                    MessageBox.Show("ERROR" + ex.ToString());
                     return false;
                 }
                 finally
@@ -460,7 +434,7 @@ namespace DonemProje
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Bir hata oluştu: " + ex.Message);
+                    MessageBox.Show("ERROR: " + ex.Message);
                 }
             
 
@@ -486,7 +460,7 @@ namespace DonemProje
                 }
             }
             else {
-                MessageBox.Show("Please enter values right");
+                MessageBox.Show("Please enter the values right");
             }
 
         }
