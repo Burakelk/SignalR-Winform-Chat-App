@@ -7,6 +7,9 @@ To run the app, you need to change the app password or disable email verificatio
 For now it only works if both parties are online. If you want to message offline, I created the database. You can add offline messaging if you want.
 ![image](https://github.com/user-attachments/assets/0169cc13-6e85-4b39-ad11-78fd7c5792eb)
 
+In the above files there is a file named users.bacpac. This file is your database.
+![users](https://github.com/user-attachments/assets/9f614144-91ee-43cd-bcde-cc3b32107c97)
+
 
 Register Page
 
