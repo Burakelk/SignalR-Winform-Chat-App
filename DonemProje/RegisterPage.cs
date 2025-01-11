@@ -246,8 +246,8 @@ namespace DonemProje
             verificationCode = VerifCodeCreater();
             
             // Gönderen ve alıcı e-posta adreslerini ve şifreyi girin. 
-            string gonderen = "celikburak4999@gmail.com";
-            string sifre = "fncm ofpw nhjq yrei";
+            string gonderen = "Your e-mail address";
+            string sifre = "Your e-mail address app password"; // you can learn here   https://support.google.com/mail/answer/185833?hl=en
          
             if (string.IsNullOrEmpty(alici))
             {
